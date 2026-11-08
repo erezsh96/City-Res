@@ -405,9 +405,9 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
   }
   [dir='rtl'] .card { transform: translateY(20px); }
   .card.is-open { transform: none; }
-  .project-body { grid-template-columns: 1fr; overflow: auto; }
-  .project-visual { border-inline-end: 0; border-bottom: 2px solid var(--line); }
-  .viewer { min-height: 300px; }
+  .project-body { grid-template-columns: 1fr; grid-auto-rows: auto; align-content: start; overflow: auto; }
+  .project-visual { min-height: auto; border-inline-end: 0; border-bottom: 2px solid var(--line); }
+  .viewer { flex: none; height: 240px; min-height: 0; }
   .visual-text { max-height: none; }
   .project-info { overflow: visible; }
 }
