@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" font-family="Rubik, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#8fa6e0"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2440"/>
+      <stop offset="1" stop-color="#121829"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="640" rx="24" fill="url(#bg)"/>
+  <text x="30" y="52" font-size="26" font-weight="700" fill="#e6eeff">TeachMeChess · how a move gets rated</text>
+  <text x="30" y="78" font-size="14" fill="#8fa6e0">Python · Streamlit · python-chess · Stockfish · SQLite · chessboardjs</text>
+
+  <!-- row 1: the pipeline -->
+  <g text-anchor="middle">
+    <rect x="30" y="104" width="280" height="134" rx="12" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="170" y="140" font-size="16" font-weight="700" fill="#e6eeff">Your move</text>
+    <text x="170" y="166" font-size="12" fill="#a9b8d8">drag-and-drop board</text>
+    <text x="170" y="184" font-size="12" fill="#a9b8d8">custom Streamlit component</text>
+    <text x="170" y="202" font-size="12" fill="#a9b8d8">on chessboardjs</text>
+    <text x="170" y="220" font-size="12" fill="#a9b8d8">two-way: JavaScript ↔ Python</text>
+
+    <rect x="343" y="104" width="280" height="134" rx="12" fill="#0f3a49" stroke="#22c7e6" stroke-width="2.5"/>
+    <text x="483" y="140" font-size="16" font-weight="700" fill="#e6feff">Position analysis</text>
+    <text x="483" y="166" font-size="12" fill="#9fe6f5">Stockfish, 3 best lines (MultiPV)</text>
+    <text x="483" y="184" font-size="12" fill="#9fe6f5">run before your move</text>
+    <text x="483" y="208" font-size="13" font-weight="700" fill="#e6feff">evaluation → win chance 0–100%</text>
+
+    <rect x="656" y="104" width="280" height="134" rx="12" fill="#3a2e14" stroke="#ffb547" stroke-width="2.5"/>
+    <text x="796" y="140" font-size="16" font-weight="700" fill="#ffe7c2">Move rating</text>
+    <text x="796" y="166" font-size="12" fill="#d9bf98">win chance lost compared with</text>
+    <text x="796" y="184" font-size="12" fill="#d9bf98">the engine's best move</text>
+    <text x="796" y="202" font-size="12" fill="#d9bf98">+ only-move check</text>
+    <text x="796" y="220" font-size="12" fill="#d9bf98">+ sound-sacrifice check</text>
+
+    <rect x="970" y="104" width="280" height="134" rx="12" fill="#173a2e" stroke="#4fc79a" stroke-width="2.5"/>
+    <text x="1110" y="140" font-size="16" font-weight="700" fill="#dffff0">Explanation</text>
+    <text x="1110" y="166" font-size="12" fill="#a6dcc4">one plain Hebrew sentence</text>
+    <text x="1110" y="184" font-size="12" fill="#a6dcc4">that names the better move</text>
+    <text x="1110" y="202" font-size="12" fill="#a6dcc4">shown with a coloured badge</text>
+    <text x="1110" y="220" font-size="12" fill="#a6dcc4">and added to the game history</text>
+  </g>
+  <g stroke="#8fa6e0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M310 171H341"/>
+    <path d="M623 171H654"/>
+    <path d="M936 171H968"/>
+    <path d="M740 238V276"/>
+    <path d="M900 238V276"/>
+  </g>
+
+  <!-- row 2: rating ladder -->
+  <rect x="30" y="278" width="740" height="196" rx="12" fill="#1d2440" stroke="#a98bff" stroke-width="2"/>
+  <text x="400" y="310" font-size="16" font-weight="700" fill="#ece6ff" text-anchor="middle">Eight rating levels</text>
+  <g font-size="12" font-weight="700" text-anchor="middle" fill="#10141f">
+    <rect x="50" y="328" width="120" height="24" rx="12" fill="#1baca6"/><text x="110" y="344">Brilliant</text>
+    <rect x="50" y="362" width="120" height="24" rx="12" fill="#5c8bb0"/><text x="110" y="378">Great</text>
+    <rect x="50" y="396" width="120" height="24" rx="12" fill="#4caf50"/><text x="110" y="412">Best</text>
+    <rect x="50" y="430" width="120" height="24" rx="12" fill="#8bc34a"/><text x="110" y="446">Excellent</text>
+    <rect x="410" y="328" width="120" height="24" rx="12" fill="#cddc39"/><text x="470" y="344">Good</text>
+    <rect x="410" y="362" width="120" height="24" rx="12" fill="#ffb300"/><text x="470" y="378">Inaccuracy</text>
+    <rect x="410" y="396" width="120" height="24" rx="12" fill="#fb8c00"/><text x="470" y="412">Mistake</text>
+    <rect x="410" y="430" width="120" height="24" rx="12" fill="#e53935"/><text x="470" y="446">Blunder</text>
+  </g>
+  <g font-size="12" fill="#c9b3e8">
+    <text x="182" y="344">best move and a sound sacrifice</text>
+    <text x="182" y="378">only move: 15+ ahead of the next</text>
+    <text x="182" y="412">the engine's own choice</text>
+    <text x="182" y="446">lost up to 1 point</text>
+    <text x="542" y="344">lost up to 3 points</text>
+    <text x="542" y="378">lost up to 7 points</text>
+    <text x="542" y="412">lost up to 15 points</text>
+    <text x="542" y="446">lost more than 15 points</text>
+  </g>
+
+  <!-- row 2: missed-move check -->
+  <g text-anchor="middle">
+    <rect x="810" y="278" width="440" height="196" rx="12" fill="#3a1d1d" stroke="#ff7a6b" stroke-width="2.5"/>
+    <text x="1030" y="310" font-size="16" font-weight="700" fill="#ffe3df">Missed-move check</text>
+    <text x="1030" y="340" font-size="12" fill="#e8b4ad">a Mistake or Blunder that lost 10+ points</text>
+    <text x="1030" y="372" font-size="13" fill="#ffe3df">→ a warning with the win chance you gave up</text>
+    <text x="1030" y="402" font-size="13" fill="#ffe3df">→ review mode: the board goes back</text>
+    <text x="1030" y="422" font-size="13" fill="#ffe3df">to the position before the move</text>
+    <text x="1030" y="452" font-size="12" fill="#e8b4ad">and names the move you missed</text>
+  </g>
+
+  <!-- row 3: foundation -->
+  <g text-anchor="middle">
+    <rect x="30" y="498" width="600" height="76" rx="12" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="330" y="528" font-size="15" font-weight="700" fill="#e6eeff">Engine manager · opponent</text>
+    <text x="330" y="552" font-size="12" fill="#a9b8d8">finds Stockfish automatically, one process per session · opponent 200–1800 ELO → Stockfish skill 0–18</text>
+
+    <rect x="650" y="498" width="600" height="76" rx="12" fill="#173a24" stroke="#7dff8a" stroke-width="2"/>
+    <text x="950" y="528" font-size="15" font-weight="700" fill="#dfffe3">Game history (SQLite)</text>
+    <text x="950" y="552" font-size="12" fill="#b4e6bb">games · moves · missed chances · importer for chess.com game history</text>
+  </g>
+
+  <text x="640" y="608" font-size="13" fill="#8fa6e0" text-anchor="middle">Solo project · ~1,400 lines of Python and JavaScript · an independent rating method built on public principles</text>
+</svg>

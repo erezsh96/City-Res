@@ -488,18 +488,62 @@
       "access": "public",
       "title": "TeachMeChess",
       "tagline": {
-        "en": "Interactive chess coach: plays you with Stockfish, classifies every move and explains it in plain language.",
-        "he": "מאמן שחמט אינטראקטיבי: משחק נגדך עם Stockfish, מסווג כל מהלך ומסביר אותו בשפה פשוטה."
+        "en": "A chess coach that plays you with Stockfish, rates every move you make, explains it in plain language and takes you back to the chances you missed.",
+        "he": "מאמן שחמט שמשחק נגדך עם Stockfish, מדרג כל מהלך שלך, מסביר אותו בשפה פשוטה ומחזיר אותך להזדמנויות שהחמצת."
       },
-      "stack": ["Python", "Streamlit", "python-chess", "Stockfish", "SQLite", "JavaScript"],
-      "links": { "github": "https://github.com/haThomas3/TMC_TeachMeChess" },
-      "floors": [
-        { "name": "Stockfish engine" },
-        { "name": "Move classifier" },
-        { "name": "Plain-language explanations" },
-        { "name": "Progress tracker (SQLite)" },
-        { "name": "Custom JS board" }
+      "description": {
+        "en": "A solo project that started in April 2026 as a simple game against Stockfish and grew into a coach. Before each of your moves the engine analyses the position and keeps its three best lines, converting each evaluation into a win chance. Your move is then rated by how much win chance it gave up compared with the engine's best move, on eight levels from Brilliant to Blunder: Best when you played the engine's move, Great when it was the only move that kept the advantage, Brilliant when it was also a sound sacrifice, and Inaccuracy, Mistake or Blunder as the loss grows. Every rating comes with a short explanation in plain Hebrew that names the better move. When a move loses at least 10 points of win chance, the app warns you and offers a review mode that shows the position before the move and the move you missed. Games, moves and missed chances are saved in SQLite to track progress over time, and an importer pulls in a player's chess.com game history. The board is a custom two-way Streamlit component built on chessboardjs, with drag and drop. The opponent's strength runs from 200 to 1800 ELO, mapped to Stockfish skill levels. The rating method is an independent approximation built on public principles, not a copy of any chess site's closed algorithm.",
+        "he": "פרויקט אישי שהתחיל באפריל 2026 כמשחק פשוט נגד Stockfish והפך למאמן. לפני כל מהלך שלך המנוע מנתח את העמדה ושומר את שלושת הקווים הטובים ביותר, וכל הערכה מומרת לסיכויי ניצחון. אחר כך המהלך שלך מדורג לפי כמה סיכויי ניצחון הוא איבד לעומת המהלך הטוב ביותר של המנוע, בשמונה רמות ממבריק ועד טעות חמורה: הטוב ביותר כששיחקת את המהלך של המנוע, נהדר כשזה היה המהלך היחיד ששומר על היתרון, מבריק כשזו הייתה גם הקרבה נכונה, ואי-דיוק, טעות או טעות חמורה ככל שההפסד גדל. כל דירוג מגיע עם הסבר קצר בעברית פשוטה שמציין את המהלך העדיף. כשמהלך מאבד לפחות 10 נקודות של סיכויי ניצחון, האפליקציה מתריעה ומציעה מצב סקירה שמראה את העמדה לפני המהלך ואת המהלך שהוחמץ. משחקים, מהלכים והחמצות נשמרים ב-SQLite למעקב אחרי ההתקדמות לאורך זמן, ומייבא נפרד מושך את היסטוריית המשחקים של שחקן מ-chess.com. הלוח הוא רכיב Streamlit דו-כיווני שכתבתי על בסיס chessboardjs, עם גרירה של כלים. רמת היריב נעה בין 200 ל-1800 ELO וממופה לרמות המיומנות של Stockfish. שיטת הדירוג היא קירוב עצמאי שבנוי על עקרונות ציבוריים, לא העתקה של אלגוריתם סגור של אתר שחמט כלשהו."
+      },
+      "goals": {
+        "en": [
+          "Teach after every move, not just play: say how good the move was and why.",
+          "Base the rating on win chance lost against the engine's best move, so every level can be explained.",
+          "Take the player back to a missed chance and show the better move on the board.",
+          "Keep a history of games and mistakes to track progress over time."
+        ],
+        "he": [
+          "ללמד אחרי כל מהלך, לא רק לשחק: להגיד כמה המהלך היה טוב ולמה.",
+          "לבסס את הדירוג על סיכויי הניצחון שאבדו לעומת המהלך הטוב ביותר של המנוע, כך שאפשר להסביר כל רמה.",
+          "להחזיר את השחקן להזדמנות שהוחמצה ולהראות על הלוח את המהלך העדיף.",
+          "לשמור היסטוריה של משחקים וטעויות כדי לעקוב אחרי ההתקדמות לאורך זמן."
+        ]
+      },
+      "myRole": {
+        "en": "Solo project: the design, the analysis and rating logic, the Streamlit app, the SQLite layer and the JavaScript board component.",
+        "he": "פרויקט אישי: האפיון, לוגיקת הניתוח והדירוג, אפליקציית ה-Streamlit, שכבת ה-SQLite ורכיב הלוח ב-JavaScript."
+      },
+      "stack": ["Python", "Streamlit", "python-chess", "Stockfish", "SQLite", "JavaScript", "chessboardjs"],
+      "metrics": [
+        { "value": "8", "label": { "en": "move-rating levels, from Brilliant to Blunder", "he": "רמות דירוג למהלך, ממבריק ועד טעות חמורה" } },
+        { "value": "200–1800", "label": { "en": "opponent ELO range", "he": "טווח ה-ELO של היריב" } },
+        { "value": "~1,400", "label": { "en": "lines of Python and JavaScript", "he": "שורות Python ו-JavaScript" } }
       ],
+      "links": { "github": "https://github.com/haThomas3/TMC_TeachMeChess" },
+      "gallery": [
+        {
+          "src": "projects/teachmechess/architecture.svg",
+          "caption": { "en": "From your move to a rating: engine analysis, win chances, the rating rules, the explanation and the missed-move check.", "he": "מהמהלך שלך לדירוג: ניתוח המנוע, סיכויי ניצחון, כללי הדירוג, ההסבר ובדיקת ההחמצה." }
+        },
+        {
+          "src": "projects/teachmechess/move-rating.webp",
+          "caption": { "en": "4.Bc4 is rated a Mistake with the reason: Nxd4 was clearly better. The yellow warning offers to show the missed move, and the history on the right rates every move of the game.", "he": "4.Bc4 מדורג כטעות עם ההסבר: Nxd4 היה עדיף באופן ברור. האזהרה הצהובה מציעה להראות את המהלך שהוחמץ, וההיסטוריה מימין מדרגת כל מהלך במשחק." }
+        },
+        {
+          "src": "projects/teachmechess/missed-move-review.webp",
+          "caption": { "en": "Review mode: the board goes back to the position before the mistake and names the recommended move, Nxd4.", "he": "מצב סקירה: הלוח חוזר לעמדה שלפני הטעות ומציין את המהלך המומלץ, Nxd4." }
+        }
+      ],
+      "floors": [
+        { "name": { "en": "Stockfish engine manager", "he": "ניהול מנוע Stockfish" }, "detail": { "en": "Finds the engine automatically and keeps one process alive for the whole session.", "he": "מאתר את המנוע אוטומטית ומחזיק תהליך אחד חי לאורך כל הסשן." } },
+        { "name": { "en": "Position analysis", "he": "ניתוח עמדה" }, "detail": { "en": "The engine's three best lines, each converted into a win chance.", "he": "שלושת הקווים הטובים ביותר של המנוע, כל אחד מומר לסיכויי ניצחון." } },
+        { "name": { "en": "Move rating", "he": "דירוג מהלכים" }, "detail": { "en": "Eight levels by win chance lost, with checks for the only good move and for sound sacrifices.", "he": "שמונה רמות לפי סיכויי הניצחון שאבדו, עם בדיקה למהלך יחיד ולהקרבה נכונה." } },
+        { "name": { "en": "Plain-language explanations", "he": "הסברים בשפה פשוטה" }, "detail": { "en": "A short Hebrew sentence for each rating that names the better move.", "he": "משפט קצר בעברית לכל דירוג, שמציין את המהלך העדיף." } },
+        { "name": { "en": "Missed-move review", "he": "סקירת החמצות" }, "detail": { "en": "After a mistake that costs 10+ points, shows the position before it and the move you missed.", "he": "אחרי טעות שעולה 10 נקודות ומעלה, מראה את העמדה שלפניה ואת המהלך שהוחמץ." } },
+        { "name": { "en": "Game history (SQLite)", "he": "היסטוריית משחקים (SQLite)" }, "detail": { "en": "Games, moves and missed chances, plus an importer for chess.com game history.", "he": "משחקים, מהלכים והחמצות, ומייבא להיסטוריית משחקים מ-chess.com." } },
+        { "name": { "en": "Drag-and-drop board", "he": "לוח עם גרירה" }, "detail": { "en": "A custom two-way Streamlit component built on chessboardjs.", "he": "רכיב Streamlit דו-כיווני שכתבתי על בסיס chessboardjs." } }
+      ],
+      "size": { "linesOfCode": 1400, "teamSize": 1 },
       "sign": "COACH"
     },
     {
