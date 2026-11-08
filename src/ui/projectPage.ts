@@ -180,7 +180,7 @@ export class ProjectPage {
           'div',
           { class: 'gallery' },
           p.gallery.map((g) =>
-            h('figure', {}, h('img', { src: assetUrl(g.src), alt: loc(g.caption, lang) || loc(p.title, lang), loading: 'lazy' }), g.caption ? h('figcaption', {}, loc(g.caption, lang)) : null),
+            h('figure', {}, h('a', { href: assetUrl(g.src), target: '_blank', rel: 'noopener' }, h('img', { src: assetUrl(g.src), alt: loc(g.caption, lang) || loc(p.title, lang), loading: 'lazy' })), g.caption ? h('figcaption', {}, loc(g.caption, lang)) : null),
           ),
         )
       : h('p', { class: 'muted gallery-empty' }, t('galleryEmpty'));

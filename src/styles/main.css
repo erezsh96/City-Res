@@ -327,6 +327,8 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
 .links { display: flex; flex-wrap: wrap; gap: 8px; }
 .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
 .gallery figure { margin: 0; }
+.gallery figure:only-child { grid-column: 1 / -1; }
+.gallery a { display: block; cursor: zoom-in; }
 .gallery img { width: 100%; border-radius: 10px; border: 2px solid var(--line); display: block; }
 .gallery figcaption { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
 .gallery-empty { margin: 0; padding: 18px; border: 2px dashed #cfc8b8; border-radius: 12px; text-align: center; }

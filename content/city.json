@@ -64,26 +64,52 @@
       "access": "public",
       "title": "IntelSAT MaxSAT Solver",
       "tagline": {
-        "en": "B.Sc. capstone: extended Intel's open-source IntelSAT solver with anytime MaxSAT optimization.",
-        "he": "פרויקט גמר: הרחבה של פותר IntelSAT של אינטל (קוד פתוח) לאופטימיזציית MaxSAT מסוג anytime."
+        "en": "B.Sc. capstone: turned Intel's open-source IntelSAT solver into an anytime MaxSAT solver. 3rd place at the faculty project showcase.",
+        "he": "פרויקט גמר: הפכנו את פותר IntelSAT של אינטל (קוד פתוח) לפותר MaxSAT מסוג anytime. מקום 3 בתחרות הפרויקטים של הפקולטה."
       },
-      "description": "A team of five extended Intel's open-source IntelSAT solver (MIT license) with anytime MaxSAT optimization. The team placed 3rd of 13 and reached up to ~4x the speed of the EvalMaxSAT baseline.",
+      "description": {
+        "en": "Our B.Sc. capstone, built by a team of five students. Prof. Alexander Nadel, IntelSAT's main developer, was our academic advisor and acted as the client. We extended Intel's open-source IntelSAT solver (MIT license) from plain SAT to anytime MaxSAT. It reads weighted WCNF instances, exposes the incremental IPAMIR API, and searches with LSU, Mrs. Beaver and NuWLS local search, printing each better solution as soon as it finds one. We checked correctness with differential fuzzers against EvalMaxSAT and UWrMaxSat, and measured performance on MaxSAT Evaluation 2022 instances on an Azure VM.",
+        "he": "פרויקט הגמר שלנו לתואר ראשון, בצוות של חמישה סטודנטים. המנחה האקדמי שלנו, פרופ' אלכסנדר נדאל, המפתח הראשי של IntelSAT, שימש גם בתור הלקוח. הרחבנו את פותר IntelSAT של אינטל (קוד פתוח, רישיון MIT) מ-SAT רגיל ל-MaxSAT מסוג anytime. הפותר קורא בעיות WCNF משוקללות, חושף את ממשק IPAMIR האינקרמנטלי, ומחפש פתרונות עם LSU, Mrs. Beaver וחיפוש מקומי NuWLS. כל פתרון טוב יותר מודפס ברגע שנמצא. את הנכונות בדקנו עם fuzzers דיפרנציאליים מול EvalMaxSAT ו-UWrMaxSat, ואת הביצועים מדדנו על בעיות מ-MaxSAT Evaluation 2022 במכונה של Azure."
+      },
+      "goals": {
+        "en": [
+          "Extend a production-grade SAT solver to weighted MaxSAT without rewriting its core.",
+          "Support incremental solving through the standard IPAMIR API.",
+          "Report improving solutions while running (anytime), in competition format.",
+          "Prove correctness with differential fuzzing against established MaxSAT solvers."
+        ],
+        "he": [
+          "להרחיב פותר SAT ברמה תעשייתית ל-MaxSAT משוקלל בלי לשכתב את הליבה שלו.",
+          "לתמוך בפתרון אינקרמנטלי דרך ממשק IPAMIR הסטנדרטי.",
+          "לדווח על פתרונות משתפרים תוך כדי ריצה (anytime), בפורמט של תחרויות.",
+          "להוכיח נכונות בעזרת fuzzing דיפרנציאלי מול פותרי MaxSAT מוכרים."
+        ]
+      },
       "myRole": {
-        "en": "The WCNF/MaxSAT parser and the core data structures.",
-        "he": "פרסר WCNF/MaxSAT ומבני הנתונים המרכזיים."
+        "en": "Wrote the WCNF/MaxSAT parser and the core data structures the solver works on. A teammate integrated my code into the shared repository, so the commits are under his name. Beyond code, I worked on debugging and problem-solving across the solver and took part in the client meetings with the advisor.",
+        "he": "כתבתי את פרסר ה-WCNF/MaxSAT ואת מבני הנתונים המרכזיים שהפותר עובד עליהם. חבר צוות שילב את הקוד שלי בריפו המשותף, ולכן הקומיטים רשומים על שמו. מעבר לקוד עבדתי על דיבוג ופתרון בעיות בפותר, והשתתפתי בפגישות הלקוח עם המנחה."
       },
-      "stack": ["C++", "CMake", "Linux", "Azure VM", "Git"],
+      "stack": ["C++", "Make", "Python", "Bash", "Linux", "Azure VM", "Git"],
       "metrics": [
-        { "value": "3rd / 13", "label": { "en": "teams", "he": "צוותים" } },
-        { "value": "~4x", "label": { "en": "faster than EvalMaxSAT baseline", "he": "מהיר יותר מ-EvalMaxSAT" } }
+        { "value": "3rd / 13", "label": { "en": "faculty project showcase", "he": "תחרות הפרויקטים בפקולטה" } },
+        { "value": "140 / 141", "label": { "en": "benchmark instances solved in 60s (incremental mode)", "he": "בעיות בנצ'מרק נפתרו תוך 60 שניות (מצב אינקרמנטלי)" } },
+        { "value": "0", "label": { "en": "correctness bugs in differential fuzzing", "he": "באגי נכונות ב-fuzzing דיפרנציאלי" } }
       ],
       "links": { "github": "https://github.com/Ev-Gu/intel_sat_solver_enhanced" },
+      "gallery": [
+        {
+          "src": "projects/intelsat-maxsat/architecture.svg",
+          "caption": { "en": "How the pieces fit: from a WCNF file to an improving solution.", "he": "איך החלקים מתחברים: מקובץ WCNF לפתרון שהולך ומשתפר." }
+        }
+      ],
       "floors": [
-        { "name": "WCNF parser (my part)" },
-        { "name": "Core data structures (my part)" },
-        { "name": "IntelSAT core (Intel, MIT)" },
-        { "name": "Anytime MaxSAT search" },
-        { "name": "Benchmarks on Azure VM" }
+        { "name": { "en": "WCNF parser (my part)", "he": "פרסר WCNF (החלק שלי)" }, "detail": { "en": "Reads weighted MaxSAT instances and adds soft clauses as they are read.", "he": "קורא בעיות MaxSAT משוקללות ומוסיף פסוקיות רכות תוך כדי קריאה." } },
+        { "name": { "en": "Core data structures (my part)", "he": "מבני נתונים (החלק שלי)" }, "detail": { "en": "Hard and soft clauses, weights and models shared by every search layer.", "he": "פסוקיות קשות ורכות, משקלים והשמות שכל שכבות החיפוש משתמשות בהם." } },
+        { "name": { "en": "IntelSAT core (Intel, MIT)", "he": "ליבת IntelSAT (אינטל, MIT)" }, "detail": { "en": "The existing CDCL SAT engine we built on.", "he": "מנוע ה-SAT הקיים (CDCL) שעליו בנינו." } },
+        { "name": { "en": "IPAMIR incremental API", "he": "ממשק IPAMIR אינקרמנטלי" }, "detail": { "en": "Standard interface for solving a changing MaxSAT problem round after round.", "he": "ממשק סטנדרטי לפתרון בעיית MaxSAT שמשתנה מסבב לסבב." } },
+        { "name": { "en": "LSU + Mrs. Beaver search", "he": "חיפוש LSU ו-Mrs. Beaver" }, "detail": { "en": "Anytime search that tightens the cost bound and prints each better solution.", "he": "חיפוש anytime שמהדק את חסם העלות ומדפיס כל פתרון טוב יותר." } },
+        { "name": { "en": "NuWLS local search", "he": "חיפוש מקומי NuWLS" }, "detail": { "en": "Fast local search that finds good solutions early.", "he": "חיפוש מקומי מהיר שמוצא פתרונות טובים מוקדם." } },
+        { "name": { "en": "Fuzzing & benchmarks (Azure VM)", "he": "Fuzzing ובנצ'מרקים (Azure)" }, "detail": { "en": "Differential fuzzers vs EvalMaxSAT / UWrMaxSat and MaxSAT Evaluation 2022 runs.", "he": "Fuzzers דיפרנציאליים מול EvalMaxSAT ו-UWrMaxSat, וריצות על MaxSAT Evaluation 2022." } }
       ],
       "size": { "teamSize": 5 },
       "sign": "MaxSAT"

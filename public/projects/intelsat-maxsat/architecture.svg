@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 600" font-family="Rubik, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#8fa6e0"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2440"/>
+      <stop offset="1" stop-color="#121829"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="600" rx="24" fill="url(#bg)"/>
+
+  <text x="30" y="52" font-size="26" font-weight="700" fill="#e6eeff">IntelSAT → anytime MaxSAT</text>
+  <text x="30" y="78" font-size="14" fill="#8fa6e0">B.Sc. capstone · team of five · built on Intel's open-source solver (MIT)</text>
+  <rect x="1032" y="36" width="16" height="16" rx="4" fill="#22c7e6"/>
+  <text x="1056" y="49" font-size="14" fill="#cfe9ff">my part</text>
+  <rect x="1130" y="36" width="16" height="16" rx="4" fill="none" stroke="#a98bff" stroke-width="2"/>
+  <text x="1154" y="49" font-size="14" fill="#cfe9ff">team</text>
+
+  <!-- input -->
+  <g>
+    <path d="M30 150h110l30 30v80H30z" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <path d="M140 150v30h30" fill="none" stroke="#5b6b96" stroke-width="2"/>
+    <text x="100" y="205" font-size="17" font-weight="700" fill="#e6eeff" text-anchor="middle">WCNF file</text>
+    <text x="100" y="228" font-size="12.5" fill="#a9b8d8" text-anchor="middle">hard + weighted</text>
+    <text x="100" y="244" font-size="12.5" fill="#a9b8d8" text-anchor="middle">soft clauses</text>
+  </g>
+
+  <!-- my part -->
+  <g>
+    <rect x="210" y="150" width="170" height="110" rx="14" fill="#0f3a49" stroke="#22c7e6" stroke-width="3"/>
+    <text x="295" y="198" font-size="17" font-weight="700" fill="#e6feff" text-anchor="middle">WCNF parser</text>
+    <text x="295" y="222" font-size="12.5" fill="#9fe6f5" text-anchor="middle">adds soft clauses</text>
+    <text x="295" y="238" font-size="12.5" fill="#9fe6f5" text-anchor="middle">while reading</text>
+
+    <rect x="420" y="150" width="180" height="110" rx="14" fill="#0f3a49" stroke="#22c7e6" stroke-width="3"/>
+    <text x="510" y="198" font-size="17" font-weight="700" fill="#e6feff" text-anchor="middle">Core data</text>
+    <text x="510" y="218" font-size="17" font-weight="700" fill="#e6feff" text-anchor="middle">structures</text>
+    <text x="510" y="240" font-size="12.5" fill="#9fe6f5" text-anchor="middle">clauses · weights · models</text>
+  </g>
+
+  <!-- solver -->
+  <g>
+    <rect x="640" y="96" width="420" height="270" rx="18" fill="#1d2440" stroke="#a98bff" stroke-width="2"/>
+    <text x="660" y="122" font-size="13" font-weight="700" fill="#c9b8ff" letter-spacing="1.5">SOLVER</text>
+
+    <rect x="660" y="135" width="380" height="44" rx="10" fill="#2a2f58" stroke="#a98bff" stroke-width="1.5"/>
+    <text x="850" y="163" font-size="15" font-weight="700" fill="#ece6ff" text-anchor="middle">IPAMIR incremental API</text>
+
+    <rect x="660" y="193" width="116" height="80" rx="10" fill="#2a2f58" stroke="#a98bff" stroke-width="1.5"/>
+    <text x="718" y="229" font-size="15" font-weight="700" fill="#ece6ff" text-anchor="middle">LSU</text>
+    <text x="718" y="250" font-size="11.5" fill="#b9add9" text-anchor="middle">tighten bound</text>
+
+    <rect x="792" y="193" width="116" height="80" rx="10" fill="#2a2f58" stroke="#a98bff" stroke-width="1.5"/>
+    <text x="850" y="229" font-size="15" font-weight="700" fill="#ece6ff" text-anchor="middle">Mrs. Beaver</text>
+    <text x="850" y="250" font-size="11.5" fill="#b9add9" text-anchor="middle">anytime search</text>
+
+    <rect x="924" y="193" width="116" height="80" rx="10" fill="#2a2f58" stroke="#a98bff" stroke-width="1.5"/>
+    <text x="982" y="229" font-size="15" font-weight="700" fill="#ece6ff" text-anchor="middle">NuWLS</text>
+    <text x="982" y="250" font-size="11.5" fill="#b9add9" text-anchor="middle">local search</text>
+
+    <rect x="660" y="288" width="380" height="58" rx="10" fill="#33304a" stroke="#ffb547" stroke-width="1.5"/>
+    <text x="850" y="314" font-size="15" font-weight="700" fill="#ffe7c2" text-anchor="middle">IntelSAT core · CDCL SAT engine</text>
+    <text x="850" y="334" font-size="11.5" fill="#d9bf98" text-anchor="middle">existing Intel code, extended, not rewritten</text>
+  </g>
+
+  <!-- output -->
+  <g>
+    <rect x="1100" y="150" width="150" height="150" rx="14" fill="#16302a" stroke="#7dff8a" stroke-width="2"/>
+    <text x="1175" y="182" font-size="15" font-weight="700" fill="#dcffe0" text-anchor="middle">Anytime output</text>
+    <g font-family="Consolas, 'Courier New', monospace" font-size="15" fill="#b6f5bd">
+      <text x="1130" y="214">o 1520</text>
+      <text x="1130" y="238">o 1312</text>
+      <text x="1130" y="262">o 1290</text>
+    </g>
+    <text x="1175" y="288" font-size="11.5" fill="#9fd9a6" text-anchor="middle">illustrative values</text>
+  </g>
+
+  <!-- flow arrows -->
+  <g stroke="#8fa6e0" stroke-width="2.5" fill="none" marker-end="url(#a)">
+    <path d="M172 205H204"/>
+    <path d="M382 205H414"/>
+    <path d="M602 205H634"/>
+    <path d="M1062 225H1094"/>
+  </g>
+
+  <!-- validation -->
+  <path d="M850 368V420" stroke="#8fa6e0" stroke-width="2.5" stroke-dasharray="6 6" fill="none" marker-end="url(#a)"/>
+  <g>
+    <rect x="30" y="426" width="1220" height="140" rx="18" fill="#1a2138" stroke="#5b6b96" stroke-width="2" stroke-dasharray="8 6"/>
+    <text x="50" y="452" font-size="13" font-weight="700" fill="#a9b8d8" letter-spacing="1.5">VALIDATION</text>
+
+    <rect x="50" y="466" width="380" height="80" rx="12" fill="#232d4d"/>
+    <text x="240" y="500" font-size="15" font-weight="700" fill="#e6eeff" text-anchor="middle">Fuzzer 1 · batch vs EvalMaxSAT</text>
+    <text x="240" y="524" font-size="12.5" fill="#a9b8d8" text-anchor="middle">random WCNFs, compare optimal cost</text>
+
+    <rect x="450" y="466" width="380" height="80" rx="12" fill="#232d4d"/>
+    <text x="640" y="500" font-size="15" font-weight="700" fill="#e6eeff" text-anchor="middle">Fuzzer 2 · IPAMIR vs UWrMaxSat</text>
+    <text x="640" y="524" font-size="12.5" fill="#a9b8d8" text-anchor="middle">incremental rounds · 0 correctness bugs</text>
+
+    <rect x="850" y="466" width="380" height="80" rx="12" fill="#232d4d"/>
+    <text x="1040" y="500" font-size="15" font-weight="700" fill="#e6eeff" text-anchor="middle">MaxSAT Evaluation 2022 benchmark</text>
+    <text x="1040" y="524" font-size="12.5" fill="#a9b8d8" text-anchor="middle">Azure VM · 140 / 141 solved in 60 s</text>
+  </g>
+</svg>
