@@ -40,7 +40,6 @@ export class App {
   private pickTargets: THREE.Object3D[] = [];
 
   private hovered: string | null = null;
-  private plazaHovered = false;
   private selected: string | null = null;
   private savedView: View | null = null;
   private matches = new Set<string>();
@@ -135,14 +134,7 @@ export class App {
 
   private createLabels(): void {
     const lang = getLang();
-    // Districts have no permanent labels (they hid the buildings): hovering a district shows its tooltip instead.
-    const plaza = h(
-      'button',
-      { class: 'label-plaza', type: 'button', onclick: () => this.router.go('/about') },
-      h('span', { class: 'txt' }, t('centralSquare')),
-      h('span', { class: 'sub' }, t('about')),
-    );
-    this.labels.add('plaza', new THREE.Vector3(0, 0.6, 0), plaza);
+    // Districts and the plaza have no permanent labels (they hid the buildings): hovering shows a tooltip instead.
     for (const pp of this.model.projects) {
       const b = this.buildings.get(pp.project.id)!;
       const el = h('div', { class: 'label-building', style: `--d:${pp.district.color}` }, loc(pp.project.title, lang));
@@ -152,11 +144,6 @@ export class App {
 
   private refreshLabelText(): void {
     const lang = getLang();
-    const plaza = this.labels.get('plaza');
-    if (plaza) {
-      plaza.querySelector('.txt')!.textContent = t('centralSquare');
-      plaza.querySelector('.sub')!.textContent = t('about');
-    }
     for (const pp of this.model.projects) {
       const el = this.labels.get(`b:${pp.project.id}`);
       if (el) el.textContent = loc(pp.project.title, lang);
@@ -194,13 +181,18 @@ export class App {
     this.setHovered(hit?.kind === 'building' ? hit.id! : null, hit?.kind === 'plaza');
     if (hit?.kind === 'building') this.showTooltip(this.model.byId.get(hit.id!)!, x, y);
     else if (hit?.kind === 'district') this.showDistrictTip(hit.id!, x, y);
+    else if (hit?.kind === 'plaza') this.showPlazaTip(x, y);
     else this.tooltip.hidden = true;
+  }
+
+  private showPlazaTip(x: number, y: number): void {
+    this.tooltip.replaceChildren(h('strong', {}, t('centralSquare')), h('span', { class: 'tt-stack' }, t('about'), ' →'));
+    this.tooltip.style.removeProperty('--d');
+    this.placeTooltip(x, y);
   }
 
   private setHovered(id: string | null, plaza: boolean): void {
     this.canvas.style.cursor = id || plaza ? 'pointer' : '';
-    this.plazaHovered = plaza;
-    this.labels.get('plaza')?.classList.toggle('is-hot', plaza);
     if (id === this.hovered) return;
     this.hovered = id;
     if (!id) this.tooltip.hidden = true;
@@ -565,10 +557,7 @@ export class App {
       this.labels.setVisible(`b:${id}`, lifted || this.matches.has(id) || zoomLabels);
       for (const bl of b.blinkers) bl.visible = Math.sin(time * 3 + b.height) > -0.3;
     }
-    this.labels.get('plaza')?.classList.toggle('is-hot', this.plazaHovered);
-    // Keep the plaza label on the rim nearest the camera, clear of the district labels behind.
     const az = this.ctx.rig.azimuth;
-    this.labels.setPosition('plaza', Math.cos(az) * LAYOUT.plazaR * 0.95, 0.6, Math.sin(az) * LAYOUT.plazaR * 0.95);
     this.world.update(time, az);
     this.layoutLabels();
     this.ctx.render();
