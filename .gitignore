@@ -1,0 +1,12 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+.vite/
+
+# Private working notes: never publish (they contain private repo names and security notes)
+projects.md
+QUESTIONS.md
+_private/
+Gemini_Generated_Image_*.jpg
+.claude/

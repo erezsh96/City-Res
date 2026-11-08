@@ -1,0 +1,411 @@
+{
+  "owner": {
+    "name": "Thomas Erlich",
+    "initials": "TE",
+    "role": {
+      "en": "Builds AI automation, data systems and web apps",
+      "he": "בונה אוטומציות AI, מערכות נתונים ואפליקציות ווב"
+    },
+    "bio": {
+      "en": "I build practical software: LLM-powered automation, data-heavy web apps and performance-minded systems code. This city maps the projects I have built, from real client work to research. (Draft bio: to be written together.)",
+      "he": "אני בונה תוכנה מעשית: אוטומציות מבוססות LLM, אפליקציות ווב עתירות נתונים וקוד מערכות שמקפיד על ביצועים. העיר הזו ממפה את הפרויקטים שבניתי, מעבודות ללקוחות אמיתיים ועד מחקר. (טיוטה: נכתוב יחד.)"
+    },
+    "links": [
+      { "label": "GitHub", "url": "https://github.com/haThomas3" }
+    ]
+  },
+  "districts": [
+    { "id": "ai", "name": { "en": "AI & Automation", "he": "AI ואוטומציה" }, "color": "#38e8ff" },
+    { "id": "freelance", "name": { "en": "Freelance & Clients", "he": "פרילנס ולקוחות" }, "color": "#ffb547" },
+    { "id": "academic", "name": { "en": "Academic & Research", "he": "אקדמיה ומחקר" }, "color": "#a98bff" },
+    { "id": "chess", "name": { "en": "Chess Quarter", "he": "רובע השחמט" }, "color": "#ff5fa2" },
+    { "id": "playground", "name": { "en": "Playground", "he": "מגרש המשחקים" }, "color": "#7dff8a" }
+  ],
+  "projects": [
+    {
+      "id": "receipts-inventory",
+      "district": "freelance",
+      "tier": "featured",
+      "access": "private",
+      "title": { "en": "Receipts & Inventory System", "he": "מערכת קבלות ומלאי" },
+      "tagline": {
+        "en": "Mobile-friendly app that manages a small local business's receipts, stock and spending dashboards.",
+        "he": "אפליקציה ידידותית למובייל שמנהלת לעסק מקומי קטן קבלות, מלאי ודשבורדים של הוצאות."
+      },
+      "description": "Built for a real client. Invoices are read by an LLM, every receipt waits for human approval, and the system flags duplicates and VAT mismatches. All changes are recorded in a database audit log, and the code runs through a CI pipeline with 68 automated tests.",
+      "goals": [
+        "Replace manual receipt entry with LLM extraction",
+        "Keep a human in the loop for every receipt",
+        "Catch duplicates and VAT mismatches automatically",
+        "Give the owner clear stock and spending dashboards"
+      ],
+      "stack": ["Python", "Streamlit", "PostgreSQL (Supabase)", "Gemini API", "n8n", "pytest", "GitHub Actions"],
+      "metrics": [
+        { "value": "68", "label": { "en": "automated tests", "he": "בדיקות אוטומטיות" } },
+        { "value": "100%", "label": { "en": "of receipts human-approved", "he": "מהקבלות מאושרות ידנית" } }
+      ],
+      "floors": [
+        { "name": "Mobile UI (Streamlit)" },
+        { "name": "LLM invoice extraction (Gemini)" },
+        { "name": "Human approval queue" },
+        { "name": "Duplicate & VAT-mismatch checks" },
+        { "name": "PostgreSQL + audit log" },
+        { "name": "Stock & spending dashboards" },
+        { "name": "n8n automations" },
+        { "name": "68 tests + CI pipeline" }
+      ],
+      "size": { "tests": 68, "teamSize": 1 },
+      "sign": "RECEIPTS"
+    },
+    {
+      "id": "intelsat-maxsat",
+      "district": "academic",
+      "tier": "featured",
+      "access": "public",
+      "title": "IntelSAT MaxSAT Solver",
+      "tagline": {
+        "en": "B.Sc. capstone: extended Intel's open-source IntelSAT solver with anytime MaxSAT optimization.",
+        "he": "פרויקט גמר: הרחבה של פותר IntelSAT של אינטל (קוד פתוח) לאופטימיזציית MaxSAT מסוג anytime."
+      },
+      "description": "A team of five extended Intel's open-source IntelSAT solver (MIT license) with anytime MaxSAT optimization. The team placed 3rd of 13 and reached up to ~4x the speed of the EvalMaxSAT baseline.",
+      "myRole": {
+        "en": "The WCNF/MaxSAT parser and the core data structures.",
+        "he": "פרסר WCNF/MaxSAT ומבני הנתונים המרכזיים."
+      },
+      "stack": ["C++", "CMake", "Linux", "Azure VM", "Git"],
+      "metrics": [
+        { "value": "3rd / 13", "label": { "en": "teams", "he": "צוותים" } },
+        { "value": "~4x", "label": { "en": "faster than EvalMaxSAT baseline", "he": "מהיר יותר מ-EvalMaxSAT" } }
+      ],
+      "links": { "github": "https://github.com/Ev-Gu/intel_sat_solver_enhanced" },
+      "floors": [
+        { "name": "WCNF parser (my part)" },
+        { "name": "Core data structures (my part)" },
+        { "name": "IntelSAT core (Intel, MIT)" },
+        { "name": "Anytime MaxSAT search" },
+        { "name": "Benchmarks on Azure VM" }
+      ],
+      "size": { "teamSize": 5 },
+      "sign": "MaxSAT"
+    },
+    {
+      "id": "career-pipeline",
+      "district": "ai",
+      "tier": "featured",
+      "access": "private",
+      "title": "Career Pipeline",
+      "tagline": {
+        "en": "AI job-application automation: matches a posting to a verified profile and builds a tailored one-page resume.",
+        "he": "אוטומציית AI להגשת מועמדות: מתאימה מודעת דרושים לפרופיל מאומת ובונה קורות חיים מותאמים בעמוד אחד."
+      },
+      "description": "Built from Claude Code Skills and subagents: requirements extraction, match & plan, and tailoring, with human review at set checkpoints. A Python tracker follows applications and skill gaps. The output is a one-page LaTeX resume.",
+      "stack": ["Claude Code (Skills, subagents)", "Python", "LaTeX", "Git"],
+      "metrics": [
+        { "value": "3", "label": { "en": "agent stages", "he": "שלבי סוכנים" } }
+      ],
+      "floors": [
+        { "name": "Requirements extraction" },
+        { "name": "Match & plan" },
+        { "name": "Resume tailoring" },
+        { "name": "Human review checkpoints" },
+        { "name": "LaTeX one-page builder" },
+        { "name": "Application & skill-gap tracker" }
+      ],
+      "size": { "teamSize": 1 },
+      "sign": "CAREER"
+    },
+    {
+      "id": "skinsens",
+      "district": "ai",
+      "tier": "featured",
+      "access": "public",
+      "title": "SkinSens",
+      "tagline": {
+        "en": "AI skincare advisor that builds personalized routines and flags conflicting ingredients.",
+        "he": "יועץ טיפוח מבוסס AI שבונה שגרה אישית ומזהה רכיבים מתנגשים."
+      },
+      "description": "Works with several AI providers (OpenAI, Gemini, Ollama) through one shared interface, with safety guardrails and user authentication. About 6,900 lines of Python, built with a partner.",
+      "stack": ["Python", "Streamlit", "OpenAI API", "Gemini API", "Ollama"],
+      "metrics": [
+        { "value": "~6,900", "label": { "en": "lines of Python", "he": "שורות Python" } },
+        { "value": "3", "label": { "en": "AI providers, one interface", "he": "ספקי AI בממשק אחד" } }
+      ],
+      "floors": [
+        { "name": "Provider-agnostic AI interface" },
+        { "name": "Routine builder" },
+        { "name": "Ingredient conflict checks" },
+        { "name": "Safety guardrails" },
+        { "name": "User authentication" }
+      ],
+      "size": { "linesOfCode": 6900, "teamSize": 2 },
+      "sign": "SkinSens",
+      "notes": "Repo link (mayRefael/SkinSens) is held back until the repo cleanup is done."
+    },
+    {
+      "id": "question-clarity",
+      "district": "academic",
+      "tier": "featured",
+      "access": "public",
+      "title": { "en": "What Makes a Question Clear?", "he": "מה הופך שאלה לברורה?" },
+      "tagline": {
+        "en": "Data-science study of 5,000 scraped LaTeX Stack Exchange questions, modeling which features make a question clear.",
+        "he": "מחקר מדעי נתונים על 5,000 שאלות מ-LaTeX Stack Exchange: אילו מאפיינים הופכים שאלה לברורה."
+      },
+      "stack": ["Python", "R", "Jupyter", "scikit-learn", "XGBoost"],
+      "metrics": [
+        { "value": "5,000", "label": { "en": "questions analysed", "he": "שאלות שנותחו" } }
+      ],
+      "links": { "github": "https://github.com/EladJoseph/Metacognition_Final_Project" },
+      "floors": [
+        { "name": "Web scraper" },
+        { "name": "Feature engineering" },
+        { "name": "Random Forest / XGBoost models" },
+        { "name": "Bootstrap analysis" },
+        { "name": "Research paper" }
+      ],
+      "sign": "CLARITY"
+    },
+    {
+      "id": "local-rag-assistant",
+      "district": "ai",
+      "tier": "more",
+      "access": "public",
+      "title": "Local RAG Assistant",
+      "tagline": {
+        "en": "NotebookLM-style, local-first assistant that answers from your own documents.",
+        "he": "עוזר בסגנון NotebookLM שרץ מקומית ועונה מתוך המסמכים שלך."
+      },
+      "stack": ["Python", "FAISS", "Embeddings", "Ollama", "Gemini", "pytest"],
+      "metrics": [
+        { "value": "6", "label": { "en": "milestones complete", "he": "אבני דרך הושלמו" } }
+      ],
+      "links": { "github": "https://github.com/haThomas3/local-rag-project" },
+      "floors": [
+        { "name": "Document loading & chunking" },
+        { "name": "Local embeddings + FAISS" },
+        { "name": "Grounded prompt builder" },
+        { "name": "Interactive CLI" },
+        { "name": "API + web page" },
+        { "name": "Retrieval evals & tests" }
+      ],
+      "sign": "RAG"
+    },
+    {
+      "id": "rag-business-agent",
+      "district": "ai",
+      "tier": "more",
+      "access": "public",
+      "title": "RAG Business Agent",
+      "tagline": {
+        "en": "Retrieval-augmented chat agent built in an n8n workshop.",
+        "he": "סוכן צ'אט מבוסס RAG שנבנה בסדנת n8n."
+      },
+      "stack": ["n8n", "Pinecone", "OpenAI embeddings", "OpenRouter"],
+      "floors": [
+        { "name": "n8n workflow" },
+        { "name": "Pinecone vector store" },
+        { "name": "Chat model (OpenRouter)" }
+      ],
+      "sign": "AGENT"
+    },
+    {
+      "id": "restaurant-order-builder",
+      "district": "freelance",
+      "tier": "more",
+      "access": "private",
+      "title": { "en": "Restaurant Order Builder", "he": "בונה הזמנות למסעדה" },
+      "tagline": {
+        "en": "Hebrew mobile site, reached by QR code, that builds an order and shows how much a meal card covers.",
+        "he": "אתר מובייל בעברית, נכנסים אליו בקוד QR, שבונה הזמנה ומראה כמה מכוסה בכרטיס הסיבוס."
+      },
+      "description": "Serverless on Cloudflare Workers + D1 (D1 was chosen over KV for immediate consistency). Admin panel with the password stored as a server secret, a remote kill switch, fails closed when unavailable, unit + end-to-end tests.",
+      "stack": ["JavaScript", "Cloudflare Workers", "D1 (SQL)", "Node.js tests"],
+      "metrics": [
+        { "value": "19.4 s", "label": { "en": "remote kill switch (30 s target)", "he": "מתג כיבוי מרחוק (יעד: 30 שניות)" } }
+      ],
+      "floors": [
+        { "name": "Hebrew RTL mobile UI" },
+        { "name": "Cloudflare Worker API" },
+        { "name": "D1 SQL database" },
+        { "name": "Admin panel (server secret)" },
+        { "name": "Remote kill switch" },
+        { "name": "Unit + E2E tests" }
+      ],
+      "sign": "ORDERS"
+    },
+    {
+      "id": "metacognition-experiment",
+      "district": "academic",
+      "tier": "more",
+      "access": "public",
+      "title": { "en": "Online Metacognition Experiment", "he": "ניסוי מטה-קוגניציה מקוון" },
+      "tagline": {
+        "en": "Browser-based psychology experiment that collected real participant data into Google Sheets.",
+        "he": "ניסוי פסיכולוגי בדפדפן שאסף נתונים של משתתפים אמיתיים ל-Google Sheets."
+      },
+      "stack": ["JavaScript", "HTML/CSS", "Google Apps Script"],
+      "links": { "github": "https://github.com/haThomas3/Metacognition_Experiment" },
+      "floors": [
+        { "name": "Syllogism tasks" },
+        { "name": "Timed responses" },
+        { "name": "Sheets data pipeline" }
+      ],
+      "sign": "EXPERIMENT"
+    },
+    {
+      "id": "nextjs-cve-demo",
+      "district": "academic",
+      "tier": "more",
+      "access": "public",
+      "title": "Next.js CVE-2025-29927 Demo",
+      "tagline": {
+        "en": "Working demo of the Next.js middleware authorization bypass on a mock gradebook, plus a security talk.",
+        "he": "הדגמה עובדת של עקיפת ההרשאות ב-middleware של Next.js על מערכת ציונים מדומה, ומצגת אבטחה."
+      },
+      "stack": ["Next.js", "JavaScript", "CodeQL"],
+      "floors": [
+        { "name": "Mock gradebook" },
+        { "name": "Middleware bypass exploit" },
+        { "name": "CodeQL analysis" },
+        { "name": "Security talk" }
+      ],
+      "sign": "CVE"
+    },
+    {
+      "id": "teachmechess",
+      "district": "chess",
+      "tier": "more",
+      "access": "public",
+      "title": "TeachMeChess",
+      "tagline": {
+        "en": "Interactive chess coach: plays you with Stockfish, classifies every move and explains it in plain language.",
+        "he": "מאמן שחמט אינטראקטיבי: משחק נגדך עם Stockfish, מסווג כל מהלך ומסביר אותו בשפה פשוטה."
+      },
+      "stack": ["Python", "Streamlit", "python-chess", "Stockfish", "SQLite", "JavaScript"],
+      "links": { "github": "https://github.com/haThomas3/TMC_TeachMeChess" },
+      "floors": [
+        { "name": "Stockfish engine" },
+        { "name": "Move classifier" },
+        { "name": "Plain-language explanations" },
+        { "name": "Progress tracker (SQLite)" },
+        { "name": "Custom JS board" }
+      ],
+      "sign": "COACH"
+    },
+    {
+      "id": "threat-map",
+      "district": "chess",
+      "tier": "more",
+      "access": "public",
+      "title": "Threat Map",
+      "tagline": {
+        "en": "Mobile-first board-vision trainer: mark every square your pieces threaten in real game positions.",
+        "he": "מאמן ראיית לוח למובייל: מסמנים כל משבצת שהכלים שלך מאיימים עליה, בעמדות ממשחקים אמיתיים."
+      },
+      "stack": ["HTML/JS", "Python"],
+      "links": { "github": "https://github.com/haThomas3/threat-map" },
+      "floors": [
+        { "name": "Position extractor (Python)" },
+        { "name": "Mobile trainer (single file)" }
+      ],
+      "sign": "THREATS"
+    },
+    {
+      "id": "chess-analytics",
+      "district": "chess",
+      "tier": "more",
+      "access": "public",
+      "title": { "en": "Chess Analytics Dashboard", "he": "דשבורד ניתוח שחמט" },
+      "tagline": {
+        "en": "Imports my chess.com game history into a local database and turns it into an interactive dashboard.",
+        "he": "מייבא את היסטוריית המשחקים שלי מ-chess.com למסד נתונים מקומי והופך אותה לדשבורד אינטראקטיבי."
+      },
+      "stack": ["Python", "SQL", "Chart.js"],
+      "floors": [
+        { "name": "chess.com importer" },
+        { "name": "Local SQL database" },
+        { "name": "Interactive dashboard" }
+      ],
+      "sign": "STATS"
+    },
+    {
+      "id": "boredom-solvers",
+      "district": "playground",
+      "tier": "more",
+      "access": "public",
+      "title": "Boredom Solvers",
+      "tagline": {
+        "en": "Lightweight Python games and simulations, from terminal logic puzzles to a Boids flocking simulation.",
+        "he": "משחקים וסימולציות קלילים ב-Python, מחידות היגיון בטרמינל ועד סימולציית להקה (Boids)."
+      },
+      "stack": ["Python"],
+      "links": { "github": "https://github.com/haThomas3/boredom_solvers" },
+      "floors": [
+        { "name": "Terminal logic puzzles" },
+        { "name": "Boids flocking simulation" },
+        { "name": "Card games" }
+      ],
+      "sign": "GAMES"
+    },
+    {
+      "id": "pdf-merge-cli",
+      "district": "playground",
+      "tier": "optional",
+      "access": "public",
+      "title": "PDF Merge CLI",
+      "tagline": { "en": "Python command-line tool packaged as a Windows .exe.", "he": "כלי שורת פקודה ב-Python שנארז כקובץ exe לווינדוס." },
+      "stack": ["Python", "PyInstaller"],
+      "sign": "PDF"
+    },
+    {
+      "id": "django-apps",
+      "district": "playground",
+      "tier": "optional",
+      "access": "public",
+      "title": { "en": "Django Web Apps", "he": "אפליקציות Django" },
+      "tagline": { "en": "A Netflix-style browser and a stock app.", "he": "דפדפן סרטים בסגנון נטפליקס ואפליקציית מניות." },
+      "stack": ["Django", "SQL"],
+      "sign": "DJANGO"
+    },
+    {
+      "id": "technion-tournament",
+      "district": "playground",
+      "tier": "optional",
+      "access": "public",
+      "title": "TechnionTournament",
+      "tagline": { "en": "Tree-based data structures in Java with O(log n) operations.", "he": "מבני נתונים מבוססי עצים ב-Java עם פעולות ב-O(log n)." },
+      "stack": ["Java"],
+      "sign": "TREES"
+    },
+    {
+      "id": "two-three-tree-race",
+      "district": "playground",
+      "tier": "optional",
+      "access": "public",
+      "title": { "en": "2-3 Tree Race System", "he": "מערכת מרוץ על עץ 2-3" },
+      "tagline": { "en": "Generic 2-3 trees in Java (data structures course).", "he": "עצי 2-3 גנריים ב-Java (קורס מבני נתונים)." },
+      "stack": ["Java"],
+      "sign": "2-3"
+    },
+    {
+      "id": "puzzle-search",
+      "district": "playground",
+      "tier": "optional",
+      "access": "public",
+      "title": { "en": "Puzzle Search & Parallel Recursion", "he": "חיפוש פאזל ורקורסיה מקבילית" },
+      "tagline": { "en": "Search algorithm and multithreading in Java.", "he": "אלגוריתם חיפוש וריבוי תהליכונים ב-Java." },
+      "stack": ["Java"],
+      "sign": "SEARCH"
+    },
+    {
+      "id": "bmp-filters",
+      "district": "playground",
+      "tier": "optional",
+      "access": "public",
+      "title": { "en": "BMP Image Filters", "he": "מסנני תמונה BMP" },
+      "tagline": { "en": "Command-line image filter tool in C.", "he": "כלי שורת פקודה לסינון תמונות ב-C." },
+      "stack": ["C"],
+      "sign": "BMP"
+    }
+  ]
+}

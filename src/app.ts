@@ -1,0 +1,466 @@
+/**
+ * Wires everything together: data → model → scene, input → selection,
+ * routes → overlays, daylight → theme, language → UI text.
+ */
+import * as THREE from 'three';
+import type { CityData } from './types';
+import { buildCityModel, LAYOUT, type CityModel, type PlacedProject } from './data/model';
+import { createScene, type SceneCtx } from './engine/scene';
+import { createWorld, type World } from './engine/world';
+import { createBuilding, type BuildingHandle } from './engine/building';
+import { LabelLayer } from './engine/labels';
+import { Controls } from './engine/controls';
+import { nightFactor, themeFor, type Theme, type ThemeMode } from './engine/daylight';
+import type { View } from './engine/camera';
+import { Router, type Route } from './router';
+import { getLang, isRtl, onLangChange, setLang, t } from './i18n';
+import { allVariants, loc } from './text';
+import { $, h } from './ui/dom';
+import { SideCard } from './ui/card';
+import { ProjectPage } from './ui/projectPage';
+import { AboutModal, ListView, showHint } from './ui/overlays';
+
+const easeOutBack = (x: number) => {
+  const c1 = 1.4;
+  const c3 = c1 + 1;
+  return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+};
+
+export class App {
+  private model: CityModel;
+  private ctx: SceneCtx;
+  private world: World;
+  private buildings = new Map<string, BuildingHandle>();
+  private labels: LabelLayer;
+  private raycaster = new THREE.Raycaster();
+  private pickTargets: THREE.Object3D[] = [];
+
+  private hovered: string | null = null;
+  private plazaHovered = false;
+  private selected: string | null = null;
+  private savedView: View | null = null;
+  private matches = new Set<string>();
+
+  private themeMode: ThemeMode = 'auto';
+  private theme: Theme;
+  private lowPower: boolean;
+  private reducedMotion: boolean;
+  private touch: boolean;
+  private introStart = performance.now();
+  private introDone = false;
+  private hintShown = false;
+  private interacted = false;
+  private last = performance.now();
+
+  private card: SideCard;
+  private page: ProjectPage;
+  private about: AboutModal;
+  private list: ListView;
+  private router: Router;
+  private stage = $('#stage');
+  private canvas = $('#city') as HTMLCanvasElement;
+  private tooltip = $('#tooltip');
+  private hint = $('#hint');
+
+  constructor(data: CityData) {
+    this.model = buildCityModel(data);
+    this.lowPower = matchMedia('(max-width: 760px)').matches || (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 820);
+    this.touch = matchMedia('(pointer: coarse)').matches;
+    this.reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const shadows = !this.lowPower;
+    const maxHeight = this.model.maxFloors * LAYOUT.floorH + 2.2;
+
+    this.ctx = createScene(this.canvas, this.stage, { lowPower: this.lowPower, shadows, radius: this.model.radius, maxHeight });
+    this.world = createWorld(this.model, { lowPower: this.lowPower, shadows });
+    // Portrait phones: the island is width-bound, so start a little closer.
+    if (this.stage.clientHeight > this.stage.clientWidth * 1.2) {
+      this.ctx.rig.zoom = this.ctx.rig.goal.zoom = 1.18;
+    }
+    this.ctx.scene.add(this.world.group);
+    this.pickTargets.push(this.world.plazaPick);
+
+    for (const pp of this.model.projects) {
+      const b = createBuilding(pp, { shadows });
+      if (!this.reducedMotion) b.body.scale.y = 0.001;
+      this.ctx.scene.add(b.group);
+      this.buildings.set(pp.project.id, b);
+      this.pickTargets.push(b.pick);
+    }
+    if (this.reducedMotion) this.introDone = true;
+
+    this.labels = new LabelLayer($('#labels'), this.ctx.rig.camera);
+    this.createLabels();
+
+    this.card = new SideCard($('#card'), {
+      onEnter: (id) => this.router.go(`/project/${id}`),
+      onClose: () => this.deselect(),
+    });
+    this.page = new ProjectPage($('#project'), { onBack: () => this.router.back() });
+    this.about = new AboutModal($('#about'), data, () => this.router.back());
+    this.list = new ListView($('#list-view'), data, () => this.router.back());
+
+    new Controls(this.canvas, this.ctx.rig, {
+      onInteract: () => this.onInteract(),
+      onTap: (x, y) => this.onTap(x, y),
+      onHover: (x, y) => this.onHover(x, y),
+      onLeave: () => this.setHovered(null, false),
+    });
+
+    this.bindHud();
+    try {
+      const saved = localStorage.getItem('city-theme');
+      if (saved === 'day' || saved === 'night' || saved === 'auto') this.themeMode = saved;
+    } catch {
+      /* ignore */
+    }
+    this.theme = themeFor(nightFactor(this.themeMode));
+    this.applyTheme();
+    setInterval(() => this.updateDaylight(), 60_000);
+
+    onLangChange(() => this.refreshLang());
+    window.addEventListener('keydown', (e) => this.onKey(e));
+    this.ctx.onResize(() => this.layoutLabels());
+
+    this.router = new Router((r) => this.onRoute(r));
+    this.router.start();
+    $('#loading').remove();
+    this.loop();
+  }
+
+  // ---------- labels ----------
+
+  private createLabels(): void {
+    const lang = getLang();
+    for (const sec of this.model.sectors) {
+      const r = LAYOUT.firstRing + 2.4;
+      const pos = new THREE.Vector3(Math.cos(sec.mid) * r, 1.2, Math.sin(sec.mid) * r);
+      const el = h('div', { class: 'label-district', style: `--d:${sec.district.color}` }, h('span', { class: 'dot' }), h('span', { class: 'txt' }, loc(sec.district.name, lang)));
+      this.labels.add(`d:${sec.district.id}`, pos, el);
+    }
+    const plaza = h(
+      'button',
+      { class: 'label-plaza', type: 'button', onclick: () => this.router.go('/about') },
+      h('span', { class: 'txt' }, t('centralSquare')),
+      h('span', { class: 'sub' }, t('about')),
+    );
+    this.labels.add('plaza', new THREE.Vector3(0, 0.6, 0), plaza);
+    for (const pp of this.model.projects) {
+      const b = this.buildings.get(pp.project.id)!;
+      const el = h('div', { class: 'label-building', style: `--d:${pp.district.color}` }, loc(pp.project.title, lang));
+      this.labels.add(`b:${pp.project.id}`, new THREE.Vector3(pp.x, b.height + 0.5, pp.z), el, false);
+    }
+  }
+
+  private refreshLabelText(): void {
+    const lang = getLang();
+    for (const sec of this.model.sectors) {
+      const txt = this.labels.get(`d:${sec.district.id}`)?.querySelector('.txt');
+      if (txt) txt.textContent = loc(sec.district.name, lang);
+    }
+    const plaza = this.labels.get('plaza');
+    if (plaza) {
+      plaza.querySelector('.txt')!.textContent = t('centralSquare');
+      plaza.querySelector('.sub')!.textContent = t('about');
+    }
+    for (const pp of this.model.projects) {
+      const el = this.labels.get(`b:${pp.project.id}`);
+      if (el) el.textContent = loc(pp.project.title, lang);
+    }
+  }
+
+  private layoutLabels(): void {
+    this.labels.update(this.ctx.size.width, this.ctx.size.height);
+  }
+
+  // ---------- picking & selection ----------
+
+  private pickAt(clientX: number, clientY: number): { kind: 'building' | 'plaza'; id?: string } | null {
+    const rect = this.canvas.getBoundingClientRect();
+    const ndc = new THREE.Vector2(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
+    this.raycaster.setFromCamera(ndc, this.ctx.rig.camera);
+    const hit = this.raycaster.intersectObjects(this.pickTargets, false)[0];
+    if (!hit) return null;
+    const ud = hit.object.userData as { kind: 'building' | 'plaza'; id?: string };
+    return { kind: ud.kind, id: ud.id };
+  }
+
+  private onHover(x: number, y: number): void {
+    if (this.page.isOpen) return;
+    const hit = this.pickAt(x, y);
+    this.setHovered(hit?.kind === 'building' ? hit.id! : null, hit?.kind === 'plaza');
+    if (hit?.kind === 'building') this.showTooltip(this.model.byId.get(hit.id!)!, x, y);
+    else this.tooltip.hidden = true;
+  }
+
+  private setHovered(id: string | null, plaza: boolean): void {
+    this.canvas.style.cursor = id || plaza ? 'pointer' : '';
+    this.plazaHovered = plaza;
+    this.labels.get('plaza')?.classList.toggle('is-hot', plaza);
+    if (id === this.hovered) return;
+    this.hovered = id;
+    if (!id) this.tooltip.hidden = true;
+    this.applyHighlights();
+  }
+
+  private showTooltip(pp: PlacedProject, x: number, y: number): void {
+    const lang = getLang();
+    const rect = this.stage.getBoundingClientRect();
+    this.tooltip.replaceChildren(
+      h('strong', {}, loc(pp.project.title, lang)),
+      h('span', { class: 'tt-tag' }, loc(pp.project.tagline, lang)),
+      h('span', { class: 'tt-stack' }, pp.project.stack.slice(0, 4).join(' · ')),
+    );
+    this.tooltip.style.setProperty('--d', pp.district.color);
+    this.tooltip.hidden = false;
+    const tw = this.tooltip.offsetWidth;
+    let left = x - rect.left + 18;
+    if (left + tw > rect.width - 8) left = x - rect.left - tw - 18;
+    this.tooltip.style.transform = `translate(${left}px, ${y - rect.top + 18}px)`;
+  }
+
+  private onTap(x: number, y: number): void {
+    if (this.page.isOpen) return;
+    const hit = this.pickAt(x, y);
+    if (hit?.kind === 'building') this.select(hit.id!);
+    else if (hit?.kind === 'plaza') this.router.go('/about');
+    else if (this.selected) this.deselect();
+  }
+
+  private select(id: string): void {
+    const pp = this.model.byId.get(id);
+    if (!pp) return;
+    if (!this.selected) this.savedView = this.ctx.rig.snapshot();
+    this.selected = id;
+    this.tooltip.hidden = true;
+    const b = this.buildings.get(id)!;
+    const rig = this.ctx.rig;
+    const zoom = Math.min(2.8, Math.max(1.4, (rig.fitHalfH * 0.7) / (b.height * 0.6 + 2.2)));
+    const mobile = this.stage.clientWidth < 700;
+    rig.flyTo({
+      azimuth: pp.angle + Math.PI,
+      zoom,
+      target: new THREE.Vector3(pp.x, b.height * 0.4, pp.z),
+      offsetX: mobile ? 0 : isRtl() ? -0.32 : 0.32,
+      offsetY: mobile ? -0.35 : 0,
+    });
+    this.card.show(pp);
+    this.applyHighlights();
+  }
+
+  private deselect(): void {
+    if (!this.selected) return;
+    this.selected = null;
+    this.card.hide();
+    if (this.savedView) this.ctx.rig.flyTo({ ...this.savedView, offsetX: 0, offsetY: 0 });
+    this.savedView = null;
+    this.applyHighlights();
+  }
+
+  private applyHighlights(): void {
+    for (const [id, b] of this.buildings) {
+      b.setHighlight(id === this.hovered || id === this.selected || this.matches.has(id));
+    }
+  }
+
+  // ---------- routes ----------
+
+  private onRoute(r: Route): void {
+    if (r.name === 'project') {
+      const pp = this.model.byId.get(r.id);
+      if (!pp) return this.router.replace('/');
+      if (this.selected !== r.id) this.select(r.id);
+      this.page.open(pp, this.theme);
+    } else if (this.page.isOpen) {
+      this.page.close();
+    }
+    if (r.name === 'about') this.about.open();
+    else this.about.close();
+    if (r.name === 'list') this.list.open();
+    else this.list.close();
+    document.body.classList.toggle('overlay-open', r.name !== 'map');
+  }
+
+  private onKey(e: KeyboardEvent): void {
+    if (e.key !== 'Escape') return;
+    const search = $('#search') as HTMLInputElement;
+    if (document.activeElement === search) {
+      search.value = '';
+      this.runSearch('');
+      search.blur();
+    } else if (this.page.isOpen || this.about.isOpen || this.list.isOpen) {
+      this.router.back();
+    } else if (this.selected) {
+      this.deselect();
+    }
+  }
+
+  // ---------- HUD ----------
+
+  private bindHud(): void {
+    const rig = this.ctx.rig;
+    const step = Math.PI / 4;
+    $('#rot-left').addEventListener('click', () => (rig.rotateBy(-step), this.onInteract()));
+    $('#rot-right').addEventListener('click', () => (rig.rotateBy(step), this.onInteract()));
+    $('#zoom-in').addEventListener('click', () => (rig.zoomBy(1.25), this.onInteract()));
+    $('#zoom-out').addEventListener('click', () => (rig.zoomBy(1 / 1.25), this.onInteract()));
+    $('#btn-list').addEventListener('click', () => this.router.go('/list'));
+    $('#btn-list-mobile').addEventListener('click', () => this.router.go('/list'));
+    $('#btn-about').addEventListener('click', () => this.router.go('/about'));
+    $('#btn-lang').addEventListener('click', () => setLang(getLang() === 'en' ? 'he' : 'en'));
+    $('#btn-theme').addEventListener('click', () => {
+      const order: ThemeMode[] = ['auto', 'day', 'night'];
+      this.themeMode = order[(order.indexOf(this.themeMode) + 1) % order.length];
+      try {
+        localStorage.setItem('city-theme', this.themeMode);
+      } catch {
+        /* ignore */
+      }
+      this.updateDaylight();
+    });
+
+    const search = $('#search') as HTMLInputElement;
+    search.addEventListener('input', () => this.runSearch(search.value));
+    search.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const first = [...this.matches][0];
+        if (first) {
+          this.router.go('/');
+          this.select(first);
+          search.blur();
+        }
+      }
+    });
+    $('#search-results').addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-id]');
+      if (!btn) return;
+      if (this.page.isOpen || this.list.isOpen || this.about.isOpen) this.router.go('/');
+      this.select(btn.dataset.id!);
+      search.value = '';
+      this.runSearch('');
+    });
+    this.updateThemeButton();
+  }
+
+  private runSearch(raw: string): void {
+    const q = raw.trim().toLowerCase();
+    this.matches.clear();
+    const results = $('#search-results');
+    if (q) {
+      for (const pp of this.model.projects) {
+        const p = pp.project;
+        const hay = [...allVariants(p.title), ...allVariants(p.tagline), ...allVariants(pp.district.name), ...p.stack].join(' ').toLowerCase();
+        if (hay.includes(q)) this.matches.add(p.id);
+      }
+      const lang = getLang();
+      const items = [...this.matches].slice(0, 8).map((id) => {
+        const pp = this.model.byId.get(id)!;
+        return h('li', {}, h('button', { type: 'button', 'data-id': id, style: `--d:${pp.district.color}` }, h('span', { class: 'dot' }), loc(pp.project.title, lang)));
+      });
+      results.replaceChildren(
+        h('li', { class: 'results-count' }, this.matches.size ? `${this.matches.size}` : t('noResults')),
+        ...items,
+      );
+      results.hidden = false;
+    } else {
+      results.hidden = true;
+      results.replaceChildren();
+    }
+    this.applyHighlights();
+  }
+
+  private updateThemeButton(): void {
+    const btn = $('#btn-theme');
+    btn.textContent = this.themeMode === 'auto' ? '◐' : this.themeMode === 'day' ? '☀' : '☾';
+    const label = t(this.themeMode === 'auto' ? 'themeAuto' : this.themeMode === 'day' ? 'themeDay' : 'themeNight');
+    btn.title = label;
+    btn.setAttribute('aria-label', label);
+  }
+
+  private onInteract(): void {
+    if (this.interacted) return;
+    this.interacted = true;
+    this.hint.classList.remove('is-visible');
+  }
+
+  // ---------- theme ----------
+
+  private updateDaylight(): void {
+    this.theme = themeFor(nightFactor(this.themeMode));
+    this.applyTheme();
+    this.updateThemeButton();
+  }
+
+  private applyTheme(): void {
+    const th = this.theme;
+    this.ctx.applyTheme(th);
+    this.world.applyTheme(th);
+    for (const b of this.buildings.values()) {
+      b.windowMats.forEach((m) => (m.emissiveIntensity = th.windowGlow));
+      b.neon.forEach((n) => n.mat.color.copy(n.base).multiplyScalar(th.neon));
+    }
+    this.stage.style.setProperty('--water', `#${th.water.getHexString()}`);
+    document.body.dataset.daylight = th.night > 0.6 ? 'night' : th.night > 0.25 ? 'dusk' : 'day';
+  }
+
+  private refreshLang(): void {
+    this.refreshLabelText();
+    this.card.refresh();
+    this.page.refresh();
+    this.about.refresh();
+    if (this.list.isOpen) this.list.refresh();
+    showHint(this.hint, this.touch);
+    this.updateThemeButton();
+    const search = $('#search') as HTMLInputElement;
+    if (search.value) this.runSearch(search.value);
+    if (this.selected) {
+      const pp = this.model.byId.get(this.selected)!;
+      this.ctx.rig.flyTo({ offsetX: this.stage.clientWidth < 700 ? 0 : isRtl() ? -0.32 : 0.32, azimuth: pp.angle + Math.PI });
+    }
+  }
+
+  // ---------- frame loop ----------
+
+  private loop = (): void => {
+    requestAnimationFrame(this.loop);
+    const now = performance.now();
+    const dt = Math.min(0.05, (now - this.last) / 1000);
+    this.last = now;
+    // The project page covers the map: skip rendering it.
+    if (this.page.isOpen) return;
+
+    const time = now / 1000;
+    this.ctx.rig.update(dt);
+
+    if (!this.introDone) {
+      const t0 = (now - this.introStart) / 1000;
+      let done = true;
+      for (const pp of this.model.projects) {
+        const delay = 0.15 + (pp.radius / this.model.radius) * 0.9;
+        const p = Math.min(1, Math.max(0, (t0 - delay) / 0.7));
+        if (p < 1) done = false;
+        this.buildings.get(pp.project.id)!.body.scale.y = Math.max(0.001, easeOutBack(p));
+      }
+      this.introDone = done;
+    }
+    if (!this.hintShown && (now - this.introStart) / 1000 > 1.6) {
+      this.hintShown = true;
+      showHint(this.hint, this.touch);
+      if (!this.interacted) this.hint.classList.add('is-visible');
+    }
+
+    const zoomLabels = this.ctx.rig.zoom >= 2.3 && !this.selected;
+    for (const [id, b] of this.buildings) {
+      const lifted = id === this.hovered || id === this.selected;
+      b.body.position.y += ((lifted ? 0.3 : 0) - b.body.position.y) * Math.min(1, dt * 10);
+      this.labels.setVisible(`b:${id}`, lifted || this.matches.has(id) || zoomLabels);
+      for (const bl of b.blinkers) bl.visible = Math.sin(time * 3 + b.height) > -0.3;
+    }
+    this.labels.get('plaza')?.classList.toggle('is-hot', this.plazaHovered);
+    // Keep the plaza label on the rim nearest the camera, clear of the district labels behind.
+    const az = this.ctx.rig.azimuth;
+    this.labels.setPosition('plaza', Math.cos(az) * LAYOUT.plazaR * 0.95, 0.6, Math.sin(az) * LAYOUT.plazaR * 0.95);
+    this.world.update(time);
+    this.layoutLabels();
+    this.ctx.render();
+  };
+}
