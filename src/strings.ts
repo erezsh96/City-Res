@@ -56,6 +56,8 @@ const en = {
   consentAccept: 'Accept',
   consentDecline: 'No thanks',
   analyticsSettings: 'Analytics settings',
+  districtCount: '{n} projects',
+  districtOne: '1 project',
 };
 
 export type StringKey = keyof typeof en;
@@ -115,6 +117,8 @@ const he: Record<StringKey, string> = {
   consentAccept: 'אישור',
   consentDecline: 'לא, תודה',
   analyticsSettings: 'הגדרות אנליטיקס',
+  districtCount: '{n} פרויקטים',
+  districtOne: 'פרויקט אחד',
 };
 
 export const STRINGS: Record<Lang, Record<StringKey, string>> = { en, he };

@@ -59,6 +59,7 @@ export function validateCity(raw: unknown): string[] {
     else if (districtIds.has(d.id)) e.push(`district id "${d.id}" is used twice`);
     else districtIds.add(d.id);
     if (!isLoc(d.name)) e.push(`districts[${i}].name is missing`);
+    if (d.blurb !== undefined && !isLoc(d.blurb)) e.push(`districts[${i}].blurb must be text`);
     if (typeof d.color !== 'string' || !HEX.test(d.color)) e.push(`districts[${i}].color must look like #22d3ee`);
   });
 

@@ -11,7 +11,7 @@
 
   <rect width="1280" height="640" rx="24" fill="url(#bg)"/>
   <text x="30" y="52" font-size="26" font-weight="700" fill="#e6eeff">Receipts &amp; Inventory · how a receipt flows</text>
-  <text x="30" y="78" font-size="14" fill="#8fa6e0">Freelance, built and maintained solo for a small local business · nothing reaches the reports before a human approves it</text>
+  <text x="30" y="78" font-size="14" fill="#8fa6e0">Freelance, built and maintained solo for Pulcinella in Kadima · nothing reaches the reports before a human approves it</text>
 
   <!-- inputs -->
   <g>

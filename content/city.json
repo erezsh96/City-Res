@@ -17,11 +17,16 @@
     ]
   },
   "districts": [
-    { "id": "ai", "name": { "en": "AI & Automation", "he": "AI ואוטומציה" }, "color": "#38e8ff" },
-    { "id": "freelance", "name": { "en": "Freelance & Clients", "he": "פרילנס ולקוחות" }, "color": "#ffb547" },
-    { "id": "academic", "name": { "en": "Academic & Research", "he": "אקדמיה ומחקר" }, "color": "#a98bff" },
-    { "id": "chess", "name": { "en": "Chess Quarter", "he": "רובע השחמט" }, "color": "#ff5fa2" },
-    { "id": "playground", "name": { "en": "Playground", "he": "מגרש המשחקים" }, "color": "#7dff8a" }
+    { "id": "ai", "name": { "en": "AI & Automation", "he": "AI ואוטומציה" }, "color": "#38e8ff",
+      "blurb": { "en": "Tools where an LLM does real work: agents, answers from my own documents, and automation built with Claude Code and n8n.", "he": "כלים שבהם מודל שפה עושה עבודה אמיתית: סוכנים, תשובות מתוך מסמכים, ואוטומציות שנבנו עם Claude Code ו-n8n." } },
+    { "id": "freelance", "name": { "en": "Freelance & Clients", "he": "פרילנס ולקוחות" }, "color": "#ffb547",
+      "blurb": { "en": "Built for real clients who use them in their business: requirements with the owner, delivery, and changes after launch.", "he": "נבנו ללקוחות אמיתיים שמשתמשים בהם בעסק: אפיון מול בעל העסק, מסירה, ושינויים אחרי העלייה לאוויר." } },
+    { "id": "academic", "name": { "en": "Academic & Research", "he": "אקדמיה ומחקר" }, "color": "#a98bff",
+      "blurb": { "en": "Technion projects and research: a SAT-solver capstone, data-science studies, a security demo and an online experiment.", "he": "פרויקטים ומחקר מהטכניון: פרויקט גמר על פותר SAT, מחקרי דאטה, הדגמת אבטחה וניסוי מקוון." } },
+    { "id": "chess", "name": { "en": "Chess Quarter", "he": "רובע השחמט" }, "color": "#ff5fa2",
+      "blurb": { "en": "Chess tools I built for my own training: a coach that explains every move, a board-vision trainer and a dashboard of my games.", "he": "כלי שחמט שבניתי לאימון שלי: מאמן שמסביר כל מהלך, מאמן ראיית לוח, ודשבורד של המשחקים שלי." } },
+    { "id": "playground", "name": { "en": "Playground", "he": "מגרש המשחקים" }, "color": "#7dff8a",
+      "blurb": { "en": "Small side projects for fun and practice: games, simulations and handy utilities.", "he": "פרויקטים קטנים בשביל הכיף והתרגול: משחקים, סימולציות וכלים שימושיים." } }
   ],
   "projects": [
     {
@@ -31,12 +36,12 @@
       "access": "private",
       "title": { "en": "Receipts & Inventory System", "he": "מערכת קבלות ומלאי" },
       "tagline": {
-        "en": "Freelance: a phone-first app that reads a small business's receipts with an LLM, checks them, and turns them into stock and spending reports.",
-        "he": "פרילנס: אפליקציה לטלפון שקוראת קבלות של עסק קטן בעזרת LLM, בודקת אותן, והופכת אותן לדוחות מלאי והוצאות."
+        "en": "Freelance for Pulcinella in Kadima: a phone-first app that reads the business's receipts with an LLM, checks them, and turns them into stock and spending reports.",
+        "he": "פרילנס עבור פולצינלה בקדימה: אפליקציה לטלפון שקוראת את הקבלות של העסק בעזרת LLM, בודקת אותן, והופכת אותן לדוחות מלאי והוצאות."
       },
       "description": {
-        "en": "Built for a real client, a small local business, under an ongoing contract. The owner photographs a receipt, uploads a PDF, or simply lets it arrive by email: an n8n flow picks up Gmail attachments every 15 minutes. Gemini reads the supplier, date, lines, VAT and totals, and falls back to another model automatically when the free quota runs out. Every receipt then goes through 18 automatic checks (duplicates, VAT and line math, odd dates, amounts 3× above a supplier's usual, foreign currency converted at the ECB rate), and nothing reaches the reports until a person approves it, with the original scan shown next to the data. Approved lines feed the stock (consumption = last count + purchases − new count) and a spending dashboard. Every change is written to an audit log by database triggers, so app code can't forget it. Status: delivered and now in the client's own trial period; their feedback drives the next round of customization.",
-        "he": "נבנה עבור לקוח אמיתי, עסק מקומי קטן, במסגרת התקשרות מתמשכת. בעל העסק מצלם קבלה, מעלה PDF, או פשוט נותן לה להגיע במייל: זרימת n8n אוספת קבצים מצורפים מ-Gmail כל 15 דקות. Gemini קורא את הספק, התאריך, השורות, המע\"מ והסכומים, ועובר אוטומטית למודל אחר כשהמכסה החינמית נגמרת. כל קבלה עוברת 18 בדיקות אוטומטיות (כפילויות, חישובי מע\"מ ושורות, תאריכים חריגים, סכום גבוה פי 3 מהרגיל אצל הספק, מטבע חוץ שמומר לפי שער הבנק המרכזי האירופי), ושום דבר לא נכנס לדוחות לפני שאדם מאשר, כשהסריקה המקורית מוצגת ליד הנתונים. שורות שאושרו מעדכנות את המלאי (צריכה = ספירה קודמת + קניות − ספירה חדשה) ודשבורד הוצאות. כל שינוי נרשם ביומן שינויים על ידי טריגרים במסד הנתונים, כך שהקוד לא יכול לשכוח לרשום. סטטוס: נמסר ללקוח ונמצא כעת בתקופת ניסיון עצמית שלו. הפידבק שלו יקבע את סבב ההתאמות הבא."
+        "en": "Built for a real client, Pulcinella in Kadima, under an ongoing contract. The owner photographs a receipt, uploads a PDF, or simply lets it arrive by email: an n8n flow picks up Gmail attachments every 15 minutes. Gemini reads the supplier, date, lines, VAT and totals, and falls back to another model automatically when the free quota runs out. Every receipt then goes through 18 automatic checks (duplicates, VAT and line math, odd dates, amounts 3× above a supplier's usual, foreign currency converted at the ECB rate), and nothing reaches the reports until a person approves it, with the original scan shown next to the data. Approved lines feed the stock (consumption = last count + purchases − new count) and a spending dashboard. Every change is written to an audit log by database triggers, so app code can't forget it. Status: delivered and now in the client's own trial period; their feedback drives the next round of customization.",
+        "he": "נבנה עבור לקוח אמיתי, פולצינלה (Pulcinella) בקדימה, במסגרת התקשרות מתמשכת. בעל העסק מצלם קבלה, מעלה PDF, או פשוט נותן לה להגיע במייל: זרימת n8n אוספת קבצים מצורפים מ-Gmail כל 15 דקות. Gemini קורא את הספק, התאריך, השורות, המע\"מ והסכומים, ועובר אוטומטית למודל אחר כשהמכסה החינמית נגמרת. כל קבלה עוברת 18 בדיקות אוטומטיות (כפילויות, חישובי מע\"מ ושורות, תאריכים חריגים, סכום גבוה פי 3 מהרגיל אצל הספק, מטבע חוץ שמומר לפי שער הבנק המרכזי האירופי), ושום דבר לא נכנס לדוחות לפני שאדם מאשר, כשהסריקה המקורית מוצגת ליד הנתונים. שורות שאושרו מעדכנות את המלאי (צריכה = ספירה קודמת + קניות − ספירה חדשה) ודשבורד הוצאות. כל שינוי נרשם ביומן שינויים על ידי טריגרים במסד הנתונים, כך שהקוד לא יכול לשכוח לרשום. סטטוס: נמסר ללקוח ונמצא כעת בתקופת ניסיון עצמית שלו. הפידבק שלו יקבע את סבב ההתאמות הבא."
       },
       "goals": {
         "en": [
@@ -172,8 +177,8 @@
         "he": "סקיל ב-Claude Code שהופך מודעת דרושים לקורות חיים מותאמים בעמוד אחד ב-LaTeX, רק מעובדות שמופיעות בפרופיל מאומת."
       },
       "description": {
-        "en": "My own job-search tool, which I use for every application. I paste a posting into Claude Code and one skill runs a fixed 9-step protocol. It analyses the posting, checks it against past applications (a duplicate gate) and screens it for paid \"training programs\" posing as jobs (a second gate). Then it pulls out the must-have and nice-to-have requirements with the exact keywords an applicant-tracking system scans for, and marks each one against my verified profile: met, bridgeable by wording, missing or unknown. A weighted score (must-haves count double) shows how good the fit is. It picks the closest of 4 LaTeX templates and changes only what the posting calls for. It never invents experience: facts come only from the profile files, and a new fact is added with its date and source. The build fails unless the PDF is exactly one page. A small Python tracker logs each application after I submit it, and every gap as real, bridgeable or unknown, so recurring gaps become a list of what to learn next. A phone mode runs the same protocol from the Claude app and hands the PC a sync file to finish the steps. All rules live in one protocol file that each run's lessons update; a cleanup cut what is read per run by about a third. The repo is private because it holds personal data.",
-        "he": "כלי חיפוש העבודה שלי, שאני משתמש בו בכל הגשה. אני מדביק מודעה ל-Claude Code, וסקיל אחד מריץ פרוטוקול קבוע של 9 שלבים. הוא מנתח את המודעה, בודק אותה מול הגשות קודמות (שער כפילויות), ומסנן \"תוכניות הכשרה\" בתשלום שמתחפשות למשרה (שער שני). אחר כך הוא שולף את דרישות החובה והיתרון עם מילות המפתח המדויקות שמערכות סינון קורות חיים מחפשות, ומסמן כל דרישה מול הפרופיל המאומת שלי: עונה, ניתנת לגישור בניסוח, חסרה או לא ידועה. ציון משוקלל (דרישת חובה שווה כפול) מראה כמה ההתאמה טובה. הוא בוחר את הקרובה מבין 4 תבניות LaTeX ומשנה רק את מה שהמודעה דורשת. הוא אף פעם לא ממציא ניסיון: העובדות מגיעות רק מקבצי הפרופיל, ועובדה חדשה נכנסת עם תאריך ומקור. הבנייה נכשלת אם ה-PDF אינו בדיוק עמוד אחד. טרקר קטן ב-Python רושם כל הגשה אחרי שהגשתי, וכל פער כאמיתי, ניתן לגישור או לא ידוע, כך שפערים שחוזרים הופכים לרשימה של מה ללמוד. מצב טלפון מריץ את אותו פרוטוקול מאפליקציית Claude ומעביר למחשב קובץ סנכרון שמשלים את השלבים. כל הכללים נמצאים בקובץ פרוטוקול אחד שהלקחים מכל ריצה מעדכנים, וניקוי צמצם בכשליש את מה שנקרא בכל ריצה. הריפו פרטי כי יש בו מידע אישי."
+        "en": "My own job-search tool, which I have used for every application since early September 2026. I paste a posting into Claude Code and one skill runs a fixed 9-step protocol. It analyses the posting, checks it against past applications (a duplicate gate) and screens it for paid \"training programs\" posing as jobs (a second gate). Then it pulls out the must-have and nice-to-have requirements with the exact keywords an applicant-tracking system scans for, and marks each one against my verified profile: met, bridgeable by wording, missing or unknown. A weighted score (must-haves count double) shows how good the fit is. It picks the closest of 4 LaTeX templates and changes only what the posting calls for. It never invents experience: facts come only from the profile files, and a new fact is added with its date and source. The build fails unless the PDF is exactly one page. A small Python tracker logs each application after I submit it, and every gap as real, bridgeable or unknown, so recurring gaps become a list of what to learn next. A phone mode runs the same protocol from the Claude app and hands the PC a sync file to finish the steps. All rules live in one protocol file that each run's lessons update; a cleanup cut what is read per run by about a third. The repo is private because it holds personal data.",
+        "he": "כלי חיפוש העבודה שלי, שאני משתמש בו בכל הגשה מאז תחילת ספטמבר 2026. אני מדביק מודעה ל-Claude Code, וסקיל אחד מריץ פרוטוקול קבוע של 9 שלבים. הוא מנתח את המודעה, בודק אותה מול הגשות קודמות (שער כפילויות), ומסנן \"תוכניות הכשרה\" בתשלום שמתחפשות למשרה (שער שני). אחר כך הוא שולף את דרישות החובה והיתרון עם מילות המפתח המדויקות שמערכות סינון קורות חיים מחפשות, ומסמן כל דרישה מול הפרופיל המאומת שלי: עונה, ניתנת לגישור בניסוח, חסרה או לא ידועה. ציון משוקלל (דרישת חובה שווה כפול) מראה כמה ההתאמה טובה. הוא בוחר את הקרובה מבין 4 תבניות LaTeX ומשנה רק את מה שהמודעה דורשת. הוא אף פעם לא ממציא ניסיון: העובדות מגיעות רק מקבצי הפרופיל, ועובדה חדשה נכנסת עם תאריך ומקור. הבנייה נכשלת אם ה-PDF אינו בדיוק עמוד אחד. טרקר קטן ב-Python רושם כל הגשה אחרי שהגשתי, וכל פער כאמיתי, ניתן לגישור או לא ידוע, כך שפערים שחוזרים הופכים לרשימה של מה ללמוד. מצב טלפון מריץ את אותו פרוטוקול מאפליקציית Claude ומעביר למחשב קובץ סנכרון שמשלים את השלבים. כל הכללים נמצאים בקובץ פרוטוקול אחד שהלקחים מכל ריצה מעדכנים, וניקוי צמצם בכשליש את מה שנקרא בכל ריצה. הריפו פרטי כי יש בו מידע אישי."
       },
       "goals": {
         "en": [
@@ -217,7 +222,7 @@
         { "name": { "en": "Application & skill-gap tracker", "he": "טרקר הגשות ופערים" }, "detail": { "en": "A Python CLI: duplicate check, application log after submitting, and gaps as real, bridgeable or unknown.", "he": "כלי שורת פקודה ב-Python: בדיקת כפילות, רישום הגשה אחרי שהוגשה, ופערים כאמיתי, ניתן לגישור או לא ידוע." } },
         { "name": { "en": "Phone mode", "he": "מצב טלפון" }, "detail": { "en": "Runs the same protocol from the Claude app and produces a sync file that the PC imports to finish the steps.", "he": "מריץ את אותו פרוטוקול מאפליקציית Claude ומפיק קובץ סנכרון שהמחשב מייבא כדי להשלים את השלבים." } }
       ],
-      "size": { "teamSize": 1 },
+      "size": { "teamSize": 1, "months": 2 },
       "sign": "CAREER"
     },
     {
@@ -472,46 +477,6 @@
       "tagline": { "en": "A Netflix-style browser and a stock app.", "he": "דפדפן סרטים בסגנון נטפליקס ואפליקציית מניות." },
       "stack": ["Django", "SQL"],
       "sign": "DJANGO"
-    },
-    {
-      "id": "technion-tournament",
-      "district": "playground",
-      "tier": "optional",
-      "access": "public",
-      "title": "TechnionTournament",
-      "tagline": { "en": "Tree-based data structures in Java with O(log n) operations.", "he": "מבני נתונים מבוססי עצים ב-Java עם פעולות ב-O(log n)." },
-      "stack": ["Java"],
-      "sign": "TREES"
-    },
-    {
-      "id": "two-three-tree-race",
-      "district": "playground",
-      "tier": "optional",
-      "access": "public",
-      "title": { "en": "2-3 Tree Race System", "he": "מערכת מרוץ על עץ 2-3" },
-      "tagline": { "en": "Generic 2-3 trees in Java (data structures course).", "he": "עצי 2-3 גנריים ב-Java (קורס מבני נתונים)." },
-      "stack": ["Java"],
-      "sign": "2-3"
-    },
-    {
-      "id": "puzzle-search",
-      "district": "playground",
-      "tier": "optional",
-      "access": "public",
-      "title": { "en": "Puzzle Search & Parallel Recursion", "he": "חיפוש פאזל ורקורסיה מקבילית" },
-      "tagline": { "en": "Search algorithm and multithreading in Java.", "he": "אלגוריתם חיפוש וריבוי תהליכונים ב-Java." },
-      "stack": ["Java"],
-      "sign": "SEARCH"
-    },
-    {
-      "id": "bmp-filters",
-      "district": "playground",
-      "tier": "optional",
-      "access": "public",
-      "title": { "en": "BMP Image Filters", "he": "מסנני תמונה BMP" },
-      "tagline": { "en": "Command-line image filter tool in C.", "he": "כלי שורת פקודה לסינון תמונות ב-C." },
-      "stack": ["C"],
-      "sign": "BMP"
     }
   ]
 }

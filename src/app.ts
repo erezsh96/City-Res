@@ -21,6 +21,9 @@ import { SideCard } from './ui/card';
 import { ProjectPage } from './ui/projectPage';
 import { AboutModal, ListView, showHint } from './ui/overlays';
 
+const GROUND = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+const TAU = Math.PI * 2;
+
 const easeOutBack = (x: number) => {
   const c1 = 1.4;
   const c3 = c1 + 1;
@@ -132,12 +135,7 @@ export class App {
 
   private createLabels(): void {
     const lang = getLang();
-    for (const sec of this.model.sectors) {
-      const r = LAYOUT.firstRing + 2.4;
-      const pos = new THREE.Vector3(Math.cos(sec.mid) * r, 1.2, Math.sin(sec.mid) * r);
-      const el = h('div', { class: 'label-district', style: `--d:${sec.district.color}` }, h('span', { class: 'dot' }), h('span', { class: 'txt' }, loc(sec.district.name, lang)));
-      this.labels.add(`d:${sec.district.id}`, pos, el);
-    }
+    // Districts have no permanent labels (they hid the buildings): hovering a district shows its tooltip instead.
     const plaza = h(
       'button',
       { class: 'label-plaza', type: 'button', onclick: () => this.router.go('/about') },
@@ -154,10 +152,6 @@ export class App {
 
   private refreshLabelText(): void {
     const lang = getLang();
-    for (const sec of this.model.sectors) {
-      const txt = this.labels.get(`d:${sec.district.id}`)?.querySelector('.txt');
-      if (txt) txt.textContent = loc(sec.district.name, lang);
-    }
     const plaza = this.labels.get('plaza');
     if (plaza) {
       plaza.querySelector('.txt')!.textContent = t('centralSquare');
@@ -175,14 +169,23 @@ export class App {
 
   // ---------- picking & selection ----------
 
-  private pickAt(clientX: number, clientY: number): { kind: 'building' | 'plaza'; id?: string } | null {
+  private pickAt(clientX: number, clientY: number): { kind: 'building' | 'plaza' | 'district'; id?: string } | null {
     const rect = this.canvas.getBoundingClientRect();
     const ndc = new THREE.Vector2(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
     this.raycaster.setFromCamera(ndc, this.ctx.rig.camera);
     const hit = this.raycaster.intersectObjects(this.pickTargets, false)[0];
-    if (!hit) return null;
-    const ud = hit.object.userData as { kind: 'building' | 'plaza'; id?: string };
-    return { kind: ud.kind, id: ud.id };
+    if (hit) {
+      const ud = hit.object.userData as { kind: 'building' | 'plaza'; id?: string };
+      return { kind: ud.kind, id: ud.id };
+    }
+    // Nothing solid under the pointer: which district's ground is it over?
+    const p = new THREE.Vector3();
+    if (!this.raycaster.ray.intersectPlane(GROUND, p)) return null;
+    const r = Math.hypot(p.x, p.z);
+    if (r < LAYOUT.ringRoadR - LAYOUT.ringRoadW / 2 || r > this.model.radius) return null;
+    const th = Math.atan2(p.z, p.x);
+    const sec = this.model.sectors.find((s) => (((th - s.start) % TAU) + TAU) % TAU < s.end - s.start);
+    return sec ? { kind: 'district', id: sec.district.id } : null;
   }
 
   private onHover(x: number, y: number): void {
@@ -190,6 +193,7 @@ export class App {
     const hit = this.pickAt(x, y);
     this.setHovered(hit?.kind === 'building' ? hit.id! : null, hit?.kind === 'plaza');
     if (hit?.kind === 'building') this.showTooltip(this.model.byId.get(hit.id!)!, x, y);
+    else if (hit?.kind === 'district') this.showDistrictTip(hit.id!, x, y);
     else this.tooltip.hidden = true;
   }
 
@@ -205,13 +209,35 @@ export class App {
 
   private showTooltip(pp: PlacedProject, x: number, y: number): void {
     const lang = getLang();
-    const rect = this.stage.getBoundingClientRect();
     this.tooltip.replaceChildren(
       h('strong', {}, loc(pp.project.title, lang)),
       h('span', { class: 'tt-tag' }, loc(pp.project.tagline, lang)),
       h('span', { class: 'tt-stack' }, pp.project.stack.slice(0, 4).join(' · ')),
     );
     this.tooltip.style.setProperty('--d', pp.district.color);
+    this.placeTooltip(x, y);
+  }
+
+  /** District name, what its projects have in common, and how many there are. */
+  private showDistrictTip(id: string, x: number, y: number): void {
+    const sec = this.model.sectors.find((s) => s.district.id === id);
+    if (!sec) return;
+    const d = sec.district;
+    const lang = getLang();
+    const n = this.model.projects.filter((pp) => pp.district.id === id).length;
+    this.tooltip.replaceChildren(
+      ...[
+        h('strong', { class: 'tt-title' }, h('span', { class: 'dot' }), loc(d.name, lang)),
+        d.blurb ? h('span', { class: 'tt-tag' }, loc(d.blurb, lang)) : null,
+        h('span', { class: 'tt-stack' }, n === 1 ? t('districtOne') : t('districtCount', { n })),
+      ].filter((el): el is HTMLElement => el !== null),
+    );
+    this.tooltip.style.setProperty('--d', d.color);
+    this.placeTooltip(x, y);
+  }
+
+  private placeTooltip(x: number, y: number): void {
+    const rect = this.stage.getBoundingClientRect();
     this.tooltip.hidden = false;
     const tw = this.tooltip.offsetWidth;
     let left = x - rect.left + 18;
@@ -224,7 +250,12 @@ export class App {
     const hit = this.pickAt(x, y);
     if (hit?.kind === 'building') this.select(hit.id!);
     else if (hit?.kind === 'plaza') this.router.go('/about');
-    else if (this.selected) this.deselect();
+    else {
+      if (this.selected) this.deselect();
+      // Touch screens have no hover, so a tap on a district's ground shows its tooltip.
+      if (hit?.kind === 'district') this.showDistrictTip(hit.id!, x, y);
+      else this.tooltip.hidden = true;
+    }
   }
 
   private select(id: string): void {

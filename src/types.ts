@@ -34,6 +34,8 @@ export interface District {
   name: LocalizedText;
   /** Neon accent colour for the district, as #rrggbb. */
   color: string;
+  /** One sentence on what the district's projects have in common. Shown when hovering the district. */
+  blurb?: LocalizedText;
 }
 
 /** One floor of the building = one module or part of the project. Listed bottom to top. */
