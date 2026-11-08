@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" font-family="Rubik, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#8fa6e0"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2440"/>
+      <stop offset="1" stop-color="#121829"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="640" rx="24" fill="url(#bg)"/>
+  <text x="30" y="52" font-size="26" font-weight="700" fill="#e6eeff">Receipts &amp; Inventory · how a receipt flows</text>
+  <text x="30" y="78" font-size="14" fill="#8fa6e0">Freelance, built and maintained solo for a small local business · nothing reaches the reports before a human approves it</text>
+
+  <!-- inputs -->
+  <g>
+    <rect x="30" y="112" width="190" height="72" rx="12" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="125" y="144" font-size="15" font-weight="700" fill="#e6eeff" text-anchor="middle">Phone camera</text>
+    <text x="125" y="165" font-size="12" fill="#a9b8d8" text-anchor="middle">or gallery, several at once</text>
+
+    <rect x="30" y="198" width="190" height="72" rx="12" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="125" y="230" font-size="15" font-weight="700" fill="#e6eeff" text-anchor="middle">PDF / image files</text>
+    <text x="125" y="251" font-size="12" fill="#a9b8d8" text-anchor="middle">incl. HEIC from iPhone</text>
+
+    <rect x="30" y="284" width="190" height="72" rx="12" fill="#232d4d" stroke="#ffb547" stroke-width="2"/>
+    <text x="125" y="316" font-size="15" font-weight="700" fill="#ffe7c2" text-anchor="middle">Gmail → n8n</text>
+    <text x="125" y="337" font-size="12" fill="#d9bf98" text-anchor="middle">every 15 min → email inbox</text>
+  </g>
+
+  <!-- pipeline -->
+  <g>
+    <rect x="270" y="170" width="170" height="130" rx="14" fill="#1d2440" stroke="#a98bff" stroke-width="2"/>
+    <text x="355" y="206" font-size="16" font-weight="700" fill="#ece6ff" text-anchor="middle">Ingest</text>
+    <text x="355" y="232" font-size="12" fill="#b9add9" text-anchor="middle">resize · file hash</text>
+    <text x="355" y="250" font-size="12" fill="#b9add9" text-anchor="middle">same file twice</text>
+    <text x="355" y="268" font-size="12" fill="#b9add9" text-anchor="middle">is blocked</text>
+
+    <rect x="480" y="170" width="180" height="130" rx="14" fill="#0f3a49" stroke="#22c7e6" stroke-width="2.5"/>
+    <text x="570" y="206" font-size="16" font-weight="700" fill="#e6feff" text-anchor="middle">Gemini extraction</text>
+    <text x="570" y="232" font-size="12" fill="#9fe6f5" text-anchor="middle">supplier · date · lines</text>
+    <text x="570" y="250" font-size="12" fill="#9fe6f5" text-anchor="middle">VAT · totals</text>
+    <text x="570" y="268" font-size="12" fill="#9fe6f5" text-anchor="middle">auto model fallback on quota</text>
+
+    <rect x="700" y="170" width="180" height="130" rx="14" fill="#0f3a49" stroke="#22c7e6" stroke-width="2.5"/>
+    <text x="790" y="206" font-size="16" font-weight="700" fill="#e6feff" text-anchor="middle">18 automatic checks</text>
+    <text x="790" y="232" font-size="12" fill="#9fe6f5" text-anchor="middle">duplicates · VAT &amp; line math</text>
+    <text x="790" y="250" font-size="12" fill="#9fe6f5" text-anchor="middle">dates · 3× outliers</text>
+    <text x="790" y="268" font-size="12" fill="#9fe6f5" text-anchor="middle">foreign currency → ECB rate</text>
+
+    <rect x="920" y="170" width="160" height="130" rx="14" fill="#16302a" stroke="#7dff8a" stroke-width="2.5"/>
+    <text x="1000" y="206" font-size="16" font-weight="700" fill="#dcffe0" text-anchor="middle">Human approval</text>
+    <text x="1000" y="232" font-size="12" fill="#9fd9a6" text-anchor="middle">scan shown next to</text>
+    <text x="1000" y="250" font-size="12" fill="#9fd9a6" text-anchor="middle">the data · every alert</text>
+    <text x="1000" y="268" font-size="12" fill="#9fd9a6" text-anchor="middle">marked "checked"</text>
+  </g>
+
+  <!-- database -->
+  <g>
+    <rect x="1120" y="140" width="130" height="190" rx="14" fill="#2a2f58" stroke="#a98bff" stroke-width="2"/>
+    <ellipse cx="1185" cy="176" rx="40" ry="12" fill="none" stroke="#c9b8ff" stroke-width="2"/>
+    <path d="M1145 176v40c0 7 18 12 40 12s40-5 40-12v-40" fill="none" stroke="#c9b8ff" stroke-width="2"/>
+    <text x="1185" y="256" font-size="15" font-weight="700" fill="#ece6ff" text-anchor="middle">PostgreSQL</text>
+    <text x="1185" y="276" font-size="12" fill="#b9add9" text-anchor="middle">Supabase</text>
+    <text x="1185" y="298" font-size="12" fill="#b9add9" text-anchor="middle">audit-log triggers</text>
+    <text x="1185" y="315" font-size="12" fill="#b9add9" text-anchor="middle">row-level security</text>
+  </g>
+
+  <g stroke="#8fa6e0" stroke-width="2.5" fill="none" marker-end="url(#a)">
+    <path d="M222 148C246 148 248 200 266 210"/>
+    <path d="M222 234H266"/>
+    <path d="M222 320C246 320 248 270 266 260"/>
+    <path d="M442 235H476"/>
+    <path d="M662 235H696"/>
+    <path d="M882 235H916"/>
+    <path d="M1082 235H1116"/>
+  </g>
+
+  <!-- outputs -->
+  <path d="M1185 332V380H650V404" stroke="#8fa6e0" stroke-width="2.5" fill="none" marker-end="url(#a)"/>
+  <g>
+    <rect x="270" y="410" width="360" height="96" rx="14" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="450" y="442" font-size="16" font-weight="700" fill="#e6eeff" text-anchor="middle">Stock</text>
+    <text x="450" y="466" font-size="12.5" fill="#a9b8d8" text-anchor="middle">receipt lines → items (remembered per supplier)</text>
+    <text x="450" y="486" font-size="12.5" fill="#a9b8d8" text-anchor="middle">use = last count + bought − new count · low-stock alerts</text>
+
+    <rect x="650" y="410" width="360" height="96" rx="14" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="830" y="442" font-size="16" font-weight="700" fill="#e6eeff" text-anchor="middle">Spending dashboard</text>
+    <text x="830" y="466" font-size="12.5" fill="#a9b8d8" text-anchor="middle">goods vs running costs · by supplier · 6 months</text>
+    <text x="830" y="486" font-size="12.5" fill="#a9b8d8" text-anchor="middle">price changes · one-line summary of the month</text>
+  </g>
+
+  <!-- quality -->
+  <g>
+    <rect x="30" y="540" width="1220" height="70" rx="16" fill="#1a2138" stroke="#5b6b96" stroke-width="2" stroke-dasharray="8 6"/>
+    <text x="54" y="570" font-size="13" font-weight="700" fill="#a9b8d8" letter-spacing="1.5">QUALITY &amp; OPS</text>
+    <text x="54" y="594" font-size="13.5" fill="#cfd9f2">68 pytest tests in GitHub Actions against a real Postgres (incl. headless smoke test of every page) · Streamlit Community Cloud · scheduled keep-awake job · Hebrew RTL, mobile-first UI</text>
+  </g>
+</svg>

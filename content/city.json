@@ -29,32 +29,77 @@
       "access": "private",
       "title": { "en": "Receipts & Inventory System", "he": "מערכת קבלות ומלאי" },
       "tagline": {
-        "en": "Mobile-friendly app that manages a small local business's receipts, stock and spending dashboards.",
-        "he": "אפליקציה ידידותית למובייל שמנהלת לעסק מקומי קטן קבלות, מלאי ודשבורדים של הוצאות."
+        "en": "Freelance: a phone-first app that reads a small business's receipts with an LLM, checks them, and turns them into stock and spending reports.",
+        "he": "פרילנס: אפליקציה לטלפון שקוראת קבלות של עסק קטן בעזרת LLM, בודקת אותן, והופכת אותן לדוחות מלאי והוצאות."
       },
-      "description": "Built for a real client. Invoices are read by an LLM, every receipt waits for human approval, and the system flags duplicates and VAT mismatches. All changes are recorded in a database audit log, and the code runs through a CI pipeline with 68 automated tests.",
-      "goals": [
-        "Replace manual receipt entry with LLM extraction",
-        "Keep a human in the loop for every receipt",
-        "Catch duplicates and VAT mismatches automatically",
-        "Give the owner clear stock and spending dashboards"
-      ],
-      "stack": ["Python", "Streamlit", "PostgreSQL (Supabase)", "Gemini API", "n8n", "pytest", "GitHub Actions"],
+      "description": {
+        "en": "Built for a real client, a small local business, under an ongoing contract. The owner photographs a receipt, uploads a PDF, or simply lets it arrive by email: an n8n flow picks up Gmail attachments every 15 minutes. Gemini reads the supplier, date, lines, VAT and totals, and falls back to another model automatically when the free quota runs out. Every receipt then goes through 18 automatic checks (duplicates, VAT and line math, odd dates, amounts 3× above a supplier's usual, foreign currency converted at the ECB rate), and nothing reaches the reports until a person approves it, with the original scan shown next to the data. Approved lines feed the stock (consumption = last count + purchases − new count) and a spending dashboard. Every change is written to an audit log by database triggers, so app code can't forget it. Status: delivered and now in the client's own trial period; their feedback drives the next round of customization.",
+        "he": "נבנה עבור לקוח אמיתי, עסק מקומי קטן, במסגרת התקשרות מתמשכת. בעל העסק מצלם קבלה, מעלה PDF, או פשוט נותן לה להגיע במייל: זרימת n8n אוספת קבצים מצורפים מ-Gmail כל 15 דקות. Gemini קורא את הספק, התאריך, השורות, המע\"מ והסכומים, ועובר אוטומטית למודל אחר כשהמכסה החינמית נגמרת. כל קבלה עוברת 18 בדיקות אוטומטיות (כפילויות, חישובי מע\"מ ושורות, תאריכים חריגים, סכום גבוה פי 3 מהרגיל אצל הספק, מטבע חוץ שמומר לפי שער הבנק המרכזי האירופי), ושום דבר לא נכנס לדוחות לפני שאדם מאשר, כשהסריקה המקורית מוצגת ליד הנתונים. שורות שאושרו מעדכנות את המלאי (צריכה = ספירה קודמת + קניות − ספירה חדשה) ודשבורד הוצאות. כל שינוי נרשם ביומן שינויים על ידי טריגרים במסד הנתונים, כך שהקוד לא יכול לשכוח לרשום. סטטוס: נמסר ללקוח ונמצא כעת בתקופת ניסיון עצמית שלו. הפידבק שלו יקבע את סבב ההתאמות הבא."
+      },
+      "goals": {
+        "en": [
+          "Replace typing receipts by hand with LLM extraction from photos, PDFs and email.",
+          "Keep a human in the loop: no receipt reaches the reports without approval.",
+          "Catch duplicates, VAT and math errors automatically, before approval.",
+          "Give the owner stock levels, consumption and spending in one phone-friendly place.",
+          "Run on free tiers (Streamlit Cloud, Supabase, Gemini) so the client pays nothing to host it."
+        ],
+        "he": [
+          "להחליף הקלדה ידנית של קבלות בחילוץ אוטומטי עם LLM מתמונות, PDF ומייל.",
+          "להשאיר אדם בתהליך: שום קבלה לא נכנסת לדוחות בלי אישור.",
+          "לתפוס כפילויות וטעויות מע\"מ וחישוב באופן אוטומטי, לפני האישור.",
+          "לתת לבעל העסק מלאי, צריכה והוצאות במקום אחד שנוח בטלפון.",
+          "לרוץ על שכבות חינמיות (Streamlit Cloud, Supabase, Gemini) כך שהלקוח לא משלם על אחסון."
+        ]
+      },
+      "myRole": {
+        "en": "End to end: requirements with the owner, design, code, tests, deployment, and the ongoing changes since.",
+        "he": "מקצה לקצה: אפיון מול בעל העסק, תכנון, קוד, בדיקות, העלאה לאוויר, והשינויים השוטפים מאז."
+      },
+      "stack": ["Python", "Streamlit", "PostgreSQL (Supabase)", "Gemini API", "n8n", "Gmail", "pandas", "pytest", "GitHub Actions"],
       "metrics": [
-        { "value": "68", "label": { "en": "automated tests", "he": "בדיקות אוטומטיות" } },
-        { "value": "100%", "label": { "en": "of receipts human-approved", "he": "מהקבלות מאושרות ידנית" } }
+        { "value": "68", "label": { "en": "tests in CI, against a real Postgres", "he": "בדיקות ב-CI, מול Postgres אמיתי" } },
+        { "value": "18", "label": { "en": "automatic checks on every receipt", "he": "בדיקות אוטומטיות על כל קבלה" } },
+        { "value": "~2,900", "label": { "en": "lines of Python (plus ~760 in tests)", "he": "שורות Python (ועוד כ-760 בבדיקות)" } }
+      ],
+      "gallery": [
+        {
+          "src": "projects/receipts-inventory/architecture.svg",
+          "caption": { "en": "How a receipt flows: three ways in, checks, a human approves, then stock and reports.", "he": "איך קבלה עוברת במערכת: שלוש דרכי כניסה, בדיקות, אישור של אדם, ואז מלאי ודוחות." }
+        },
+        {
+          "src": "projects/receipts-inventory/receipts-alerts.webp",
+          "caption": { "en": "Receipts waiting for approval, each with what the checks found. Demo data.", "he": "קבלות שממתינות לאישור, וליד כל אחת מה שהבדיקות מצאו. נתוני דמו." }
+        },
+        {
+          "src": "projects/receipts-inventory/receipt-review.webp",
+          "caption": { "en": "Review screen: the scan next to the fields read from it. Demo data.", "he": "מסך הבדיקה: הסריקה ליד השדות שנקראו ממנה. נתוני דמו." }
+        },
+        {
+          "src": "projects/receipts-inventory/spending-dashboard.webp",
+          "caption": { "en": "Monthly spending with a one-line summary and the change by supplier. Demo data.", "he": "הוצאות החודש עם סיכום בשורה אחת והשינוי לפי ספק. נתוני דמו." }
+        },
+        {
+          "src": "projects/receipts-inventory/stock.webp",
+          "caption": { "en": "Stock built from approved receipts, with low-stock alerts. Demo data.", "he": "מלאי שנבנה מהקבלות המאושרות, עם התראות על מלאי נמוך. נתוני דמו." }
+        },
+        {
+          "src": "projects/receipts-inventory/upload-inbox.webp",
+          "caption": { "en": "Upload page: photos, files, and attachments that arrived by email. Demo data.", "he": "עמוד ההעלאה: תמונות, קבצים וקבצים מצורפים שהגיעו במייל. נתוני דמו." }
+        }
       ],
       "floors": [
-        { "name": "Mobile UI (Streamlit)" },
-        { "name": "LLM invoice extraction (Gemini)" },
-        { "name": "Human approval queue" },
-        { "name": "Duplicate & VAT-mismatch checks" },
-        { "name": "PostgreSQL + audit log" },
-        { "name": "Stock & spending dashboards" },
-        { "name": "n8n automations" },
-        { "name": "68 tests + CI pipeline" }
+        { "name": { "en": "PostgreSQL + audit log", "he": "PostgreSQL ויומן שינויים" }, "detail": { "en": "Supabase. Triggers log every change; row-level security blocks public access.", "he": "Supabase. טריגרים רושמים כל שינוי, ו-row-level security חוסם גישה ציבורית." } },
+        { "name": { "en": "Upload & ingest", "he": "העלאה וקליטה" }, "detail": { "en": "Camera, gallery, PDF or HEIC, several at once. The same file twice is blocked by hash.", "he": "מצלמה, גלריה, PDF או HEIC, כמה ביחד. אותו קובץ פעמיים נחסם לפי hash." } },
+        { "name": { "en": "Gmail → n8n inbox", "he": "Gmail ← n8n לתיבה" }, "detail": { "en": "Attachments land in an inbox table every 15 minutes, each file exactly once.", "he": "קבצים מצורפים נכנסים לטבלת תיבה כל 15 דקות, כל קובץ פעם אחת בלבד." } },
+        { "name": { "en": "Gemini extraction", "he": "חילוץ עם Gemini" }, "detail": { "en": "Supplier, date, lines, VAT, totals. Falls back to another model when the quota ends.", "he": "ספק, תאריך, שורות, מע\"מ וסכומים. עובר למודל אחר כשהמכסה נגמרת." } },
+        { "name": { "en": "18 automatic checks", "he": "18 בדיקות אוטומטיות" }, "detail": { "en": "Duplicates, VAT and line math, dates, 3× outliers, foreign currency, near-empty reads.", "he": "כפילויות, חישובי מע\"מ ושורות, תאריכים, חריגים פי 3, מטבע חוץ, קריאה כמעט ריקה." } },
+        { "name": { "en": "Human approval", "he": "אישור אנושי" }, "detail": { "en": "The scan next to the data; every alert must be marked as checked before approving.", "he": "הסריקה ליד הנתונים. כל התראה צריכה סימון \"בדקתי\" לפני אישור." } },
+        { "name": { "en": "Stock & consumption", "he": "מלאי וצריכה" }, "detail": { "en": "Receipt lines map to items, remembered per supplier. Weekly counts and low-stock alerts.", "he": "שורות קבלה משויכות לפריטים, והשיוך נזכר לפי ספק. ספירה שבועית והתראות מלאי נמוך." } },
+        { "name": { "en": "Spending dashboard", "he": "דשבורד הוצאות" }, "detail": { "en": "Goods vs running costs, by supplier, 6 months, price changes.", "he": "סחורה מול הוצאות שוטפות, לפי ספק, 6 חודשים, שינויי מחיר." } },
+        { "name": { "en": "Tests & CI", "he": "בדיקות ו-CI" }, "detail": { "en": "68 pytest tests in GitHub Actions, incl. a headless run of every page.", "he": "68 בדיקות pytest ב-GitHub Actions, כולל הרצה של כל עמוד בלי ממשק." } }
       ],
-      "size": { "tests": 68, "teamSize": 1 },
+      "size": { "linesOfCode": 2900, "tests": 68, "teamSize": 1 },
       "sign": "RECEIPTS"
     },
     {
