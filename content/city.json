@@ -1,4 +1,5 @@
 {
+  "site": { "clarityId": "" },
   "owner": {
     "name": "Thomas Erlich",
     "initials": "TE",
@@ -11,7 +12,8 @@
       "he": "אני בונה תוכנה מעשית: אוטומציות מבוססות LLM, אפליקציות ווב עתירות נתונים וקוד מערכות שמקפיד על ביצועים. העיר הזו ממפה את הפרויקטים שבניתי, מעבודות ללקוחות אמיתיים ועד מחקר. (טיוטה: נכתוב יחד.)"
     },
     "links": [
-      { "label": "GitHub", "url": "https://github.com/haThomas3" }
+      { "label": "GitHub", "url": "https://github.com/haThomas3" },
+      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/thomas-erlich" }
     ]
   },
   "districts": [
@@ -156,7 +158,7 @@
         { "name": { "en": "NuWLS local search", "he": "חיפוש מקומי NuWLS" }, "detail": { "en": "Fast local search that finds good solutions early.", "he": "חיפוש מקומי מהיר שמוצא פתרונות טובים מוקדם." } },
         { "name": { "en": "Fuzzing & benchmarks (Azure VM)", "he": "Fuzzing ובנצ'מרקים (Azure)" }, "detail": { "en": "Differential fuzzers vs EvalMaxSAT / UWrMaxSat and MaxSAT Evaluation 2022 runs.", "he": "Fuzzers דיפרנציאליים מול EvalMaxSAT ו-UWrMaxSat, וריצות על MaxSAT Evaluation 2022." } }
       ],
-      "size": { "teamSize": 5 },
+      "size": { "teamSize": 5, "months": 10 },
       "sign": "MaxSAT"
     },
     {
@@ -166,21 +168,54 @@
       "access": "private",
       "title": "Career Pipeline",
       "tagline": {
-        "en": "AI job-application automation: matches a posting to a verified profile and builds a tailored one-page resume.",
-        "he": "אוטומציית AI להגשת מועמדות: מתאימה מודעת דרושים לפרופיל מאומת ובונה קורות חיים מותאמים בעמוד אחד."
+        "en": "A Claude Code skill that turns a job posting into a tailored one-page LaTeX resume, using only facts from a verified profile.",
+        "he": "סקיל ב-Claude Code שהופך מודעת דרושים לקורות חיים מותאמים בעמוד אחד ב-LaTeX, רק מעובדות שמופיעות בפרופיל מאומת."
       },
-      "description": "Built from Claude Code Skills and subagents: requirements extraction, match & plan, and tailoring, with human review at set checkpoints. A Python tracker follows applications and skill gaps. The output is a one-page LaTeX resume.",
-      "stack": ["Claude Code (Skills, subagents)", "Python", "LaTeX", "Git"],
+      "description": {
+        "en": "My own job-search tool, which I use for every application. I paste a posting into Claude Code and one skill runs a fixed 9-step protocol. It analyses the posting, checks it against past applications (a duplicate gate) and screens it for paid \"training programs\" posing as jobs (a second gate). Then it pulls out the must-have and nice-to-have requirements with the exact keywords an applicant-tracking system scans for, and marks each one against my verified profile: met, bridgeable by wording, missing or unknown. A weighted score (must-haves count double) shows how good the fit is. It picks the closest of 4 LaTeX templates and changes only what the posting calls for. It never invents experience: facts come only from the profile files, and a new fact is added with its date and source. The build fails unless the PDF is exactly one page. A small Python tracker logs each application after I submit it, and every gap as real, bridgeable or unknown, so recurring gaps become a list of what to learn next. A phone mode runs the same protocol from the Claude app and hands the PC a sync file to finish the steps. All rules live in one protocol file that each run's lessons update; a cleanup cut what is read per run by about a third. The repo is private because it holds personal data.",
+        "he": "כלי חיפוש העבודה שלי, שאני משתמש בו בכל הגשה. אני מדביק מודעה ל-Claude Code, וסקיל אחד מריץ פרוטוקול קבוע של 9 שלבים. הוא מנתח את המודעה, בודק אותה מול הגשות קודמות (שער כפילויות), ומסנן \"תוכניות הכשרה\" בתשלום שמתחפשות למשרה (שער שני). אחר כך הוא שולף את דרישות החובה והיתרון עם מילות המפתח המדויקות שמערכות סינון קורות חיים מחפשות, ומסמן כל דרישה מול הפרופיל המאומת שלי: עונה, ניתנת לגישור בניסוח, חסרה או לא ידועה. ציון משוקלל (דרישת חובה שווה כפול) מראה כמה ההתאמה טובה. הוא בוחר את הקרובה מבין 4 תבניות LaTeX ומשנה רק את מה שהמודעה דורשת. הוא אף פעם לא ממציא ניסיון: העובדות מגיעות רק מקבצי הפרופיל, ועובדה חדשה נכנסת עם תאריך ומקור. הבנייה נכשלת אם ה-PDF אינו בדיוק עמוד אחד. טרקר קטן ב-Python רושם כל הגשה אחרי שהגשתי, וכל פער כאמיתי, ניתן לגישור או לא ידוע, כך שפערים שחוזרים הופכים לרשימה של מה ללמוד. מצב טלפון מריץ את אותו פרוטוקול מאפליקציית Claude ומעביר למחשב קובץ סנכרון שמשלים את השלבים. כל הכללים נמצאים בקובץ פרוטוקול אחד שהלקחים מכל ריצה מעדכנים, וניקוי צמצם בכשליש את מה שנקרא בכל ריצה. הריפו פרטי כי יש בו מידע אישי."
+      },
+      "goals": {
+        "en": [
+          "Tailor every application in minutes instead of rewriting a resume by hand.",
+          "Never claim anything that isn't in the verified profile.",
+          "Stop early on duplicates and on paid courses posing as jobs.",
+          "Turn missing skills into a tracked list of what to learn next.",
+          "Stay free and local, with a fallback that works from the phone."
+        ],
+        "he": [
+          "להתאים כל הגשה בדקות, במקום לשכתב קורות חיים ידנית.",
+          "לא לטעון שום דבר שלא מופיע בפרופיל המאומת.",
+          "לעצור מוקדם על כפילויות ועל קורסים בתשלום שמתחפשים למשרה.",
+          "להפוך כישורים חסרים לרשימה מסודרת של מה ללמוד.",
+          "להישאר חינמי ומקומי, עם גיבוי שעובד מהטלפון."
+        ]
+      },
+      "myRole": {
+        "en": "Solo: designed the protocol, wrote the skill, the tracker and the templates, and keep refining the rules after each run.",
+        "he": "לבד: תכננתי את הפרוטוקול, כתבתי את הסקיל, הטרקר והתבניות, ואני ממשיך לשפר את הכללים אחרי כל ריצה."
+      },
+      "stack": ["Claude Code (Skills)", "Python", "LaTeX (pdflatex)", "Bash", "Git", "Markdown"],
       "metrics": [
-        { "value": "3", "label": { "en": "agent stages", "he": "שלבי סוכנים" } }
+        { "value": "9", "label": { "en": "steps, with 2 safety gates", "he": "שלבים, עם 2 שערי בטיחות" } },
+        { "value": "4", "label": { "en": "LaTeX templates, picked per job type", "he": "תבניות LaTeX, לפי סוג המשרה" } },
+        { "value": "1", "label": { "en": "page, enforced by the build", "he": "עמוד, והבנייה אוכפת את זה" } }
+      ],
+      "gallery": [
+        {
+          "src": "projects/career-pipeline/architecture.svg",
+          "caption": { "en": "From a pasted posting to a one-page PDF, with the two gates and the tracker.", "he": "ממודעה שהודבקה ועד PDF של עמוד אחד, עם שני השערים והטרקר." }
+        }
       ],
       "floors": [
-        { "name": "Requirements extraction" },
-        { "name": "Match & plan" },
-        { "name": "Resume tailoring" },
-        { "name": "Human review checkpoints" },
-        { "name": "LaTeX one-page builder" },
-        { "name": "Application & skill-gap tracker" }
+        { "name": { "en": "Posting analysis", "he": "ניתוח המודעה" }, "detail": { "en": "Company, role, seniority, location, and who is posting: the employer or an agency.", "he": "חברה, משרה, ותק, מיקום, ומי מפרסם: המעסיק או חברת השמה." } },
+        { "name": { "en": "Duplicate & course gates", "he": "שערי כפילות וקורסים" }, "detail": { "en": "Stops on a job already applied to, and flags paid training programs posing as jobs, quoting the lines that gave them away.", "he": "עוצר על משרה שכבר הגשתי אליה, ומסמן תוכניות הכשרה בתשלום שמתחפשות למשרה, עם ציטוט השורות שחשפו אותן." } },
+        { "name": { "en": "Requirements & ATS keywords", "he": "דרישות ומילות מפתח" }, "detail": { "en": "A table of must-have and nice-to-have requirements, with the exact phrases a resume filter scans for.", "he": "טבלה של דרישות חובה ויתרון, עם הביטויים המדויקים שמסנני קורות חיים מחפשים." } },
+        { "name": { "en": "Match against the verified profile", "he": "התאמה מול הפרופיל המאומת" }, "detail": { "en": "Each requirement is met, bridgeable, missing or unknown, and a weighted score counts must-haves double.", "he": "כל דרישה מסומנת כעונה, ניתנת לגישור, חסרה או לא ידועה, וציון משוקלל סופר דרישת חובה כפול." } },
+        { "name": { "en": "Template tailoring", "he": "התאמת התבנית" }, "detail": { "en": "Picks 1 of 4 templates and edits only the title, summary, ordering and wording; facts come only from the profile.", "he": "בוחר אחת מ-4 תבניות ועורך רק כותרת, תקציר, סדר וניסוח. העובדות רק מהפרופיל." } },
+        { "name": { "en": "One-page PDF build", "he": "בניית PDF בעמוד אחד" }, "detail": { "en": "A pdflatex build that fails unless the result is exactly one page, then a text check of the PDF.", "he": "בנייה עם pdflatex שנכשלת אם התוצאה אינה בדיוק עמוד אחד, ואחריה בדיקה של הטקסט ב-PDF." } },
+        { "name": { "en": "Application & skill-gap tracker", "he": "טרקר הגשות ופערים" }, "detail": { "en": "A Python CLI: duplicate check, application log after submitting, and gaps as real, bridgeable or unknown.", "he": "כלי שורת פקודה ב-Python: בדיקת כפילות, רישום הגשה אחרי שהוגשה, ופערים כאמיתי, ניתן לגישור או לא ידוע." } },
+        { "name": { "en": "Phone mode", "he": "מצב טלפון" }, "detail": { "en": "Runs the same protocol from the Claude app and produces a sync file that the PC imports to finish the steps.", "he": "מריץ את אותו פרוטוקול מאפליקציית Claude ומפיק קובץ סנכרון שהמחשב מייבא כדי להשלים את השלבים." } }
       ],
       "size": { "teamSize": 1 },
       "sign": "CAREER"

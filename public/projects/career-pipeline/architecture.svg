@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" font-family="Rubik, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#8fa6e0"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2440"/>
+      <stop offset="1" stop-color="#121829"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="640" rx="24" fill="url(#bg)"/>
+  <text x="30" y="52" font-size="26" font-weight="700" fill="#e6eeff">Career Pipeline · from a job posting to a one-page resume</text>
+  <text x="30" y="78" font-size="14" fill="#8fa6e0">One Claude Code skill runs a fixed 9-step protocol · it never claims anything that isn't in the verified profile</text>
+
+  <!-- row 1: intake and gates -->
+  <g text-anchor="middle">
+    <rect x="30" y="108" width="210" height="108" rx="12" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="135" y="146" font-size="16" font-weight="700" fill="#e6eeff">Paste a posting</text>
+    <text x="135" y="170" font-size="12" fill="#a9b8d8">into Claude Code</text>
+    <text x="135" y="188" font-size="12" fill="#a9b8d8">text, file or link</text>
+
+    <rect x="282" y="108" width="210" height="108" rx="12" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="387" y="146" font-size="16" font-weight="700" fill="#e6eeff">Analyse</text>
+    <text x="387" y="170" font-size="12" fill="#a9b8d8">company · role · seniority</text>
+    <text x="387" y="188" font-size="12" fill="#a9b8d8">employer or agency?</text>
+
+    <rect x="534" y="108" width="210" height="108" rx="12" fill="#3a2e14" stroke="#ffb547" stroke-width="2.5"/>
+    <text x="639" y="146" font-size="16" font-weight="700" fill="#ffe7c2">Gate 1 · Duplicate</text>
+    <text x="639" y="170" font-size="12" fill="#d9bf98">checked with the tracker</text>
+    <text x="639" y="188" font-size="12" fill="#d9bf98">already applied → stop &amp; ask</text>
+
+    <rect x="786" y="108" width="210" height="108" rx="12" fill="#3a2e14" stroke="#ffb547" stroke-width="2.5"/>
+    <text x="891" y="146" font-size="16" font-weight="700" fill="#ffe7c2">Gate 2 · Paid course</text>
+    <text x="891" y="170" font-size="12" fill="#d9bf98">tuition or training signs</text>
+    <text x="891" y="188" font-size="12" fill="#d9bf98">quoted → skip or log only</text>
+
+    <rect x="1038" y="108" width="210" height="108" rx="12" fill="#0f3a49" stroke="#22c7e6" stroke-width="2.5"/>
+    <text x="1143" y="146" font-size="16" font-weight="700" fill="#e6feff">Requirements</text>
+    <text x="1143" y="170" font-size="12" fill="#9fe6f5">must-have vs nice-to-have</text>
+    <text x="1143" y="188" font-size="12" fill="#9fe6f5">exact ATS keywords</text>
+  </g>
+  <g stroke="#8fa6e0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M240 162H280"/>
+    <path d="M492 162H532"/>
+    <path d="M744 162H784"/>
+    <path d="M996 162H1036"/>
+    <path d="M1143 216V266"/>
+  </g>
+
+  <!-- row 2: match, tailor, build -->
+  <g text-anchor="middle">
+    <rect x="1038" y="268" width="210" height="118" rx="12" fill="#0f3a49" stroke="#22c7e6" stroke-width="2.5"/>
+    <text x="1143" y="306" font-size="16" font-weight="700" fill="#e6feff">Match vs profile</text>
+    <text x="1143" y="330" font-size="12" fill="#9fe6f5">each requirement: met,</text>
+    <text x="1143" y="348" font-size="12" fill="#9fe6f5">bridgeable, missing, unknown</text>
+    <text x="1143" y="366" font-size="12" fill="#9fe6f5">weighted score, must-have ×2</text>
+
+    <rect x="786" y="268" width="210" height="118" rx="12" fill="#0f3a49" stroke="#22c7e6" stroke-width="2.5"/>
+    <text x="891" y="306" font-size="16" font-weight="700" fill="#e6feff">Tailor a template</text>
+    <text x="891" y="330" font-size="12" fill="#9fe6f5">1 of 4, picked by job type</text>
+    <text x="891" y="348" font-size="12" fill="#9fe6f5">edits title, summary, order</text>
+    <text x="891" y="366" font-size="12" fill="#9fe6f5">facts only from the profile</text>
+
+    <rect x="534" y="268" width="210" height="118" rx="12" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="639" y="306" font-size="16" font-weight="700" fill="#e6eeff">pdflatex build</text>
+    <text x="639" y="330" font-size="12" fill="#a9b8d8">fails unless exactly 1 page</text>
+    <text x="639" y="348" font-size="12" fill="#a9b8d8">then a text check</text>
+    <text x="639" y="366" font-size="12" fill="#a9b8d8">of the PDF</text>
+
+    <rect x="282" y="268" width="210" height="118" rx="12" fill="#173a24" stroke="#7dff8a" stroke-width="2.5"/>
+    <text x="387" y="306" font-size="16" font-weight="700" fill="#dfffe3">Tailored PDF</text>
+    <text x="387" y="330" font-size="12" fill="#a6dcae">one page, LaTeX</text>
+    <text x="387" y="348" font-size="12" fill="#a6dcae">copied to Downloads</text>
+    <text x="387" y="366" font-size="12" fill="#a6dcae">and attached in the chat</text>
+  </g>
+  <g stroke="#8fa6e0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M1038 327H998"/>
+    <path d="M786 327H746"/>
+    <path d="M534 327H494"/>
+  </g>
+
+  <!-- phone mode -->
+  <g text-anchor="middle">
+    <rect x="30" y="268" width="210" height="242" rx="12" fill="#3a1a2d" stroke="#ff5fa2" stroke-width="2" stroke-dasharray="7 5"/>
+    <text x="135" y="306" font-size="16" font-weight="700" fill="#ffe0ee">Phone mode</text>
+    <text x="135" y="334" font-size="12" fill="#e0a9c4">the same protocol</text>
+    <text x="135" y="354" font-size="12" fill="#e0a9c4">in the Claude app,</text>
+    <text x="135" y="374" font-size="12" fill="#e0a9c4">reading the repo on GitHub</text>
+    <text x="135" y="408" font-size="12" fill="#e0a9c4">↓ hands over a sync file</text>
+    <text x="135" y="442" font-size="12" fill="#e0a9c4">the PC imports it and</text>
+    <text x="135" y="462" font-size="12" fill="#e0a9c4">finishes the steps</text>
+    <text x="135" y="482" font-size="12" fill="#e0a9c4">the phone can't do</text>
+  </g>
+
+  <!-- row 3: tracker and profile -->
+  <g text-anchor="middle">
+    <rect x="282" y="430" width="462" height="80" rx="12" fill="#1d2440" stroke="#a98bff" stroke-width="2"/>
+    <text x="513" y="456" font-size="15" font-weight="700" fill="#ece6ff">Tracker · Python CLI</text>
+    <text x="513" y="480" font-size="12" fill="#b9add9">logs an application only after I submit it</text>
+    <text x="513" y="498" font-size="12" fill="#b9add9">gaps as real / bridgeable / unknown → what to learn next</text>
+
+    <rect x="786" y="430" width="462" height="80" rx="12" fill="#173a24" stroke="#7dff8a" stroke-width="2"/>
+    <text x="1017" y="456" font-size="15" font-weight="700" fill="#dfffe3">Verified profile</text>
+    <text x="1017" y="480" font-size="12" fill="#a6dcae">master resume · confirmed extra facts · coursework</text>
+    <text x="1017" y="498" font-size="12" fill="#a6dcae">a new fact is added only with its date and source</text>
+  </g>
+  <g stroke="#8fa6e0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M891 430V388"/>
+    <path d="M1143 430V388"/>
+    <path d="M387 386V428" stroke-dasharray="5 4"/>
+  </g>
+  <text x="397" y="413" font-size="11" fill="#8fa6e0">"I submitted"</text>
+
+  <!-- protocol band -->
+  <rect x="30" y="540" width="1218" height="66" rx="12" fill="#161d33" stroke="#3a4670" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="639" y="568" font-size="14" font-weight="700" fill="#c9d6f5" text-anchor="middle">One protocol file holds every rule · each run's lessons update it · a cleanup cut what is read per run by about a third</text>
+  <text x="639" y="590" font-size="12" fill="#8fa6e0" text-anchor="middle">free and local · Claude Code Skills · Python · LaTeX · Bash · Git</text>
+</svg>
