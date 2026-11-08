@@ -192,6 +192,28 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
   display: flex; gap: 8px;
 }
 .map-controls .icon-btn { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); }
+.map-controls { align-items: center; }
+.tilt-dial {
+  position: relative; display: inline-flex; align-items: center; gap: 2px;
+  height: 46px; padding: 0 12px 0 4px; border: 2px solid var(--line); border-radius: 999px;
+  background: var(--card); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  cursor: grab; touch-action: none; user-select: none;
+}
+.tilt-dial.is-dragging { cursor: grabbing; }
+.tilt-dial:focus-within { outline: 3px solid var(--accent); outline-offset: 2px; }
+.tilt-dial svg { width: 40px; height: 40px; overflow: visible; }
+.tilt-dial path, .tilt-dial circle { fill: none; stroke-linecap: round; }
+.tilt-ground { stroke: var(--muted); stroke-width: 2.5; }
+.tilt-track { stroke: color-mix(in srgb, var(--accent) 35%, transparent); stroke-width: 5; }
+.tilt-ticks path { stroke: var(--muted); stroke-width: 1.6; }
+.tilt-needle { stroke: var(--ink); stroke-width: 2.6; }
+.tilt-eye { fill: var(--accent) !important; stroke: var(--ink); stroke-width: 1.6; }
+.tilt-pivot { fill: var(--ink) !important; }
+.tilt-val { min-width: 3ch; font-weight: 700; font-size: 14px; font-variant-numeric: tabular-nums; direction: ltr; }
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
 .list-fab { display: none; position: absolute; inset-inline-end: 14px; bottom: 14px; z-index: 10; }
 .hint {
   position: absolute; left: 50%; bottom: 16px; z-index: 9; transform: translate(-50%, 12px);
@@ -400,7 +422,8 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
   .label-district { font-size: 11.5px; padding: 4px 10px 4px 8px; }
   .label-plaza { font-size: 12px; padding: 4px 11px; }
   .label-plaza .sub { font-size: 10.5px; }
-  .hint { font-size: 12px; bottom: 64px; }
+  .hint { font-size: 12px; bottom: 120px; }
+  .map-controls { flex-wrap: wrap; width: 176px; }
   .card {
     top: auto; bottom: 0; inset-inline: 0; width: 100%; max-height: 58%;
     border-radius: 18px 18px 0 0; border-bottom: 0; transform: translateY(20px);

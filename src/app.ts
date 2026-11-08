@@ -296,6 +296,79 @@ export class App {
 
   // ---------- HUD ----------
 
+  /** The tilt dial: 0° looks straight down, 45° is the most oblique view. Drag, tap, scroll or arrow keys. */
+  private bindTilt(): void {
+    const rig = this.ctx.rig;
+    const dial = $('#tilt-dial');
+    const svg = dial.querySelector('svg') as SVGSVGElement;
+    const input = $('#tilt') as HTMLInputElement;
+    const needle = $('#tilt-needle');
+    const val = $('#tilt-val');
+    const show = () => {
+      const deg = rig.tiltDeg;
+      const d = Math.round(deg);
+      input.value = String(d);
+      input.setAttribute('aria-valuetext', `${d}°`);
+      val.textContent = `${d}°`;
+      needle.setAttribute('transform', `rotate(${deg.toFixed(1)} 9 40)`);
+    };
+    const set = (deg: number) => {
+      rig.setTiltDeg(deg);
+      show();
+      try {
+        localStorage.setItem('city-tilt', String(Math.round(rig.tiltDeg)));
+      } catch {
+        /* storage blocked: the dial still works for this visit */
+      }
+      this.onInteract();
+    };
+
+    let saved: string | null = null;
+    try {
+      saved = localStorage.getItem('city-tilt');
+    } catch {
+      saved = null;
+    }
+    if (saved !== null && saved !== '' && !Number.isNaN(Number(saved))) {
+      rig.setTiltDeg(Number(saved));
+      rig.tilt = rig.tiltGoal; // no animation on load
+    }
+    show();
+
+    // Angle of the pointer around the dial's pivot (bottom-left of the gauge), measured from the vertical.
+    const fromPointer = (e: PointerEvent) => {
+      const r = svg.getBoundingClientRect();
+      const px = r.left + (9 / 46) * r.width;
+      const py = r.top + (40 / 46) * r.height;
+      set((Math.atan2(e.clientX - px, py - e.clientY) * 180) / Math.PI);
+    };
+    let dragging = false;
+    dial.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      dial.setPointerCapture(e.pointerId);
+      dial.classList.add('is-dragging');
+      fromPointer(e);
+    });
+    dial.addEventListener('pointermove', (e) => {
+      if (dragging) fromPointer(e);
+    });
+    const stop = () => {
+      dragging = false;
+      dial.classList.remove('is-dragging');
+    };
+    dial.addEventListener('pointerup', stop);
+    dial.addEventListener('pointercancel', stop);
+    dial.addEventListener(
+      'wheel',
+      (e) => {
+        e.preventDefault();
+        set(rig.tiltDeg + (e.deltaY > 0 ? 3 : -3));
+      },
+      { passive: false },
+    );
+    input.addEventListener('input', () => set(Number(input.value)));
+  }
+
   private bindHud(): void {
     const rig = this.ctx.rig;
     const step = Math.PI / 4;
@@ -303,6 +376,7 @@ export class App {
     $('#rot-right').addEventListener('click', () => (rig.rotateBy(step), this.onInteract()));
     $('#zoom-in').addEventListener('click', () => (rig.zoomBy(1.25), this.onInteract()));
     $('#zoom-out').addEventListener('click', () => (rig.zoomBy(1 / 1.25), this.onInteract()));
+    this.bindTilt();
     $('#btn-list').addEventListener('click', () => this.router.go('/list'));
     $('#btn-list-mobile').addEventListener('click', () => this.router.go('/list'));
     $('#btn-about').addEventListener('click', () => this.router.go('/about'));
@@ -459,7 +533,7 @@ export class App {
     // Keep the plaza label on the rim nearest the camera, clear of the district labels behind.
     const az = this.ctx.rig.azimuth;
     this.labels.setPosition('plaza', Math.cos(az) * LAYOUT.plazaR * 0.95, 0.6, Math.sin(az) * LAYOUT.plazaR * 0.95);
-    this.world.update(time);
+    this.world.update(time, az);
     this.layoutLabels();
     this.ctx.render();
   };

@@ -13,7 +13,8 @@ export interface World {
   /** Invisible cylinder over the plaza, for clicks. */
   plazaPick: THREE.Mesh;
   applyTheme(theme: Theme): void;
-  update(time: number): void;
+  /** azimuth = current camera azimuth; the logo turns so its text always reads upright. */
+  update(time: number, azimuth: number): void;
 }
 
 export function createWorld(model: CityModel, opts: { lowPower: boolean; shadows: boolean }): World {
@@ -180,7 +181,9 @@ export function createWorld(model: CityModel, opts: { lowPower: boolean; shadows
       for (const n of neons) n.mat.color.copy(n.base).multiplyScalar(theme.neon);
       beamMat.opacity = 0.02 + theme.night * 0.06;
     },
-    update(time) {
+    update(time, azimuth) {
+      // Spin the logo in its own plane so "TE" stays level with the viewer's eye line.
+      logo.rotation.z = Math.PI / 2 - azimuth;
       beam.rotation.y = time * 0.2;
       beamMat.opacity = Math.max(0, beamMat.opacity);
     },

@@ -48,6 +48,22 @@
           <div id="labels" class="labels"></div>
           <div id="tooltip" class="tooltip" hidden></div>
           <div class="map-controls">
+            <label class="tilt-dial" id="tilt-dial" data-i18n-title="tilt">
+              <svg viewBox="0 0 46 46" aria-hidden="true">
+                <path class="tilt-ground" d="M3 40H43" />
+                <path class="tilt-track" d="M9 10A30 30 0 0 1 30.21 18.79" />
+                <g class="tilt-ticks">
+                  <path d="M9 14V9" /><path d="M16.76 15.02l1.3-4.83" /><path d="M24 18.02l2.5-4.33" /><path d="M27.38 21.62l3.54-3.54" />
+                </g>
+                <g id="tilt-needle">
+                  <path class="tilt-needle" d="M9 40V12" />
+                  <circle class="tilt-eye" cx="9" cy="12" r="3.2" />
+                </g>
+                <circle class="tilt-pivot" cx="9" cy="40" r="2.4" />
+              </svg>
+              <span class="tilt-val" id="tilt-val">45°</span>
+              <input id="tilt" class="visually-hidden" data-i18n-title="tilt" type="range" min="0" max="45" step="1" value="45" />
+            </label>
             <button id="rot-left" class="icon-btn" type="button" data-i18n-title="rotateLeft">↺</button>
             <button id="rot-right" class="icon-btn" type="button" data-i18n-title="rotateRight">↻</button>
             <button id="zoom-out" class="icon-btn" type="button" data-i18n-title="zoomOut">−</button>

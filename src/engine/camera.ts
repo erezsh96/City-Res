@@ -13,8 +13,10 @@ export interface View {
   offsetY: number;
 }
 
-const ELEVATION = THREE.MathUtils.degToRad(33);
 const DIST = 120;
+/** Tilt is measured from the city's vertical: 0 = straight down, 45° = the most oblique view allowed. */
+export const MAX_TILT_DEG = 45;
+const MAX_TILT = THREE.MathUtils.degToRad(MAX_TILT_DEG);
 
 export class CameraRig {
   readonly camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 400);
@@ -24,13 +26,14 @@ export class CameraRig {
   /** Screen-space shift (fraction of half the view), to make room for side cards. */
   offsetX = 0;
   offsetY = 0;
+  tilt = MAX_TILT;
+  /** Tilt is a viewer setting, kept apart from View so fly-to/restore never undoes it. */
+  tiltGoal = MAX_TILT;
 
   goal: View;
   minZoom = 0.8;
   maxZoom = 4;
   private aspect = 1;
-  /** Half-height of the view at zoom 1 that fits the whole island. */
-  fitHalfH = 10;
 
   constructor(private radius: number, private maxHeight: number) {
     this.goal = { azimuth: this.azimuth, zoom: 1, target: new THREE.Vector3(), offsetX: 0, offsetY: 0 };
@@ -38,10 +41,29 @@ export class CameraRig {
 
   setAspect(aspect: number): void {
     this.aspect = aspect;
+  }
+
+  /** Angle above the horizon. */
+  get elevation(): number {
+    return Math.PI / 2 - this.tilt;
+  }
+
+  /** Half-height of the view at zoom 1 that fits the whole island at the current tilt. */
+  get fitHalfH(): number {
     // The disc is 2R wide on screen and about R*sin(el)*2 + building height tall.
+    const el = this.elevation;
     const needW = this.radius * 1.04;
-    const needH = this.radius * Math.sin(ELEVATION) * 1.02 + this.maxHeight * Math.cos(ELEVATION) * 0.3 + 0.5;
-    this.fitHalfH = Math.max(needH, needW / aspect);
+    const needH = this.radius * Math.sin(el) * 1.02 + this.maxHeight * Math.cos(el) * 0.3 + 0.5;
+    return Math.max(needH, needW / this.aspect);
+  }
+
+  /** Set the tilt in degrees from the vertical (clamped to 0..45). */
+  setTiltDeg(deg: number): void {
+    this.tiltGoal = THREE.MathUtils.degToRad(THREE.MathUtils.clamp(deg, 0, MAX_TILT_DEG));
+  }
+
+  get tiltDeg(): number {
+    return THREE.MathUtils.radToDeg(this.tiltGoal);
   }
 
   get halfH(): number {
@@ -78,14 +100,15 @@ export class CameraRig {
   /** Called every frame. Returns true while still moving. */
   update(dt: number): boolean {
     const k = 1 - Math.exp(-dt * 7);
-    const before = this.azimuth + this.zoom + this.target.x + this.target.z + this.offsetX;
+    const before = this.azimuth + this.zoom + this.target.x + this.target.z + this.offsetX + this.tilt;
     this.azimuth += (this.goal.azimuth - this.azimuth) * k;
     this.zoom += (this.goal.zoom - this.zoom) * k;
     this.target.lerp(this.goal.target, k);
     this.offsetX += (this.goal.offsetX - this.offsetX) * k;
     this.offsetY += (this.goal.offsetY - this.offsetY) * k;
+    this.tilt += (this.tiltGoal - this.tilt) * k;
     this.apply();
-    const after = this.azimuth + this.zoom + this.target.x + this.target.z + this.offsetX;
+    const after = this.azimuth + this.zoom + this.target.x + this.target.z + this.offsetX + this.tilt;
     return Math.abs(after - before) > 1e-5;
   }
 
@@ -97,12 +120,16 @@ export class CameraRig {
     cam.right = halfW;
     cam.top = halfH;
     cam.bottom = -halfH;
+    const el = this.elevation;
     const dir = new THREE.Vector3(
-      Math.cos(this.azimuth) * Math.cos(ELEVATION),
-      Math.sin(ELEVATION),
-      Math.sin(this.azimuth) * Math.cos(ELEVATION),
+      Math.cos(this.azimuth) * Math.cos(el),
+      Math.sin(el),
+      Math.sin(this.azimuth) * Math.cos(el),
     );
     cam.position.copy(this.target).addScaledVector(dir, DIST);
+    // "Up" on screen = the horizontal direction we look along. Same result as world-up for
+    // oblique views, and still defined when looking straight down (tilt 0).
+    cam.up.set(-Math.cos(this.azimuth), 0, -Math.sin(this.azimuth));
     cam.lookAt(this.target);
     // Shift the view sideways/up so a selected building sits beside an open card.
     cam.updateMatrixWorld();
