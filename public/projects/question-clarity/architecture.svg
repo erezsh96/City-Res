@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" font-family="Rubik, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#8fa6e0"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2440"/>
+      <stop offset="1" stop-color="#121829"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="640" rx="24" fill="url(#bg)"/>
+  <text x="30" y="52" font-size="26" font-weight="700" fill="#e6eeff">What makes a question clear? · actual vs perceived clarity</text>
+  <text x="30" y="78" font-size="14" fill="#8fa6e0">Technion metacognition research seminar, team of three · 5,000 LaTeX Stack Exchange questions</text>
+
+  <!-- row 1: data -->
+  <g text-anchor="middle">
+    <rect x="30" y="108" width="250" height="150" rx="12" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="155" y="146" font-size="16" font-weight="700" fill="#e6eeff">Web scraper</text>
+    <text x="155" y="172" font-size="12" fill="#a9b8d8">Stack Exchange API</text>
+    <text x="155" y="190" font-size="12" fill="#a9b8d8">5,000 LaTeX questions</text>
+    <text x="155" y="208" font-size="12" fill="#a9b8d8">user · text · tags · images</text>
+    <text x="155" y="226" font-size="12" fill="#a9b8d8">votes · comments</text>
+
+    <rect x="330" y="108" width="300" height="68" rx="12" fill="#173a2e" stroke="#4fc79a" stroke-width="2.5"/>
+    <text x="480" y="136" font-size="15" font-weight="700" fill="#dffff0">Actual clarity</text>
+    <text x="480" y="158" font-size="12" fill="#a6dcc4">comment count (requests to clarify)</text>
+
+    <rect x="330" y="190" width="300" height="68" rx="12" fill="#2e1b45" stroke="#a46bff" stroke-width="2.5"/>
+    <text x="480" y="218" font-size="15" font-weight="700" fill="#f0e6ff">Perceived clarity</text>
+    <text x="480" y="240" font-size="12" fill="#c9b3e8">vote score (how readers judge it)</text>
+  </g>
+  <g stroke="#8fa6e0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M280 160H300V142H328"/>
+    <path d="M300 160V224H328"/>
+    <path d="M630 183H678"/>
+  </g>
+
+  <!-- row 1: analysis -->
+  <g text-anchor="middle">
+    <rect x="680" y="108" width="270" height="150" rx="12" fill="#0f3a49" stroke="#22c7e6" stroke-width="2.5"/>
+    <text x="815" y="146" font-size="16" font-weight="700" fill="#e6feff">ML models</text>
+    <text x="815" y="172" font-size="12" fill="#9fe6f5">Random Forest · XGBoost</text>
+    <text x="815" y="190" font-size="12" fill="#9fe6f5">grid search, 5-fold CV</text>
+    <text x="815" y="208" font-size="12" fill="#9fe6f5">no leakage from later answers</text>
+    <text x="815" y="232" font-size="13" font-weight="700" fill="#e6feff">R² 0.24 actual · 0.60 perceived</text>
+
+    <rect x="990" y="108" width="260" height="150" rx="12" fill="#3a2e14" stroke="#ffb547" stroke-width="2.5"/>
+    <text x="1120" y="146" font-size="16" font-weight="700" fill="#ffe7c2">Cue selection</text>
+    <text x="1120" y="172" font-size="12" fill="#d9bf98">from the course + literature</text>
+    <text x="1120" y="190" font-size="12" fill="#d9bf98">correlated cues removed</text>
+    <text x="1120" y="208" font-size="12" fill="#d9bf98">image · length · title · tags</text>
+    <text x="1120" y="226" font-size="12" fill="#d9bf98">reputation · LaTeX comments</text>
+  </g>
+  <g stroke="#8fa6e0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M950 183H988"/>
+    <path d="M1120 258V298"/>
+  </g>
+
+  <!-- row 2 -->
+  <g text-anchor="middle">
+    <rect x="30" y="300" width="580" height="150" rx="12" fill="#1d2440" stroke="#a98bff" stroke-width="2"/>
+    <text x="320" y="336" font-size="16" font-weight="700" fill="#ece6ff">What the cues did</text>
+    <text x="320" y="364" font-size="13" fill="#c9b3e8">Image: fewer clarification comments, but a much lower score</text>
+    <text x="320" y="388" font-size="13" fill="#c9b3e8">Reputation: higher score, same number of comments</text>
+    <text x="320" y="412" font-size="13" fill="#c9b3e8">Longer post: more comments and a lower score</text>
+    <text x="320" y="436" font-size="12" fill="#8fa6e0">readers' judgement follows cues that don't change actual clarity</text>
+
+    <rect x="650" y="300" width="300" height="150" rx="12" fill="#0f3a49" stroke="#22c7e6" stroke-width="2.5"/>
+    <text x="800" y="336" font-size="16" font-weight="700" fill="#e6feff">Paired bootstrap</text>
+    <text x="800" y="362" font-size="12" fill="#9fe6f5">3,000 resamples of the test set</text>
+    <text x="800" y="380" font-size="12" fill="#9fe6f5">ML beats the regression</text>
+    <text x="800" y="398" font-size="12" fill="#9fe6f5">on both measures</text>
+    <text x="800" y="422" font-size="12" fill="#9fe6f5">cues help only perceived clarity</text>
+
+    <rect x="990" y="300" width="260" height="150" rx="12" fill="#3a2e14" stroke="#ffb547" stroke-width="2.5"/>
+    <text x="1120" y="336" font-size="16" font-weight="700" fill="#ffe7c2">BEVoCI regressions</text>
+    <text x="1120" y="362" font-size="12" fill="#d9bf98">one per measure, in R</text>
+    <text x="1120" y="380" font-size="12" fill="#d9bf98">+ an interaction model</text>
+    <text x="1120" y="398" font-size="12" fill="#d9bf98">assumption checks</text>
+    <text x="1120" y="416" font-size="12" fill="#d9bf98">robust (HC3) errors</text>
+  </g>
+  <g stroke="#8fa6e0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M990 375H952"/>
+    <path d="M1120 450V466H320V452"/>
+    <path d="M815 258V298" stroke-dasharray="5 4"/>
+  </g>
+
+  <!-- paper -->
+  <g text-anchor="middle">
+    <rect x="30" y="480" width="1220" height="56" rx="12" fill="#173a24" stroke="#7dff8a" stroke-width="2"/>
+    <text x="640" y="514" font-size="15" font-weight="700" fill="#dfffe3">Research paper: why each cue, what the models and tests show, and what it means for metacognition</text>
+  </g>
+
+  <!-- my part -->
+  <rect x="30" y="556" width="1220" height="60" rx="12" fill="#161d33" stroke="#3a4670" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="640" y="582" font-size="14" font-weight="700" fill="#c9d6f5" text-anchor="middle">My part: writing the paper · the scraper and the analysis code were written by my two teammates</text>
+  <text x="640" y="602" font-size="12" fill="#8fa6e0" text-anchor="middle">Python · R · Jupyter · pandas · scikit-learn · XGBoost · tidyverse · Stack Exchange API</text>
+</svg>

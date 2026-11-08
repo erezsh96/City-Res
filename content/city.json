@@ -310,23 +310,69 @@
       "district": "academic",
       "tier": "featured",
       "access": "public",
-      "title": { "en": "What Makes a Question Clear?", "he": "מה הופך שאלה לברורה?" },
-      "tagline": {
-        "en": "Data-science study of 5,000 scraped LaTeX Stack Exchange questions, modeling which features make a question clear.",
-        "he": "מחקר מדעי נתונים על 5,000 שאלות מ-LaTeX Stack Exchange: אילו מאפיינים הופכים שאלה לברורה."
+      "title": {
+        "en": "What Makes a Question Clear?",
+        "he": "מה הופך שאלה לברורה?"
       },
-      "stack": ["Python", "R", "Jupyter", "scikit-learn", "XGBoost"],
+      "tagline": {
+        "en": "Data-science study of 5,000 LaTeX Stack Exchange questions: which cues make a question actually clear, and which only make readers judge it as clear.",
+        "he": "מחקר מדעי נתונים על 5,000 שאלות מ-LaTeX Stack Exchange: אילו רמזים הופכים שאלה לברורה באמת, ואילו רק גורמים לקוראים לשפוט אותה כברורה."
+      },
+      "description": {
+        "en": "The final project of a Technion research seminar in metacognition, done by a team of three between July and September 2026. We collected 5,000 questions from the LaTeX community on Stack Exchange and measured clarity in two ways: the number of comments a question gets, since comments are often requests for clarification (actual clarity), and its vote score (perceived clarity). Random Forest and XGBoost models, tuned with grid search and 5-fold cross-validation, predicted both measures. Six cues taken from the course and the literature, such as an image in the post, post length and the author's reputation, then went into BEVoCI-style regressions that compare each cue's effect on actual and perceived clarity. Several cues pulled the two measures apart. Questions with an image got fewer clarification comments but lower scores, and a high-reputation author raised the score without changing the number of comments, a sign of a source-credibility cue. XGBoost beat the regression on both measures, confirmed by a paired bootstrap of 3,000 resamples, and adding the significant cues improved only the model for perceived clarity.",
+        "he": "פרויקט הסיום של סמינר מחקר במטה-קוגניציה בטכניון, בצוות של שלושה, בין יולי לספטמבר 2026. אספנו 5,000 שאלות מקהילת LaTeX ב-Stack Exchange ומדדנו בהירות בשתי דרכים: מספר התגובות שהשאלה מקבלת, כי תגובות הן פעמים רבות בקשות להבהרה (בהירות בפועל), וציון ההצבעות שלה (בהירות נתפסת). מודלי Random Forest ו-XGBoost, שכוונו ב-grid search וב-cross-validation של 5 קפלים, חזו את שני המדדים. אחר כך שישה רמזים מתוך הקורס והספרות, כמו תמונה בפוסט, אורך הפוסט והמוניטין של הכותב, נכנסו לרגרסיות בסגנון BEVoCI שמשוות את ההשפעה של כל רמז על הבהירות בפועל ועל הבהירות הנתפסת. כמה רמזים הפרידו בין שני המדדים. שאלות עם תמונה קיבלו פחות תגובות הבהרה אבל ציון נמוך יותר, וכותב עם מוניטין גבוה העלה את הציון בלי לשנות את מספר התגובות, סימן לרמז של אמינות המקור. XGBoost ניצח את הרגרסיה בשני המדדים, מה שאושר ב-bootstrap מזווג של 3,000 דגימות, והוספת הרמזים המובהקים שיפרה רק את המודל של הבהירות הנתפסת."
+      },
+      "goals": {
+        "en": [
+          "Separate how clear a question actually is from how clear readers judge it to be.",
+          "Predict both measures from data that exists when the question is posted, with no leakage from later answers.",
+          "Test which metacognitive cues from the course and the literature bias readers' judgement.",
+          "Check whether a machine-learning model beats a regression, and whether the cues add anything to it."
+        ],
+        "he": [
+          "להפריד בין כמה שאלה ברורה בפועל לבין כמה הקוראים שופטים אותה כברורה.",
+          "לחזות את שני המדדים מנתונים שקיימים ברגע פרסום השאלה, בלי דליפה מתשובות מאוחרות.",
+          "לבדוק אילו רמזים מטה-קוגניטיביים מהקורס ומהספרות מטים את שיפוט הקוראים.",
+          "לבדוק אם מודל למידת מכונה מנצח רגרסיה, ואם הרמזים מוסיפים לו משהו."
+        ]
+      },
+      "myRole": {
+        "en": "A team of three. I wrote the final paper: why each cue was chosen, tied to the course and the literature, and what the regressions, models and bootstrap tests mean. The scraper and the analysis code were written by my two teammates. I also built and ran a separate online metacognition experiment with about 20 participants, which has its own building in this district.",
+        "he": "צוות של שלושה. אני כתבתי את העבודה המסכמת: למה בחרנו כל רמז, עם הקשר לקורס ולספרות, ומה המשמעות של הרגרסיות, המודלים ומבחני ה-bootstrap. את ה-scraper ואת קוד הניתוח כתבו שני השותפים שלי. בניתי והרצתי גם ניסוי מטה-קוגניציה מקוון נפרד עם כ-20 משתתפים, שיש לו בניין משלו בשכונה הזו."
+      },
+      "stack": ["Python", "R", "Jupyter", "pandas", "scikit-learn", "XGBoost", "tidyverse", "Stack Exchange API"],
       "metrics": [
-        { "value": "5,000", "label": { "en": "questions analysed", "he": "שאלות שנותחו" } }
+        { "value": "5,000", "label": { "en": "questions analysed", "he": "שאלות שנותחו" } },
+        { "value": "0.60", "label": { "en": "R² for perceived clarity (XGBoost), vs 0.12 for the regression", "he": "R² לבהירות הנתפסת (XGBoost), לעומת 0.12 ברגרסיה" } },
+        { "value": "3,000", "label": { "en": "bootstrap resamples to compare the models", "he": "דגימות bootstrap להשוואת המודלים" } }
       ],
-      "links": { "github": "https://github.com/EladJoseph/Metacognition_Final_Project" },
+      "links": {
+        "github": "https://github.com/EladJoseph/Metacognition_Final_Project"
+      },
+      "gallery": [
+        {
+          "src": "projects/question-clarity/architecture.svg",
+          "caption": { "en": "From 5,000 scraped questions to two clarity measures, the models, the cue regressions and the bootstrap tests.", "he": "מ-5,000 שאלות שנאספו לשני מדדי בהירות, המודלים, רגרסיות הרמזים ומבחני ה-bootstrap." }
+        },
+        {
+          "src": "projects/question-clarity/image-effect.webp",
+          "caption": { "en": "Questions with an image get slightly fewer clarification comments, but a much lower score. Readers judge them as less clear than they are.", "he": "שאלות עם תמונה מקבלות קצת פחות תגובות הבהרה, אבל ציון נמוך בהרבה. הקוראים שופטים אותן כפחות ברורות ממה שהן." }
+        },
+        {
+          "src": "projects/question-clarity/reputation-effect.webp",
+          "caption": { "en": "The author's reputation barely changes the number of comments but strongly raises the score: a source-credibility cue.", "he": "המוניטין של הכותב כמעט לא משנה את מספר התגובות, אבל מעלה מאוד את הציון: רמז של אמינות המקור." }
+        }
+      ],
       "floors": [
-        { "name": "Web scraper" },
-        { "name": "Feature engineering" },
-        { "name": "Random Forest / XGBoost models" },
-        { "name": "Bootstrap analysis" },
-        { "name": "Research paper" }
+        { "name": { "en": "Web scraper", "he": "Scraper" }, "detail": { "en": "Pulls 5,000 LaTeX Stack Exchange questions with user, text, tag and response data.", "he": "שולף 5,000 שאלות מ-LaTeX Stack Exchange עם נתוני משתמש, טקסט, תגיות ותגובות." } },
+        { "name": { "en": "Two clarity measures", "he": "שני מדדי בהירות" }, "detail": { "en": "Comment count for actual clarity, vote score for perceived clarity.", "he": "מספר תגובות לבהירות בפועל, ציון הצבעות לבהירות נתפסת." } },
+        { "name": { "en": "Random Forest / XGBoost models", "he": "מודלי Random Forest / XGBoost" }, "detail": { "en": "Grid search with 5-fold cross-validation, judged on a held-out test set.", "he": "Grid search עם cross-validation של 5 קפלים, נבדקו על סט מבחן נפרד." } },
+        { "name": { "en": "Cue selection", "he": "בחירת רמזים" }, "detail": { "en": "Six cues from the course and the literature, after removing highly correlated ones.", "he": "שישה רמזים מהקורס ומהספרות, אחרי הסרת רמזים עם קורלציה גבוהה." } },
+        { "name": { "en": "BEVoCI regressions", "he": "רגרסיות BEVoCI" }, "detail": { "en": "Compare each cue's effect on both measures, with assumption checks and robust (HC3) errors.", "he": "משוות את ההשפעה של כל רמז על שני המדדים, עם בדיקת הנחות ושגיאות עמידות (HC3)." } },
+        { "name": { "en": "Bootstrap analysis", "he": "ניתוח bootstrap" }, "detail": { "en": "A paired bootstrap of 3,000 resamples shows whether the model differences are real.", "he": "Bootstrap מזווג של 3,000 דגימות בודק אם ההבדלים בין המודלים אמיתיים." } },
+        { "name": { "en": "Research paper", "he": "עבודה מסכמת" }, "detail": { "en": "My part: the cue rationale, the results and what they mean.", "he": "החלק שלי: ההסבר לבחירת הרמזים, התוצאות ומה הן אומרות." } }
       ],
+      "size": { "months": 2, "teamSize": 3 },
       "sign": "CLARITY"
     },
     {
