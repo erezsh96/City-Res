@@ -4,6 +4,7 @@ import { getLang, t } from '../i18n';
 import { loc } from '../text';
 import { renderListHtml } from '../data/staticList';
 import { h } from './dom';
+import { analyticsConfigured, openConsent } from '../analytics';
 
 export class AboutModal {
   constructor(private el: HTMLElement, private data: CityData, private onClose: () => void) {
@@ -52,6 +53,9 @@ export class AboutModal {
           { class: 'links' },
           o.links.map((l) => h('a', { class: 'btn', href: l.url, target: '_blank', rel: 'noopener' }, loc(l.label, lang), ' ↗')),
         ),
+        analyticsConfigured()
+          ? h('button', { class: 'link-btn about-privacy', type: 'button', onclick: () => openConsent() }, t('analyticsSettings'))
+          : null,
       ),
     );
   }

@@ -4,6 +4,7 @@ import type { CityData } from './types';
 import { validateCity } from './data/validate';
 import { initLang, t } from './i18n';
 import { ListView } from './ui/overlays';
+import { initAnalytics } from './analytics';
 import { $ } from './ui/dom';
 
 async function boot() {
@@ -18,6 +19,7 @@ async function boot() {
     }
   }
   const data = raw as CityData;
+  initAnalytics(data.site?.clarityId);
 
   // Neon signs are drawn with the site font, so wait for it (but never for long).
   await Promise.race([

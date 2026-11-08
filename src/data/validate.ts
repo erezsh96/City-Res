@@ -28,6 +28,16 @@ export function validateCity(raw: unknown): string[] {
   const e: string[] = [];
   if (!isObj(raw)) return ['the root must be an object with owner, districts and projects'];
 
+  if (raw.site !== undefined) {
+    if (!isObj(raw.site)) e.push('site must be an object');
+    else {
+      for (const k of Object.keys(raw.site)) if (k !== 'clarityId') e.push(`site: unknown field "${k}" (typo?)`);
+      const id = raw.site.clarityId;
+      if (id !== undefined && (typeof id !== 'string' || (id !== '' && !/^[a-z0-9]{6,20}$/i.test(id))))
+        e.push('site.clarityId must be empty or a Clarity project ID (letters and digits)');
+    }
+  }
+
   const owner = raw.owner;
   if (!isObj(owner)) e.push('owner is missing');
   else {

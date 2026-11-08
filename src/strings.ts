@@ -50,6 +50,12 @@ const en = {
   findMe: 'Find me',
   noWebgl: 'Your browser could not start the 3D city, so here is the list view.',
   projects: 'Projects',
+  linkedin: 'LinkedIn profile (opens in a new tab)',
+  consentTitle: 'Analytics',
+  consentText: 'May this site use Microsoft Clarity to see which projects visitors open and where they click? It sets cookies, and starts only if you agree.',
+  consentAccept: 'Accept',
+  consentDecline: 'No thanks',
+  analyticsSettings: 'Analytics settings',
 };
 
 export type StringKey = keyof typeof en;
@@ -103,6 +109,12 @@ const he: Record<StringKey, string> = {
   findMe: 'איפה אפשר למצוא אותי',
   noWebgl: 'הדפדפן לא הצליח להפעיל את העיר בתלת-ממד, אז הנה תצוגת הרשימה.',
   projects: 'פרויקטים',
+  linkedin: 'הפרופיל שלי ב-LinkedIn (נפתח בלשונית חדשה)',
+  consentTitle: 'אנליטיקס',
+  consentText: 'האם האתר יכול להשתמש ב-Microsoft Clarity כדי לראות אילו פרויקטים מבקרים פותחים ואיפה הם לוחצים? הכלי שומר עוגיות, ומופעל רק אם תסכימו.',
+  consentAccept: 'אישור',
+  consentDecline: 'לא, תודה',
+  analyticsSettings: 'הגדרות אנליטיקס',
 };
 
 export const STRINGS: Record<Lang, Record<StringKey, string>> = { en, he };

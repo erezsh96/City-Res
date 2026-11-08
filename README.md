@@ -62,6 +62,14 @@ Gallery images go in `public/projects/<id>/`. The validator checks that they exi
 - **Footprint:** grows with team size.
 - **Placement:** automatic. Each district gets a wedge sized by its content, and buildings fill rings from the plaza outward. `place` pins one by hand.
 
+## Analytics (optional)
+
+Set `site.clarityId` in `content/city.json` to a Microsoft Clarity project ID to turn analytics on. Leave it empty and nothing runs.
+
+- Visitors see a consent bar first. Clarity loads only after they click Accept; the answer is kept in `localStorage` (`city-consent`). They can change it from "Analytics settings" in the About popup.
+- Named events for filtering sessions: `open_project:<id>`, `open_about`, `list_view`, `language:<he|en>`, `tilt_change`, `gallery_open:<id>`, `github_click:<id|profile>`, `linkedin_click`.
+- Code: `src/analytics.ts`.
+
 ## Structure
 
 ```

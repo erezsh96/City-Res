@@ -104,7 +104,14 @@ export interface Project {
   notes?: string;
 }
 
+/** Site-wide settings. */
+export interface SiteSettings {
+  /** Microsoft Clarity project ID. Empty = no analytics and no consent bar. */
+  clarityId?: string;
+}
+
 export interface CityData {
+  site?: SiteSettings;
   owner: Owner;
   districts: District[];
   projects: Project[];

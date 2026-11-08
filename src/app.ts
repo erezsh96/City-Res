@@ -13,6 +13,7 @@ import { Controls } from './engine/controls';
 import { nightFactor, themeFor, type Theme, type ThemeMode } from './engine/daylight';
 import type { View } from './engine/camera';
 import { Router, type Route } from './router';
+import { track, trackOnce } from './analytics';
 import { getLang, isRtl, onLangChange, setLang, t } from './i18n';
 import { allVariants, loc } from './text';
 import { $, h } from './ui/dom';
@@ -265,6 +266,9 @@ export class App {
   // ---------- routes ----------
 
   private onRoute(r: Route): void {
+    if (r.name === 'project') track(`open_project:${r.id}`);
+    else if (r.name === 'about') track('open_about');
+    else if (r.name === 'list') track('list_view');
     if (r.name === 'project') {
       const pp = this.model.byId.get(r.id);
       if (!pp) return this.router.replace('/');
@@ -315,6 +319,7 @@ export class App {
     const set = (deg: number) => {
       rig.setTiltDeg(deg);
       show();
+      trackOnce('tilt_change');
       try {
         localStorage.setItem('city-tilt', String(Math.round(rig.tiltDeg)));
       } catch {
