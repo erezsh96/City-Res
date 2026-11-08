@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" font-family="Rubik, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#8fa6e0"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2440"/>
+      <stop offset="1" stop-color="#121829"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="640" rx="24" fill="url(#bg)"/>
+  <text x="30" y="52" font-size="26" font-weight="700" fill="#e6eeff">SkinSens · from a skin profile to a safe routine</text>
+  <text x="30" y="78" font-size="14" fill="#8fa6e0">Technion course project, built with one partner · an LLM writes the routine, fixed rules keep it safe</text>
+
+  <!-- row 1 -->
+  <g text-anchor="middle">
+    <rect x="30" y="108" width="210" height="118" rx="12" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="135" y="146" font-size="16" font-weight="700" fill="#e6eeff">5-step onboarding</text>
+    <text x="135" y="170" font-size="12" fill="#a9b8d8">name · pregnancy status</text>
+    <text x="135" y="188" font-size="12" fill="#a9b8d8">skin type · concerns</text>
+    <text x="135" y="206" font-size="12" fill="#a9b8d8">products (optional)</text>
+
+    <rect x="282" y="108" width="210" height="118" rx="12" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="387" y="146" font-size="16" font-weight="700" fill="#e6eeff">Live product search</text>
+    <text x="387" y="170" font-size="12" fill="#a9b8d8">Open Beauty Facts API</text>
+    <text x="387" y="188" font-size="12" fill="#a9b8d8">cached · images first</text>
+    <text x="387" y="206" font-size="12" fill="#a9b8d8">broken results dropped</text>
+
+    <rect x="534" y="108" width="210" height="118" rx="12" fill="#0f3a49" stroke="#22c7e6" stroke-width="2.5"/>
+    <text x="639" y="146" font-size="16" font-weight="700" fill="#e6feff">Ingredient extraction</text>
+    <text x="639" y="170" font-size="12" fill="#9fe6f5">the LLM reads product names</text>
+    <text x="639" y="188" font-size="12" fill="#9fe6f5">and returns their active</text>
+    <text x="639" y="206" font-size="12" fill="#9fe6f5">ingredients as JSON</text>
+
+    <rect x="786" y="108" width="210" height="118" rx="12" fill="#3a2e14" stroke="#ffb547" stroke-width="2.5"/>
+    <text x="891" y="146" font-size="16" font-weight="700" fill="#ffe7c2">Conflict check</text>
+    <text x="891" y="170" font-size="12" fill="#d9bf98">fixed rules, 9 actives</text>
+    <text x="891" y="188" font-size="12" fill="#d9bf98">e.g. retinol + AHA,</text>
+    <text x="891" y="206" font-size="12" fill="#d9bf98">vitamin C + niacinamide</text>
+
+    <rect x="1038" y="108" width="210" height="118" rx="12" fill="#0f3a49" stroke="#22c7e6" stroke-width="2.5"/>
+    <text x="1143" y="146" font-size="16" font-weight="700" fill="#e6feff">Routine builder</text>
+    <text x="1143" y="170" font-size="12" fill="#9fe6f5">the LLM writes AM + PM steps</text>
+    <text x="1143" y="188" font-size="12" fill="#9fe6f5">pregnancy rules: no retinoids</text>
+    <text x="1143" y="206" font-size="12" fill="#9fe6f5">or hydroquinone</text>
+  </g>
+  <g stroke="#8fa6e0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M240 167H280"/>
+    <path d="M492 167H532"/>
+    <path d="M744 167H784"/>
+    <path d="M996 167H1036"/>
+    <path d="M1143 226V268"/>
+  </g>
+
+  <!-- row 2 -->
+  <g text-anchor="middle">
+    <rect x="30" y="270" width="714" height="118" rx="12" fill="#1d2440" stroke="#a98bff" stroke-width="2"/>
+    <text x="387" y="310" font-size="16" font-weight="700" fill="#ece6ff">AI provider layer</text>
+    <text x="387" y="336" font-size="13" fill="#b9add9">OpenAI · Gemini · a local Ollama model, behind one shared interface</text>
+    <text x="387" y="358" font-size="13" fill="#b9add9">picked in the settings · used by every LLM step</text>
+
+    <rect x="786" y="270" width="210" height="118" rx="12" fill="#0f3a49" stroke="#22c7e6" stroke-width="2.5"/>
+    <text x="891" y="308" font-size="16" font-weight="700" fill="#e6feff">Chat</text>
+    <text x="891" y="332" font-size="12" fill="#9fe6f5">questions about the routine</text>
+    <text x="891" y="350" font-size="12" fill="#9fe6f5">change requests return</text>
+    <text x="891" y="368" font-size="12" fill="#9fe6f5">a full updated AM + PM</text>
+
+    <rect x="1038" y="270" width="210" height="118" rx="12" fill="#173a24" stroke="#7dff8a" stroke-width="2.5"/>
+    <text x="1143" y="308" font-size="16" font-weight="700" fill="#dfffe3">Routine dashboard</text>
+    <text x="1143" y="332" font-size="12" fill="#a6dcae">morning and evening steps</text>
+    <text x="1143" y="350" font-size="12" fill="#a6dcae">conflict warnings</text>
+    <text x="1143" y="368" font-size="12" fill="#a6dcae">saved to the profile</text>
+  </g>
+  <g stroke="#8fa6e0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M1038 329H998"/>
+    <path d="M639 270V228" stroke-dasharray="5 4"/>
+    <path d="M891 270V246H1100V228" stroke-dasharray="5 4"/>
+  </g>
+
+  <!-- row 3 -->
+  <g text-anchor="middle">
+    <rect x="30" y="430" width="714" height="80" rx="12" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="387" y="458" font-size="15" font-weight="700" fill="#e6eeff">Accounts &amp; profiles</text>
+    <text x="387" y="482" font-size="12" fill="#a9b8d8">sign up with a bcrypt-hashed password, sign in with Google, or continue as a guest</text>
+    <text x="387" y="500" font-size="12" fill="#a9b8d8">profile and routine saved through SQLAlchemy</text>
+
+    <rect x="786" y="430" width="462" height="80" rx="12" fill="#173a24" stroke="#7dff8a" stroke-width="2"/>
+    <text x="1017" y="458" font-size="15" font-weight="700" fill="#dfffe3">Tested with real users</text>
+    <text x="1017" y="482" font-size="12" fill="#a6dcae">real people searched for the products they own</text>
+    <text x="1017" y="500" font-size="12" fill="#a6dcae">their feedback set which fixes came first</text>
+  </g>
+
+  <!-- my part -->
+  <rect x="30" y="540" width="1218" height="66" rx="12" fill="#161d33" stroke="#3a4670" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="639" y="568" font-size="14" font-weight="700" fill="#c9d6f5" text-anchor="middle">My part: debugging and QA across the Python logic and the UI · the UX/UI · testing with real users</text>
+  <text x="639" y="590" font-size="12" fill="#8fa6e0" text-anchor="middle">Python · Streamlit · OpenAI · Gemini · Ollama · SQLAlchemy · bcrypt · Google OAuth · Open Beauty Facts</text>
+</svg>

@@ -232,23 +232,76 @@
       "access": "public",
       "title": "SkinSens",
       "tagline": {
-        "en": "AI skincare advisor that builds personalized routines and flags conflicting ingredients.",
-        "he": "יועץ טיפוח מבוסס AI שבונה שגרה אישית ומזהה רכיבים מתנגשים."
+        "en": "AI skincare advisor: builds a morning and evening routine for your skin and the products you own, and flags ingredients that shouldn't be mixed.",
+        "he": "יועץ טיפוח מבוסס AI: בונה שגרת בוקר וערב לפי העור שלך והמוצרים שכבר יש לך, ומסמן רכיבים שלא כדאי לשלב."
       },
-      "description": "Works with several AI providers (OpenAI, Gemini, Ollama) through one shared interface, with safety guardrails and user authentication. About 6,900 lines of Python, built with a partner.",
-      "stack": ["Python", "Streamlit", "OpenAI API", "Gemini API", "Ollama"],
+      "description": {
+        "en": "A Technion course project, built with one partner between December 2025 and January 2026. A 5-step onboarding asks for a name, pregnancy or breastfeeding status, skin type (oily, dry, combination or sensitive), main concerns (acne, aging, pigmentation, redness, dehydration) and, optionally, the products the user already owns, found through a live search of the Open Beauty Facts database. An LLM reads those products and lists their active ingredients, and a fixed set of rules then flags pairs that may irritate the skin together, such as retinol with AHAs or vitamin C with niacinamide. The LLM writes the routine as separate morning and evening steps under fixed safety rules: for pregnant or breastfeeding users, retinoids and hydroquinone are banned and safer alternatives are suggested. A chat answers questions and returns a full updated routine when the user asks for a change. The AI part runs on OpenAI, Gemini or a local Ollama model behind one shared interface, chosen in the settings. Users can sign up with a password (stored hashed with bcrypt), sign in with Google, or continue as a guest, and their profile and routine are saved to a database.",
+        "he": "פרויקט בקורס בטכניון, שנבנה עם שותפה אחת בין דצמבר 2025 לינואר 2026. תהליך הרשמה של 5 שלבים שואל על שם, הריון או הנקה, סוג עור (שמן, יבש, מעורב או רגיש), הבעיות העיקריות (אקנה, הזדקנות, פיגמנטציה, אדמומיות, התייבשות), ואם רוצים גם על המוצרים שכבר יש למשתמש, שנמצאים בחיפוש חי במאגר Open Beauty Facts. מודל שפה קורא את המוצרים ומפרט את הרכיבים הפעילים שלהם, ואז סט קבוע של כללים מסמן זוגות שעלולים לגרות את העור יחד, כמו רטינול עם חומצות AHA או ויטמין C עם ניאצינמיד. מודל השפה כותב את השגרה כשלבי בוקר וערב נפרדים, תחת כללי בטיחות קבועים: למשתמשות בהריון או בהנקה רטינואידים והידרוקינון אסורים, ומוצעות חלופות בטוחות יותר. צ'אט עונה על שאלות ומחזיר שגרה מעודכנת מלאה כשהמשתמש מבקש שינוי. חלק ה-AI רץ על OpenAI, על Gemini או על מודל Ollama מקומי, מאחורי ממשק משותף אחד שבוחרים בהגדרות. אפשר להירשם עם סיסמה (נשמרת מוצפנת ב-bcrypt), להתחבר עם Google, או להמשיך כאורח, והפרופיל והשגרה נשמרים במסד נתונים."
+      },
+      "goals": {
+        "en": [
+          "Build a routine that fits the person's skin, concerns and the products they already own.",
+          "Catch ingredient pairs that irritate the skin before they end up in the same routine.",
+          "Keep pregnant and breastfeeding users away from unsafe ingredients.",
+          "Not depend on one AI provider: switch between OpenAI, Gemini and a local model.",
+          "Test it with real users and fix what they run into first."
+        ],
+        "he": [
+          "לבנות שגרה שמתאימה לעור, לבעיות ולמוצרים שכבר יש לאדם.",
+          "לתפוס זוגות רכיבים שמגרים את העור לפני שהם נכנסים לאותה שגרה.",
+          "להרחיק משתמשות בהריון ובהנקה מרכיבים לא בטוחים.",
+          "לא להיות תלויים בספק AI אחד: מעבר בין OpenAI, Gemini ומודל מקומי.",
+          "לבדוק עם משתמשים אמיתיים ולתקן קודם את מה שהם נתקלים בו."
+        ]
+      },
+      "myRole": {
+        "en": "Built with one partner. I owned debugging and QA across the Python logic and the UI, led the UX/UI side, and reviewed new versions before loading them into the shared repo. I tested the recommendations with real users who searched for the products they own, and their feedback set which fixes came first. In the code itself, I fixed the product search so broken results never reach the screen.",
+        "he": "נבנה עם שותפה אחת. הייתי אחראי על הדיבוג והבדיקות בלוגיקת ה-Python ובממשק, הובלתי את צד ה-UX/UI, ובדקתי גרסאות חדשות לפני שהעליתי אותן לריפו המשותף. בדקתי את ההמלצות עם משתמשים אמיתיים שחיפשו את המוצרים שיש להם, והפידבק שלהם קבע אילו תיקונים קודמים. בקוד עצמו תיקנתי את חיפוש המוצרים כך שתוצאות שבורות לא מגיעות למסך."
+      },
+      "stack": ["Python", "Streamlit", "OpenAI API", "Gemini API", "Ollama", "SQLAlchemy", "bcrypt", "Google OAuth", "Open Beauty Facts API"],
       "metrics": [
-        { "value": "~6,900", "label": { "en": "lines of Python", "he": "שורות Python" } },
-        { "value": "3", "label": { "en": "AI providers, one interface", "he": "ספקי AI בממשק אחד" } }
+        { "value": "5", "label": { "en": "onboarding steps", "he": "שלבי הרשמה" } },
+        { "value": "3", "label": { "en": "AI providers, one interface", "he": "ספקי AI בממשק אחד" } },
+        { "value": "9", "label": { "en": "active ingredients checked for conflicts", "he": "רכיבים פעילים שנבדקים להתנגשות" } }
+      ],
+      "gallery": [
+        {
+          "src": "projects/skinsens/architecture.svg",
+          "caption": { "en": "From the onboarding answers to a routine, with the conflict rules and the AI provider layer.", "he": "מתשובות ההרשמה ועד שגרה, עם כללי ההתנגשות ושכבת ספקי ה-AI." }
+        },
+        {
+          "src": "projects/skinsens/welcome.webp",
+          "caption": { "en": "The welcome screen: start the onboarding, or sign in to load a saved profile.", "he": "מסך הפתיחה: מתחילים את ההרשמה, או מתחברים כדי לטעון פרופיל שמור." }
+        },
+        {
+          "src": "projects/skinsens/pregnancy-step.webp",
+          "caption": { "en": "Step 2 asks about pregnancy or breastfeeding, which turns on the safety rules for retinoids and hydroquinone.", "he": "שלב 2 שואל על הריון או הנקה, וזה מפעיל את כללי הבטיחות לרטינואידים ולהידרוקינון." }
+        },
+        {
+          "src": "projects/skinsens/skin-type-step.webp",
+          "caption": { "en": "Step 3: picking a skin type.", "he": "שלב 3: בחירת סוג עור." }
+        },
+        {
+          "src": "projects/skinsens/concerns-step.webp",
+          "caption": { "en": "Step 4: any number of concerns can be picked, and they shape which ingredients the routine uses.", "he": "שלב 4: אפשר לבחור כמה בעיות שרוצים, והן קובעות באילו רכיבים השגרה משתמשת." }
+        },
+        {
+          "src": "projects/skinsens/product-search.webp",
+          "caption": { "en": "Step 5: a live search of Open Beauty Facts with the search fix in place. Products with images come first, and broken results are dropped. Demo profile.", "he": "שלב 5: חיפוש חי ב-Open Beauty Facts עם התיקון של החיפוש. מוצרים עם תמונה מופיעים קודם, ותוצאות שבורות מסוננות. פרופיל הדגמה." }
+        }
       ],
       "floors": [
-        { "name": "Provider-agnostic AI interface" },
-        { "name": "Routine builder" },
-        { "name": "Ingredient conflict checks" },
-        { "name": "Safety guardrails" },
-        { "name": "User authentication" }
+        { "name": { "en": "5-step onboarding", "he": "הרשמה ב-5 שלבים" }, "detail": { "en": "Name, pregnancy or breastfeeding status, skin type, main concerns and, optionally, current products.", "he": "שם, הריון או הנקה, סוג עור, בעיות עיקריות, ואם רוצים גם המוצרים הנוכחיים." } },
+        { "name": { "en": "Live product search", "he": "חיפוש מוצרים חי" }, "detail": { "en": "Searches the Open Beauty Facts database with a cache, shows products with images first, and drops broken results.", "he": "מחפש במאגר Open Beauty Facts עם מטמון, מציג קודם מוצרים עם תמונה, ומסנן תוצאות שבורות." } },
+        { "name": { "en": "Ingredient extraction", "he": "חילוץ רכיבים" }, "detail": { "en": "The LLM reads product names and returns their active ingredients as JSON.", "he": "מודל השפה קורא שמות מוצרים ומחזיר את הרכיבים הפעילים שלהם כ-JSON." } },
+        { "name": { "en": "Ingredient conflict check", "he": "בדיקת התנגשות רכיבים" }, "detail": { "en": "Fixed rules over 9 actives, such as retinol with AHAs or vitamin C with niacinamide; warnings are shown before the routine.", "he": "כללים קבועים על 9 רכיבים פעילים, כמו רטינול עם AHA או ויטמין C עם ניאצינמיד. האזהרות מוצגות לפני השגרה." } },
+        { "name": { "en": "Routine builder", "he": "בונה השגרה" }, "detail": { "en": "The LLM writes morning and evening steps under safety rules, with no retinoids or hydroquinone during pregnancy.", "he": "מודל השפה כותב שלבי בוקר וערב תחת כללי בטיחות, בלי רטינואידים והידרוקינון בהריון." } },
+        { "name": { "en": "Routine chat", "he": "צ'אט על השגרה" }, "detail": { "en": "Answers questions and returns a full updated routine when the user asks for a change.", "he": "עונה על שאלות ומחזיר שגרה מעודכנת מלאה כשמבקשים שינוי." } },
+        { "name": { "en": "AI provider layer", "he": "שכבת ספקי AI" }, "detail": { "en": "OpenAI, Gemini and a local Ollama model behind one interface, picked in the settings.", "he": "OpenAI, Gemini ומודל Ollama מקומי מאחורי ממשק אחד, שבוחרים בהגדרות." } },
+        { "name": { "en": "Accounts & profiles", "he": "חשבונות ופרופילים" }, "detail": { "en": "Passwords hashed with bcrypt, Google sign-in or guest mode; profiles saved through SQLAlchemy.", "he": "סיסמאות מוצפנות ב-bcrypt, התחברות עם Google או מצב אורח. הפרופילים נשמרים דרך SQLAlchemy." } }
       ],
-      "size": { "linesOfCode": 6900, "teamSize": 2 },
+      "size": { "linesOfCode": 7800, "months": 2, "teamSize": 2 },
       "sign": "SkinSens",
       "notes": "Repo link (mayRefael/SkinSens) is held back until the repo cleanup is done."
     },
