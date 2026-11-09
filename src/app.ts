@@ -186,7 +186,12 @@ export class App {
   }
 
   private showPlazaTip(x: number, y: number): void {
-    this.tooltip.replaceChildren(h('strong', {}, t('centralSquare')), h('span', { class: 'tt-stack' }, t('about'), ' →'));
+    // The map instructions live here, on hover, instead of a permanent bubble that covered the TE logo.
+    this.tooltip.replaceChildren(
+      h('strong', {}, t('centralSquare')),
+      h('span', { class: 'tt-stack' }, t('about'), ' →'),
+      h('span', { class: 'tt-hint' }, ...t(this.touch ? 'hintTouch' : 'hintDesktop').split(' · ').map((s) => h('span', {}, s))),
+    );
     this.tooltip.style.removeProperty('--d');
     this.placeTooltip(x, y);
   }
@@ -234,6 +239,7 @@ export class App {
     const tw = this.tooltip.offsetWidth;
     let left = x - rect.left + 18;
     if (left + tw > rect.width - 8) left = x - rect.left - tw - 18;
+    left = Math.max(8, Math.min(left, rect.width - tw - 8));
     this.tooltip.style.transform = `translate(${left}px, ${y - rect.top + 18}px)`;
   }
 
@@ -547,7 +553,11 @@ export class App {
     if (!this.hintShown && (now - this.introStart) / 1000 > 1.6) {
       this.hintShown = true;
       showHint(this.hint, this.touch);
-      if (!this.interacted) this.hint.classList.add('is-visible');
+      // Touch screens can't hover the square, so they get the hint briefly, then it fades out.
+      if (this.touch && !this.interacted) {
+        this.hint.classList.add('is-visible');
+        setTimeout(() => this.hint.classList.remove('is-visible'), 4500);
+      }
     }
 
     const zoomLabels = this.ctx.rig.zoom >= 2.3 && !this.selected;
