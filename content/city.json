@@ -553,15 +553,56 @@
       "access": "public",
       "title": "Threat Map",
       "tagline": {
-        "en": "Mobile-first board-vision trainer: mark every square your pieces threaten in real game positions.",
-        "he": "מאמן ראיית לוח למובייל: מסמנים כל משבצת שהכלים שלך מאיימים עליה, בעמדות ממשחקים אמיתיים."
+        "en": "A mobile board-vision trainer: mark every square your pieces threaten in positions from 800 of my own games, then see what you missed.",
+        "he": "מאמן ראיית לוח למובייל: מסמנים כל משבצת שהכלים שלך מאיימים עליה, בעמדות מ-800 משחקים שלי, ורואים מה פספסת."
       },
-      "stack": ["HTML/JS", "Python"],
-      "links": { "github": "https://github.com/haThomas3/threat-map" },
-      "floors": [
-        { "name": "Position extractor (Python)" },
-        { "name": "Mobile trainer (single file)" }
+      "description": {
+        "en": "A chess trainer for board vision, not a puzzle solver: you don't look for the best move, you scan a real position and mark everything your pieces attack. That covers captures available right now, empty squares you control, and your own pieces that are defended. Mode 2 asks the same question from the opponent's side. You can tap squares or drag across the board to mark many in one gesture, then check: correct squares turn green, wrong ones red, and missed ones get an amber outline. Kings are always neutral. A hint lights up the piece responsible for the most squares you haven't marked yet, and a timer, a perfect streak and a score track each round. The 4,744 positions come from 802 of my chess.com games. A Python script built on python-chess filters them: at least 10 pieces, no early opening moves, at least 3 answers, and at most 6 random positions per game. It stores only the board (FEN) and the precomputed threats, with the exact squares the attacks come from, and no opponent names, dates or ratings. Mode 1 only uses positions where it's your move, which guarantees the opponent's king is never under attack; that was checked on 23,823 candidate positions with no exceptions. The whole app is one self-contained HTML file, with the data, piece images and marble board textures embedded, so it works offline with no server or install. It's an early version: saved progress between sessions and a review screen are planned.",
+        "he": "מאמן שחמט לראיית לוח, לא פותר חידות: לא מחפשים את המהלך הטוב ביותר, אלא סורקים עמדה אמיתית ומסמנים את כל מה שהכלים שלך תוקפים. זה כולל תפיסות שזמינות עכשיו, משבצות ריקות שאתה שולט בהן, וכלים שלך שמוגנים. מוד 2 שואל את אותה שאלה מהצד של היריב. אפשר ללחוץ על משבצות או לגרור על הלוח כדי לסמן הרבה בתנועה אחת, ואז לבדוק: משבצות נכונות נצבעות בירוק, שגויות באדום, ומשבצות שהוחמצו מקבלות מסגרת כתומה. מלכים תמיד נייטרליים. רמז מדליק את הכלי שאחראי על הכי הרבה משבצות שעוד לא סימנת, וטיימר, רצף מושלם וניקוד עוקבים אחרי כל סיבוב. 4,744 העמדות לקוחות מ-802 משחקים שלי ב-chess.com. סקריפט Python מבוסס python-chess מסנן אותן: לפחות 10 כלים, בלי מהלכי הפתיחה הראשונים, לפחות 3 תשובות, ולכל היותר 6 עמדות אקראיות מכל משחק. הוא שומר רק את הלוח (FEN) ואת האיומים שחושבו מראש, כולל המשבצות המדויקות שמהן מגיעה כל התקפה, בלי שמות יריבים, תאריכים או דירוגים. מוד 1 משתמש רק בעמדות שבהן תורך, וזה מבטיח שהמלך של היריב אף פעם לא מותקף; זה נבדק על 23,823 עמדות מועמדות בלי אף חריגה. כל האפליקציה היא קובץ HTML אחד עצמאי, עם הנתונים, תמונות הכלים וטקסטורות השיש של הלוח בתוכו, כך שהיא עובדת בלי אינטרנט, בלי שרת ובלי התקנה. זו גרסה מוקדמת: שמירת התקדמות בין סשנים ומסך סיכום מתוכננים."
+      },
+      "goals": {
+        "en": [
+          "Train fast, automatic recognition of every threat on the board, not calculation.",
+          "Practise on real positions from my own games instead of made-up puzzles.",
+          "Work on a phone with one hand: tap or drag to mark, one tap to check.",
+          "Share the positions without sharing anyone's personal game data."
+        ],
+        "he": [
+          "לאמן זיהוי מהיר ואוטומטי של כל איום על הלוח, לא חישוב.",
+          "להתאמן על עמדות אמיתיות מהמשחקים שלי במקום חידות מומצאות.",
+          "לעבוד בטלפון ביד אחת: לחיצה או גרירה לסימון, לחיצה אחת לבדיקה.",
+          "לשתף את העמדות בלי לשתף נתונים אישיים של אף אחד מהמשחקים."
+        ]
+      },
+      "myRole": {
+        "en": "Solo project: the training idea, the position extractor in Python, and the single-file mobile app. The piece images and board textures were generated with AI image tools.",
+        "he": "פרויקט אישי: רעיון האימון, מחלץ העמדות ב-Python, ואפליקציית המובייל בקובץ אחד. תמונות הכלים וטקסטורות הלוח נוצרו בכלי AI ליצירת תמונות."
+      },
+      "stack": ["JavaScript", "HTML/CSS", "Python", "python-chess"],
+      "metrics": [
+        { "value": "4,744", "label": { "en": "positions from 802 of my games", "he": "עמדות מ-802 משחקים שלי" } },
+        { "value": "~34", "label": { "en": "squares to find per position in Mode 1, on average", "he": "משבצות למצוא בכל עמדה במוד 1, בממוצע" } },
+        { "value": "1", "label": { "en": "self-contained HTML file, works offline", "he": "קובץ HTML עצמאי אחד, עובד בלי אינטרנט" } }
       ],
+      "links": { "github": "https://github.com/haThomas3/threat-map" },
+      "gallery": [
+        {
+          "src": "projects/threat-map/architecture.svg",
+          "caption": { "en": "From my chess.com games to the trainer: filtering, precomputed threats with their source squares, and the check-and-hint loop.", "he": "מהמשחקים שלי ב-chess.com למאמן: סינון, איומים שחושבו מראש עם משבצות המקור שלהם, ולולאת הבדיקה והרמז." }
+        },
+        {
+          "src": "projects/threat-map/trainer.webp",
+          "caption": { "en": "On a phone: the rules screen, marking squares with the hint lighting up a knight, and the result: green correct, red wrong, amber missed.", "he": "בטלפון: מסך ההסבר, סימון משבצות עם רמז שמדליק פרש, והתוצאה: ירוק נכון, אדום שגוי, כתום הוחמץ." }
+        }
+      ],
+      "floors": [
+        { "name": { "en": "Position extractor (Python)", "he": "מחלץ עמדות (Python)" }, "detail": { "en": "Reads the game archive with python-chess, filters positions and keeps only the board and the threats.", "he": "קורא את ארכיון המשחקים עם python-chess, מסנן עמדות ושומר רק את הלוח ואת האיומים." } },
+        { "name": { "en": "Threat data", "he": "נתוני איומים" }, "detail": { "en": "4,744 positions, each with both sides' threats and the squares they come from.", "he": "4,744 עמדות, לכל אחת האיומים של שני הצדדים והמשבצות שמהן הם מגיעים." } },
+        { "name": { "en": "Two training modes", "he": "שני מודים לאימון" }, "detail": { "en": "What can I capture, and what can the opponent capture.", "he": "מה אני יכול לאכול, ומה היריב יכול לאכול." } },
+        { "name": { "en": "Tap-and-drag board", "he": "לוח עם לחיצה וגרירה" }, "detail": { "en": "Mark many squares in one gesture, built for touch screens.", "he": "סימון הרבה משבצות בתנועה אחת, בנוי למסכי מגע." } },
+        { "name": { "en": "Check, hint and score", "he": "בדיקה, רמז וניקוד" }, "detail": { "en": "Green, red and amber feedback, a hint that points at a piece, a timer and a streak.", "he": "משוב ירוק, אדום וכתום, רמז שמצביע על כלי, טיימר ורצף." } }
+      ],
+      "size": { "linesOfCode": 700, "teamSize": 1 },
       "sign": "THREATS"
     },
     {

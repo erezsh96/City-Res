@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 600" font-family="Rubik, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#8fa6e0"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2440"/>
+      <stop offset="1" stop-color="#121829"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="600" rx="24" fill="url(#bg)"/>
+  <text x="30" y="52" font-size="26" font-weight="700" fill="#e6eeff">Threat Map · from my games to a board-vision drill</text>
+  <text x="30" y="78" font-size="14" fill="#8fa6e0">Python + python-chess offline · one self-contained HTML file on the phone</text>
+
+  <!-- row 1: offline data build -->
+  <text x="30" y="116" font-size="13" font-weight="700" fill="#8fa6e0" letter-spacing="1">BUILT ONCE, OFFLINE</text>
+  <g text-anchor="middle">
+    <rect x="30" y="128" width="250" height="150" rx="12" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="155" y="166" font-size="16" font-weight="700" fill="#e6eeff">My chess.com games</text>
+    <text x="155" y="192" font-size="12" fill="#a9b8d8">802 games exported as PGN</text>
+    <text x="155" y="210" font-size="12" fill="#a9b8d8">kept local, never committed</text>
+    <text x="155" y="236" font-size="12" fill="#a9b8d8">(opponent names, dates</text>
+    <text x="155" y="254" font-size="12" fill="#a9b8d8">and ratings stay private)</text>
+
+    <rect x="320" y="128" width="300" height="150" rx="12" fill="#3a2e14" stroke="#ffb547" stroke-width="2.5"/>
+    <text x="470" y="166" font-size="16" font-weight="700" fill="#ffe7c2">Position filter</text>
+    <text x="470" y="192" font-size="12" fill="#d9bf98">at least 10 pieces · skip first 6 plies</text>
+    <text x="470" y="210" font-size="12" fill="#d9bf98">at least 3 answers</text>
+    <text x="470" y="228" font-size="12" fill="#d9bf98">max 6 random positions per game</text>
+    <text x="470" y="254" font-size="12" fill="#d9bf98">Mode 1: only when it's your move</text>
+
+    <rect x="660" y="128" width="290" height="150" rx="12" fill="#0f3a49" stroke="#22c7e6" stroke-width="2.5"/>
+    <text x="805" y="166" font-size="16" font-weight="700" fill="#e6feff">Threat precompute</text>
+    <text x="805" y="192" font-size="12" fill="#9fe6f5">python-chess attackers()</text>
+    <text x="805" y="210" font-size="12" fill="#9fe6f5">pure geometry, kings excluded</text>
+    <text x="805" y="228" font-size="12" fill="#9fe6f5">both sides, with the exact</text>
+    <text x="805" y="246" font-size="12" fill="#9fe6f5">square each attack comes from</text>
+
+    <rect x="990" y="128" width="260" height="150" rx="12" fill="#173a2e" stroke="#4fc79a" stroke-width="2.5"/>
+    <text x="1120" y="166" font-size="16" font-weight="700" fill="#dffff0">positions.json</text>
+    <text x="1120" y="198" font-size="22" font-weight="700" fill="#dffff0">4,744</text>
+    <text x="1120" y="222" font-size="12" fill="#a6dcc4">FEN + threat lists only</text>
+    <text x="1120" y="240" font-size="12" fill="#a6dcc4">~34 answers per position</text>
+    <text x="1120" y="258" font-size="12" fill="#a6dcc4">(Mode 1, average)</text>
+  </g>
+  <g stroke="#8fa6e0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M280 203H318"/>
+    <path d="M620 203H658"/>
+    <path d="M950 203H988"/>
+    <path d="M1120 278V330H1060V348"/>
+  </g>
+
+  <!-- row 2: the app -->
+  <text x="30" y="338" font-size="13" font-weight="700" fill="#8fa6e0" letter-spacing="1">ON THE PHONE: ONE HTML FILE, WORKS OFFLINE</text>
+  <rect x="30" y="350" width="1220" height="168" rx="14" fill="#161d33" stroke="#a98bff" stroke-width="2"/>
+  <g text-anchor="middle">
+    <rect x="50" y="370" width="260" height="128" rx="10" fill="#1d2440" stroke="#5b6b96" stroke-width="1.5"/>
+    <text x="180" y="402" font-size="15" font-weight="700" fill="#ece6ff">Pick a position</text>
+    <text x="180" y="428" font-size="12" fill="#c9b3e8">Mode 1: what can I capture</text>
+    <text x="180" y="446" font-size="12" fill="#c9b3e8">Mode 2: what can they capture</text>
+    <text x="180" y="472" font-size="12" fill="#c9b3e8">no repeats in the last 12</text>
+
+    <rect x="350" y="370" width="260" height="128" rx="10" fill="#1d2440" stroke="#5b6b96" stroke-width="1.5"/>
+    <text x="480" y="402" font-size="15" font-weight="700" fill="#ece6ff">Mark squares</text>
+    <text x="480" y="428" font-size="12" fill="#c9b3e8">tap, or drag to mark many</text>
+    <text x="480" y="446" font-size="12" fill="#c9b3e8">captures · coverage · defence</text>
+    <text x="480" y="472" font-size="12" fill="#c9b3e8">timer running</text>
+
+    <rect x="650" y="370" width="260" height="128" rx="10" fill="#1d2440" stroke="#5b6b96" stroke-width="1.5"/>
+    <text x="780" y="402" font-size="15" font-weight="700" fill="#ece6ff">Hint</text>
+    <text x="780" y="428" font-size="12" fill="#c9b3e8">lights up the piece behind</text>
+    <text x="780" y="446" font-size="12" fill="#c9b3e8">the most unmarked squares</text>
+    <text x="780" y="472" font-size="12" fill="#c9b3e8">uses the source squares</text>
+
+    <rect x="950" y="370" width="280" height="128" rx="10" fill="#1d2440" stroke="#5b6b96" stroke-width="1.5"/>
+    <text x="1090" y="402" font-size="15" font-weight="700" fill="#ece6ff">Check</text>
+    <g font-size="12" font-weight="700">
+      <rect x="985" y="418" width="64" height="22" rx="11" fill="#4caf50"/><text x="1017" y="433" fill="#10141f">correct</text>
+      <rect x="1058" y="418" width="64" height="22" rx="11" fill="#e53935"/><text x="1090" y="433" fill="#10141f">wrong</text>
+      <rect x="1131" y="418" width="64" height="22" rx="11" fill="none" stroke="#ffb300" stroke-width="2"/><text x="1163" y="433" fill="#ffb300">missed</text>
+    </g>
+    <text x="1090" y="472" font-size="12" fill="#c9b3e8">kings neutral · streak and score</text>
+  </g>
+  <g stroke="#8fa6e0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M310 434H348"/>
+    <path d="M610 434H648"/>
+    <path d="M910 434H948"/>
+  </g>
+
+  <text x="640" y="556" font-size="13" fill="#8fa6e0" text-anchor="middle">Solo project · a check on 23,823 candidate positions found no case where the opponent's king was under attack in Mode 1</text>
+  <text x="640" y="578" font-size="12" fill="#5b6b96" text-anchor="middle">JavaScript · HTML/CSS · Python · python-chess · AI-generated piece art and board textures, embedded in the file</text>
+</svg>
