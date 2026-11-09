@@ -23,6 +23,8 @@ import { AboutModal, ListView, showHint } from './ui/overlays';
 
 const GROUND = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 const TAU = Math.PI * 2;
+/** Matches .mushroom width in main.css. */
+const MUSHROOM_W = 150;
 
 const easeOutBack = (x: number) => {
   const c1 = 1.4;
@@ -64,6 +66,9 @@ export class App {
   private canvas = $('#city') as HTMLCanvasElement;
   private tooltip = $('#tooltip');
   private hint = $('#hint');
+  private mushroom = $('#mushroom');
+  private screenPt = new THREE.Vector3();
+  private camRight = new THREE.Vector3();
 
   constructor(data: CityData) {
     this.model = buildCityModel(data);
@@ -152,6 +157,19 @@ export class App {
 
   private layoutLabels(): void {
     this.labels.update(this.ctx.size.width, this.ctx.size.height);
+  }
+
+  /** Keeps the mushroom on the water just right of the island's on-screen edge, whatever the zoom or rotation. */
+  private layoutMushroom(): void {
+    const { width, height } = this.ctx.size;
+    const cam = this.ctx.rig.camera;
+    this.camRight.setFromMatrixColumn(cam.matrixWorld, 0).setY(0).normalize().multiplyScalar(this.model.radius);
+    const edge = this.screenPt.copy(this.camRight).project(cam);
+    const x = (edge.x * 0.5 + 0.5) * width + 24;
+    const y = (-edge.y * 0.5 + 0.5) * height;
+    const fits = x + MUSHROOM_W < width - 8;
+    this.mushroom.hidden = !fits;
+    if (fits) this.mushroom.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translateY(-50%)`;
   }
 
   // ---------- picking & selection ----------
@@ -570,6 +588,7 @@ export class App {
     const az = this.ctx.rig.azimuth;
     this.world.update(time, az);
     this.layoutLabels();
+    this.layoutMushroom();
     this.ctx.render();
   };
 }

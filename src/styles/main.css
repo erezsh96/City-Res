@@ -148,6 +148,26 @@ h1, h2, h3 { margin: 0; line-height: 1.2; }
   box-shadow: 0 0 12px color-mix(in srgb, var(--d, #38e8ff) 50%, transparent);
 }
 
+/* ---------- orange mushroom (congrats easter egg beside the island) ---------- */
+.mushroom {
+  position: absolute; left: 0; top: 0; z-index: 5; pointer-events: none;
+  display: flex; flex-direction: column; align-items: center; gap: 6px; width: 150px;
+}
+.mushroom[hidden] { display: none; }
+.mushroom-art { width: 84px; height: 84px; animation: mushroom-hop 1.6s ease-in-out infinite; transform-origin: 50% 95%; }
+.mushroom-text {
+  margin: 0; padding: 5px 10px; text-align: center;
+  background: rgba(14, 20, 34, 0.88); color: #fff3e2;
+  border: 1.5px solid #f5821f; border-radius: 8px;
+  font-size: 13px; font-weight: 600; line-height: 1.35;
+  box-shadow: 0 0 12px rgba(245, 130, 31, 0.45);
+}
+@keyframes mushroom-hop {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  40% { transform: translateY(-10px) scale(0.96, 1.04); }
+  70% { transform: translateY(0) scale(1.05, 0.95); }
+}
+
 /* ---------- tooltip ---------- */
 .tooltip {
   position: absolute; left: 0; top: 0; z-index: 15; pointer-events: none;
