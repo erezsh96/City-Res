@@ -612,15 +612,65 @@
       "access": "public",
       "title": { "en": "Chess Analytics Dashboard", "he": "דשבורד ניתוח שחמט" },
       "tagline": {
-        "en": "Imports my chess.com game history into a local database and turns it into an interactive dashboard.",
-        "he": "מייבא את היסטוריית המשחקים שלי מ-chess.com למסד נתונים מקומי והופך אותה לדשבורד אינטראקטיבי."
+        "en": "Imports my chess.com game history into SQLite and turns it into a dashboard that runs SQL in the browser, in one HTML file.",
+        "he": "מייבא את היסטוריית המשחקים שלי מ-chess.com ל-SQLite והופך אותה לדשבורד שמריץ SQL בדפדפן, בקובץ HTML אחד."
       },
-      "stack": ["Python", "SQL", "Chart.js"],
-      "floors": [
-        { "name": "chess.com importer" },
-        { "name": "Local SQL database" },
-        { "name": "Interactive dashboard" }
+      "description": {
+        "en": "A solo project from August 2026 that asks what my chess.com history says about how I play. A Python importer reads the public, read-only chess.com API by username, with no login. It goes through every monthly archive, saves each game as a PGN file and writes a CSV index and a SQLite table. To tell games against bots from games against people, it reads each opponent's public profile once and looks for the BOT title. The games were then analysed with Stockfish 16 at depth 12 into a second SQLite database with a games table and a moves table. Each of my moves has its centipawn loss, its game phase and a class: good under 50, inaccuracy from 50, mistake from 120, blunder from 300. The dashboard is a single HTML file that carries the database as base64 together with sql.js and Chart.js, so it opens without a server. On load it runs 24 SQL queries in the browser and builds eight sections: an overview, people versus bots, blunders by move number and by piece, an openings report, a monthly rating trend, blunders made while ahead, recurring patterns and a free SQL console. A separate queries.sql file keeps 17 of the analysis queries for any SQLite tool. The same importer script also ships in the TeachMeChess repo.",
+        "he": "פרויקט אישי מאוגוסט 2026 שבודק מה היסטוריית המשחקים שלי ב-chess.com אומרת על איך שאני משחק. מייבא ב-Python קורא את ה-API הציבורי של chess.com, שהוא לקריאה בלבד, לפי שם משתמש ובלי התחברות. הוא עובר על כל הארכיונים החודשיים, שומר כל משחק כקובץ PGN וכותב קובץ CSV מרכז וטבלת SQLite. כדי להבדיל בין משחקים נגד בוטים למשחקים נגד אנשים, הוא קורא פעם אחת את הפרופיל הציבורי של כל יריב ובודק אם יש בו את התואר BOT. אחר כך המשחקים נותחו עם Stockfish 16 בעומק 12 למסד SQLite שני, עם טבלת משחקים וטבלת מהלכים. לכל מהלך שלי נשמרים איבוד הסנטיפיונים, שלב המשחק וסיווג: טוב מתחת ל-50, אי-דיוק מ-50, טעות מ-120 וטעות חמורה מ-300. הדשבורד הוא קובץ HTML אחד שמכיל את מסד הנתונים כ-base64 יחד עם sql.js ו-Chart.js, ולכן הוא נפתח בלי שרת. בטעינה הוא מריץ 24 שאילתות SQL בדפדפן ובונה שמונה חלקים: תמונת מצב, אנשים מול בוטים, טעויות חמורות לפי מספר מהלך ולפי כלי, דוח פתיחות, מגמת דירוג חודשית, טעויות חמורות מתוך יתרון, דפוסים חוזרים וקונסולת SQL חופשית. קובץ queries.sql נפרד שומר 17 משאילתות הניתוח לשימוש בכל כלי SQLite. אותו סקריפט ייבוא נמצא גם בריפו של TeachMeChess."
+      },
+      "goals": {
+        "en": [
+          "Collect my full game history in one local database that can be queried with SQL.",
+          "Separate games against bots from games against people, so the numbers reflect real play.",
+          "Find where my mistakes happen: by move number, piece, game phase, opening and time control.",
+          "Ship the analysis as one file that opens in any browser, with no server and no install."
+        ],
+        "he": [
+          "לאסוף את כל היסטוריית המשחקים שלי למסד נתונים מקומי אחד שאפשר לשאול עליו שאילתות SQL.",
+          "להפריד בין משחקים נגד בוטים למשחקים נגד אנשים, כדי שהמספרים ישקפו משחק אמיתי.",
+          "למצוא איפה הטעויות שלי קורות: לפי מספר מהלך, כלי, שלב במשחק, פתיחה ובקרת זמן.",
+          "להגיש את הניתוח כקובץ אחד שנפתח בכל דפדפן, בלי שרת ובלי התקנה."
+        ]
+      },
+      "myRole": {
+        "en": "Solo project: the chess.com importer, the database design, the SQL queries and the single-file dashboard.",
+        "he": "פרויקט אישי: המייבא מ-chess.com, תכנון מסד הנתונים, שאילתות ה-SQL והדשבורד בקובץ אחד."
+      },
+      "stack": ["Python", "requests", "SQLite", "SQL", "Stockfish", "sql.js", "Chart.js", "JavaScript", "HTML/CSS"],
+      "metrics": [
+        { "value": "24", "label": { "en": "SQL queries run in the browser on page load", "he": "שאילתות SQL שרצות בדפדפן בטעינת הדף" } },
+        { "value": "4", "label": { "en": "Chart.js charts across 8 dashboard sections", "he": "גרפי Chart.js בשמונה חלקי הדשבורד" } },
+        { "value": "~900", "label": { "en": "lines of Python, SQL, HTML, CSS and JavaScript", "he": "שורות Python, SQL, HTML, CSS ו-JavaScript" } }
       ],
+      "gallery": [
+        {
+          "src": "projects/chess-analytics/architecture.svg",
+          "caption": { "en": "From chess.com to the browser: the importer, the engine analysis, the SQLite database and the single HTML file that queries it.", "he": "מ-chess.com לדפדפן: המייבא, ניתוח המנוע, מסד ה-SQLite וקובץ ה-HTML האחד ששואל אותו." }
+        },
+        {
+          "src": "projects/chess-analytics/overview.webp",
+          "caption": { "en": "The top of the dashboard: win rate against people, then cards for games, average centipawn loss and blunder rate. Demo data with invented games.", "he": "ראש הדשבורד: אחוז הניצחון נגד אנשים, ואחריו כרטיסים למספר המשחקים, איבוד הסנטיפיונים הממוצע ושיעור הטעויות החמורות. נתוני הדגמה עם משחקים מומצאים." }
+        },
+        {
+          "src": "projects/chess-analytics/blunder-anatomy.webp",
+          "caption": { "en": "Blunder rate by move number and mistakes by piece, with a note on the game phase where most blunders happen. Demo data.", "he": "שיעור הטעויות החמורות לפי מספר מהלך והטעויות לפי כלי, עם הערה על שלב המשחק שבו קורות רוב הטעויות החמורות. נתוני הדגמה." }
+        },
+        {
+          "src": "projects/chess-analytics/sql-console.webp",
+          "caption": { "en": "The free SQL console runs a query on the embedded database in the browser and shows the result as a table. Demo data.", "he": "קונסולת ה-SQL החופשית מריצה שאילתה על מסד הנתונים המוטמע, בתוך הדפדפן, ומציגה את התוצאה כטבלה. נתוני הדגמה." }
+        }
+      ],
+      "floors": [
+        { "name": { "en": "chess.com importer", "he": "מייבא מ-chess.com" }, "detail": { "en": "Reads the public API month by month and saves every game as PGN, CSV and SQLite.", "he": "קורא את ה-API הציבורי חודש אחר חודש ושומר כל משחק כ-PGN, ב-CSV וב-SQLite." } },
+        { "name": { "en": "Bot detection", "he": "זיהוי בוטים" }, "detail": { "en": "Checks each opponent's public profile once for the BOT title.", "he": "בודק פעם אחת בפרופיל הציבורי של כל יריב אם יש לו את התואר BOT." } },
+        { "name": { "en": "Engine analysis", "he": "ניתוח מנוע" }, "detail": { "en": "Stockfish 16 at depth 12: centipawn loss, game phase and a class for each of my moves.", "he": "Stockfish 16 בעומק 12: איבוד סנטיפיונים, שלב במשחק וסיווג לכל מהלך שלי." } },
+        { "name": { "en": "SQLite database", "he": "מסד נתונים SQLite" }, "detail": { "en": "A games table and a moves table, plus 17 saved queries in queries.sql.", "he": "טבלת משחקים וטבלת מהלכים, ועוד 17 שאילתות שמורות בקובץ queries.sql." } },
+        { "name": { "en": "SQL in the browser", "he": "SQL בדפדפן" }, "detail": { "en": "sql.js opens the embedded database and runs 24 queries when the page loads.", "he": "sql.js פותח את מסד הנתונים המוטמע ומריץ 24 שאילתות כשהדף נטען." } },
+        { "name": { "en": "Charts and sections", "he": "גרפים וחלקים" }, "detail": { "en": "Eight sections with 4 Chart.js charts, stat cards, opening tables and short findings.", "he": "שמונה חלקים עם 4 גרפי Chart.js, כרטיסי נתונים, טבלאות פתיחות וממצאים קצרים." } },
+        { "name": { "en": "Free SQL console", "he": "קונסולת SQL חופשית" }, "detail": { "en": "Type any query on the same database and see the result as a table.", "he": "כותבים כל שאילתה על אותו מסד נתונים ורואים את התוצאה כטבלה." } }
+      ],
+      "size": { "linesOfCode": 900, "teamSize": 1 },
       "sign": "STATS"
     },
     {

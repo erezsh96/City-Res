@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 620" font-family="Rubik, 'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#8fa6e0"/>
+    </marker>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1b2440"/>
+      <stop offset="1" stop-color="#121829"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="620" rx="24" fill="url(#bg)"/>
+  <text x="30" y="52" font-size="26" font-weight="700" fill="#e6eeff">Chess Analytics Dashboard · from chess.com games to SQL in the browser</text>
+  <text x="30" y="78" font-size="14" fill="#8fa6e0">Python and SQLite build the database · one self-contained HTML file runs the queries and draws the charts</text>
+
+  <!-- row 1: building the database -->
+  <text x="30" y="116" font-size="13" font-weight="700" fill="#8fa6e0" letter-spacing="1">BUILT LOCALLY, IN PYTHON</text>
+  <g text-anchor="middle">
+    <rect x="30" y="128" width="250" height="160" rx="12" fill="#232d4d" stroke="#5b6b96" stroke-width="2"/>
+    <text x="155" y="166" font-size="16" font-weight="700" fill="#e6eeff">chess.com</text>
+    <text x="155" y="192" font-size="12" fill="#a9b8d8">public, read-only API</text>
+    <text x="155" y="210" font-size="12" fill="#a9b8d8">monthly game archives</text>
+    <text x="155" y="228" font-size="12" fill="#a9b8d8">by username, no login</text>
+    <text x="155" y="254" font-size="12" fill="#a9b8d8">games vs people and bots</text>
+
+    <rect x="320" y="128" width="300" height="160" rx="12" fill="#0f3a49" stroke="#22c7e6" stroke-width="2.5"/>
+    <text x="470" y="166" font-size="16" font-weight="700" fill="#e6feff">import_chess_com.py</text>
+    <text x="470" y="192" font-size="12" fill="#9fe6f5">one PGN file per game</text>
+    <text x="470" y="210" font-size="12" fill="#9fe6f5">+ CSV index + SQLite table</text>
+    <text x="470" y="236" font-size="12" fill="#9fe6f5">BOT title read from each</text>
+    <text x="470" y="254" font-size="12" fill="#9fe6f5">opponent's profile, cached</text>
+
+    <rect x="660" y="128" width="290" height="160" rx="12" fill="#3a2e14" stroke="#ffb547" stroke-width="2.5"/>
+    <text x="805" y="166" font-size="16" font-weight="700" fill="#ffe7c2">Engine analysis</text>
+    <text x="805" y="192" font-size="12" fill="#d9bf98">Stockfish 16, depth 12</text>
+    <text x="805" y="210" font-size="12" fill="#d9bf98">centipawn loss for every move</text>
+    <text x="805" y="236" font-size="12" fill="#d9bf98">good &lt;50 · inaccuracy 50+</text>
+    <text x="805" y="254" font-size="12" fill="#d9bf98">mistake 120+ · blunder 300+</text>
+
+    <rect x="990" y="128" width="260" height="160" rx="12" fill="#173a2e" stroke="#4fc79a" stroke-width="2.5"/>
+    <text x="1120" y="166" font-size="16" font-weight="700" fill="#dffff0">chess_analysis.db</text>
+    <text x="1120" y="192" font-size="12" fill="#a6dcc4">SQLite, two tables</text>
+    <text x="1120" y="210" font-size="12" fill="#a6dcc4">games: 22 columns</text>
+    <text x="1120" y="228" font-size="12" fill="#a6dcc4">moves: 20 columns</text>
+    <text x="1120" y="254" font-size="12" fill="#a6dcc4">kept local, not published</text>
+  </g>
+  <g stroke="#8fa6e0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M280 208H318"/>
+    <path d="M620 208H658"/>
+    <path d="M950 208H988"/>
+    <path d="M1120 288V354"/>
+  </g>
+  <text x="1132" y="326" font-size="12" fill="#8fa6e0">embedded as base64</text>
+
+  <!-- row 2: the HTML file -->
+  <text x="30" y="344" font-size="13" font-weight="700" fill="#8fa6e0" letter-spacing="1">IN THE BROWSER: ONE SELF-CONTAINED HTML FILE</text>
+  <rect x="30" y="356" width="1220" height="170" rx="14" fill="#161d33" stroke="#a98bff" stroke-width="2"/>
+  <g text-anchor="middle">
+    <rect x="50" y="376" width="260" height="130" rx="10" fill="#1d2440" stroke="#5b6b96" stroke-width="1.5"/>
+    <text x="180" y="408" font-size="15" font-weight="700" fill="#ece6ff">Inside the file</text>
+    <text x="180" y="434" font-size="12" fill="#c9b3e8">the database, as base64</text>
+    <text x="180" y="452" font-size="12" fill="#c9b3e8">sql.js 1.10.2 (SQLite in WASM)</text>
+    <text x="180" y="470" font-size="12" fill="#c9b3e8">Chart.js 4.4.1</text>
+    <text x="180" y="488" font-size="12" fill="#c9b3e8">no server needed</text>
+
+    <rect x="350" y="376" width="260" height="130" rx="10" fill="#1d2440" stroke="#5b6b96" stroke-width="1.5"/>
+    <text x="480" y="408" font-size="15" font-weight="700" fill="#ece6ff">SQL on page load</text>
+    <text x="480" y="434" font-size="12" fill="#c9b3e8">sql.js opens the database</text>
+    <text x="480" y="452" font-size="12" fill="#c9b3e8">24 queries run in the browser</text>
+    <text x="480" y="470" font-size="12" fill="#c9b3e8">results feed the charts,</text>
+    <text x="480" y="488" font-size="12" fill="#c9b3e8">cards and text</text>
+
+    <rect x="650" y="376" width="260" height="130" rx="10" fill="#1d2440" stroke="#5b6b96" stroke-width="1.5"/>
+    <text x="780" y="408" font-size="15" font-weight="700" fill="#ece6ff">Dashboard, 8 sections</text>
+    <text x="780" y="434" font-size="12" fill="#c9b3e8">4 Chart.js charts</text>
+    <text x="780" y="452" font-size="12" fill="#c9b3e8">stat cards · opening tables</text>
+    <text x="780" y="470" font-size="12" fill="#c9b3e8">people vs bots · blunders</text>
+    <text x="780" y="488" font-size="12" fill="#c9b3e8">rating trend · lost advantages</text>
+
+    <rect x="950" y="376" width="280" height="130" rx="10" fill="#1d2440" stroke="#5b6b96" stroke-width="1.5"/>
+    <text x="1090" y="408" font-size="15" font-weight="700" fill="#ece6ff">Free SQL console</text>
+    <text x="1090" y="434" font-size="12" fill="#c9b3e8">type any query</text>
+    <text x="1090" y="452" font-size="12" fill="#c9b3e8">on the same database</text>
+    <text x="1090" y="470" font-size="12" fill="#c9b3e8">results shown as a table</text>
+    <text x="1090" y="488" font-size="12" fill="#c9b3e8">SQL errors shown in place</text>
+  </g>
+  <g stroke="#8fa6e0" stroke-width="2" fill="none" marker-end="url(#a)">
+    <path d="M310 441H348"/>
+    <path d="M610 441H648"/>
+    <path d="M910 441H948"/>
+  </g>
+
+  <text x="640" y="566" font-size="13" fill="#8fa6e0" text-anchor="middle">Solo project, August 2026 · queries.sql keeps 17 saved queries on the same database, for any SQLite tool</text>
+  <text x="640" y="590" font-size="12" fill="#5b6b96" text-anchor="middle">Python · requests · SQLite · Stockfish · sql.js · Chart.js · HTML/CSS/JavaScript</text>
+</svg>
