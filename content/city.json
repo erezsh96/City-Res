@@ -584,7 +584,7 @@
         { "value": "~34", "label": { "en": "squares to find per position in Mode 1, on average", "he": "משבצות למצוא בכל עמדה במוד 1, בממוצע" } },
         { "value": "1", "label": { "en": "self-contained HTML file, works offline", "he": "קובץ HTML עצמאי אחד, עובד בלי אינטרנט" } }
       ],
-      "links": { "github": "https://github.com/haThomas3/threat-map" },
+      "links": { "github": "https://github.com/haThomas3/threat-map", "demo": "https://hathomas3.github.io/threat-map/threat_map.html" },
       "gallery": [
         {
           "src": "projects/threat-map/architecture.svg",
